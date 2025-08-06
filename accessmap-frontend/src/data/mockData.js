@@ -99,31 +99,7 @@ export const mockRecommendations = [
   }
 ];
 
-// Community reports from users
-export const mockCommunityReports = [
-  {
-    id: 1,
-    location: { lat: 37.7699, lng: -122.4144, address: "Powell St BART" },
-    issue_type: "Elevator Out of Service",
-    description: "Main elevator has been broken for 3 days, forcing wheelchair users to find alternative routes",
-    reporter: "Anonymous",
-    date_reported: "2024-01-16",
-    photo_url: "/images/broken-elevator.jpg",
-    status: "reported",
-    sentiment: "frustrated"
-  },
-  {
-    id: 2,
-    location: { lat: 37.7799, lng: -122.4044, address: "Dolores Park" },
-    issue_type: "Inaccessible Restroom",
-    description: "Restroom door is too narrow for wheelchairs and lacks grab bars",
-    reporter: "Maria S.",
-    date_reported: "2024-01-15",
-    photo_url: "/images/restroom-door.jpg",
-    status: "under_review",
-    sentiment: "concerned"
-  }
-];
+
 
 // AI-generated survey questions (from Watsonx)
 export const mockSurveyQuestions = [
@@ -159,26 +135,47 @@ export const mockAgentChatLog = [
   {
     id: 1,
     agent: "AccessScanner",
-    timestamp: "2024-01-16 10:30:00",
-    message: "Scanning complete for downtown area. Identified 23 accessibility issues.",
-    reasoning: "Used computer vision to analyze street view imagery. Detected missing curb ramps with 92% confidence using trained accessibility detection model.",
-    data: { issues_found: 23, area_covered: "2.3 sq km", confidence_avg: 0.89 }
+    timestamp: "2024-01-15T10:30:00Z",
+    message: "Scan complete. Identified 23 accessibility barriers in the downtown area.",
+    reasoning: "Used computer vision analysis of street-level imagery combined with ADA compliance database cross-referencing. High confidence detections include missing curb ramps (8), broken sidewalks (6), and inaccessible bus stops (4).",
+    confidence: 0.94,
+    data_sources: ["Street imagery", "ADA compliance database", "Municipal records"]
   },
   {
     id: 2,
     agent: "EquityAdvisor",
-    timestamp: "2024-01-16 10:35:00",
-    message: "Prioritization analysis complete. Tenderloin district requires immediate attention.",
-    reasoning: "Cross-referenced accessibility issues with demographic data. High elderly population (34%) and disability rate (28%) in Tenderloin increases urgency score.",
-    data: { priority_locations: 8, equity_score: 9.2, vulnerable_pop_percentage: 62 }
+    timestamp: "2024-01-15T10:45:00Z",
+    message: "Priority analysis complete. Tenderloin District requires immediate attention.",
+    reasoning: "Demographic analysis shows 34% elderly population and 28% disability rate in Tenderloin, significantly above city average of 16% and 12% respectively. Combined with high concentration of accessibility barriers (15 per square mile vs city average of 3), this area scores 9.2/10 on equity priority scale.",
+    confidence: 0.91,
+    data_sources: ["Census data", "Disability services records", "Accessibility barrier density"]
   },
   {
     id: 3,
     agent: "PlannerBot",
-    timestamp: "2024-01-16 10:40:00",
-    message: "Generated 15 improvement recommendations with cost estimates.",
-    reasoning: "Optimized solutions based on impact vs cost analysis. Prioritized high-traffic areas and locations serving vulnerable populations.",
-    data: { recommendations: 15, total_estimated_cost: "$45,600", avg_timeline: "2.3 weeks" }
+    timestamp: "2024-01-15T11:00:00Z",
+    message: "Generated 12 improvement recommendations with total estimated cost of $2.3M.",
+    reasoning: "Optimization algorithm considered cost-effectiveness, impact on vulnerable populations, and implementation feasibility. Prioritized curb ramp installations (ROI: 8.5/10) and sidewalk repairs (ROI: 7.8/10) over more expensive elevator upgrades (ROI: 6.2/10). Timeline optimized for maximum parallel implementation.",
+    confidence: 0.88,
+    data_sources: ["Construction cost database", "Implementation timeline models", "Impact assessment algorithms"]
+  },
+  {
+    id: 4,
+    agent: "AccessScanner",
+    timestamp: "2024-01-15T11:15:00Z",
+    message: "Updated scan detected 3 new barriers reported by community.",
+    reasoning: "Integrated community reports with AI detection system. Verified community-reported elevator outage at Civic Center Station through building management API. Cross-referenced with historical maintenance records showing 23% uptime over past 6 months.",
+    confidence: 0.96,
+    data_sources: ["Community reports", "Building management systems", "Maintenance records"]
+  },
+  {
+    id: 5,
+    agent: "EquityAdvisor",
+    timestamp: "2024-01-15T11:30:00Z",
+    message: "Equity impact assessment updated based on new community input.",
+    reasoning: "Community sentiment analysis reveals 78% of residents in affected areas report daily mobility challenges. Weighted this qualitative data with quantitative demographic analysis to adjust priority scores. Mission District elevated from 8.7 to 9.1 due to high community concern levels.",
+    confidence: 0.89,
+    data_sources: ["Community surveys", "Sentiment analysis", "Demographic data"]
   }
 ];
 
@@ -200,3 +197,73 @@ export const sdgCallouts = {
     description: "Enhance inclusive and sustainable urbanization and capacity for participatory planning"
   }
 };
+
+// Community Reporting Module - user-submitted accessibility reports
+export const mockCommunityReports = [
+  {
+    id: 1,
+    location: { lat: 37.7849, lng: -122.4094, address: "24th St BART Station" },
+    issue_type: "Elevator Out of Service",
+    description: "The main elevator has been broken for 3 weeks. I use a wheelchair and can't access the platform. This is my daily commute to work.",
+    reporter: "Maria Rodriguez",
+    date_reported: "2024-01-12",
+    photo_url: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400",
+    status: "under_review",
+    sentiment: "frustrated"
+  },
+  {
+    id: 2,
+    location: { lat: 37.7749, lng: -122.4194, address: "Valencia St & 16th St" },
+    issue_type: "Missing Curb Ramp",
+    description: "There's no curb ramp at this busy intersection. I have to go two blocks out of my way to cross safely with my mobility scooter.",
+    reporter: "James Chen",
+    date_reported: "2024-01-10",
+    photo_url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400",
+    status: "reported",
+    sentiment: "concerned"
+  },
+  {
+    id: 3,
+    location: { lat: 37.7649, lng: -122.4294, address: "Civic Center Plaza" },
+    issue_type: "Broken Sidewalk",
+    description: "Large pothole in the sidewalk near the library entrance. Several people with mobility aids have struggled here.",
+    reporter: "Sarah Johnson",
+    date_reported: "2024-01-08",
+    photo_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400",
+    status: "resolved",
+    sentiment: "hopeful"
+  },
+  {
+    id: 4,
+    location: { lat: 37.7549, lng: -122.4394, address: "Powell St Cable Car Stop" },
+    issue_type: "Missing Audio Signal",
+    description: "The pedestrian crossing doesn't have audio signals. As someone who is visually impaired, I can't safely cross during busy times.",
+    reporter: "David Kim",
+    date_reported: "2024-01-07",
+    photo_url: null,
+    status: "under_review",
+    sentiment: "concerned"
+  },
+  {
+    id: 5,
+    location: { lat: 37.7449, lng: -122.4494, address: "Dolores Park Main Entrance" },
+    issue_type: "Inaccessible Restroom",
+    description: "The accessible restroom door is too heavy and the handle is broken. My elderly mother couldn't open it during our visit.",
+    reporter: "Lisa Wong",
+    date_reported: "2024-01-05",
+    photo_url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400",
+    status: "reported",
+    sentiment: "frustrated"
+  },
+  {
+    id: 6,
+    location: { lat: 37.7349, lng: -122.4594, address: "Mission St Bus Stop (Line 14)" },
+    issue_type: "Blocked Sidewalk",
+    description: "Construction barriers have been blocking the sidewalk for months. People in wheelchairs have to go into the street.",
+    reporter: "Michael Torres",
+    date_reported: "2024-01-03",
+    photo_url: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400",
+    status: "under_review",
+    sentiment: "frustrated"
+  }
+];
