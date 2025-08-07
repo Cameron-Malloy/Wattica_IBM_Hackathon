@@ -43,8 +43,10 @@ const createCustomIcon = (severity) => {
 };
 
 const MapPage = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('scan');
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarWidth, setSidebarWidth] = useState(384); // Default 24rem (384px)
+  const [isResizing, setIsResizing] = useState(false);
   const [mapData, setMapData] = useState({
     scanResults: [],
     priorityList: [],
@@ -60,11 +62,45 @@ const MapPage = () => {
     });
   }, []);
 
+  // Handle sidebar resizing
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!isResizing) return;
+      
+      const newWidth = e.clientX;
+      // Constrain width between 280px and 600px
+      const constrainedWidth = Math.min(Math.max(newWidth, 280), 600);
+      setSidebarWidth(constrainedWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      document.body.style.cursor = 'default';
+      document.body.style.userSelect = 'auto';
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'ew-resize';
+      document.body.style.userSelect = 'none';
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
+
+  const handleResizeStart = () => {
+    setIsResizing(true);
+  };
+
   // San Francisco center coordinates
   const center = [37.7749, -122.4194];
 
   const tabs = [
-    { id: 'scan', name: 'Scan Results', icon: ExclamationTriangleIcon, color: 'text-red-600' },
+    { id: 'scan', name: 'Scan Results', icon: ExclamationTriangleIcon, color: 'text-red-600'},
     { id: 'priority', name: 'Priority List', icon: ExclamationCircleIcon, color: 'text-yellow-600' },
     { id: 'recommendations', name: 'Recommendations', icon: CheckCircleIcon, color: 'text-green-600' },
     { id: 'how-it-works', name: 'How It Works', icon: Bars3Icon, color: 'text-blue-600' }
@@ -88,9 +124,18 @@ const MapPage = () => {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className={`bg-white shadow-lg transition-all duration-300 ${
-        sidebarOpen ? 'w-96' : 'w-0'
-      } overflow-hidden`}>
+      <div 
+        className={`bg-white shadow-lg relative ${
+          sidebarOpen ? 'block' : 'w-0'
+        } overflow-hidden ${
+          !isResizing ? 'transition-all duration-300' : ''
+        }`}
+        style={{
+          width: sidebarOpen ? `${sidebarWidth}px` : '0px',
+          minWidth: sidebarOpen ? '280px' : '0px',
+          maxWidth: sidebarOpen ? '600px' : '0px'
+        }}
+      >
         <div className="h-full flex flex-col">
           {/* Sidebar Header */}
           <div className="p-4 border-b border-gray-200">
@@ -104,24 +149,31 @@ const MapPage = () => {
               </button>
             </div>
             
-            {/* Tab Navigation */}
+            {/* Tab Navigation - Grid Layout for All Screens */}
             <div className="mt-4">
-              <nav className="flex space-x-1" aria-label="Tabs">
+              <nav className="grid grid-cols-2 gap-2" aria-label="Tabs">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
                   return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`${
-                        activeTab === tab.id
-                          ? 'bg-primary-100 text-primary-700 border-primary-500'
-                          : 'text-gray-500 hover:text-gray-700 border-transparent hover:bg-gray-100'
-                      } whitespace-nowrap py-2 px-3 border-b-2 font-medium text-sm rounded-t-lg flex items-center space-x-1`}
-                    >
-                      <Icon className={`h-4 w-4 ${tab.color}`} />
-                      <span className="hidden lg:block">{tab.name}</span>
-                    </button>
+                    <div key={tab.id} className="relative group">
+                      <button
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`${
+                          activeTab === tab.id
+                            ? 'bg-primary-100 text-primary-700 border-primary-500'
+                            : 'text-gray-500 hover:text-gray-700 border-gray-200 hover:bg-gray-100'
+                        } w-full py-3 px-2 border-2 font-medium text-xs rounded-lg flex flex-col items-center space-y-1 transition-colors duration-200`}
+                      >
+                        <Icon className={`h-5 w-5 ${tab.color}`} />
+                        <span className="text-center leading-tight">{tab.name}</span>
+                      </button>
+                      
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                        {tab.name}
+                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                      </div>
+                    </div>
                   );
                 })}
               </nav>
@@ -133,6 +185,18 @@ const MapPage = () => {
             {renderSidebarContent()}
           </div>
         </div>
+        
+        {/* Resize Handle */}
+        {sidebarOpen && (
+          <div
+            className="absolute top-0 right-0 w-1 h-full bg-gray-300 hover:bg-primary-500 cursor-ew-resize transition-colors duration-200 group"
+            onMouseDown={handleResizeStart}
+          >
+            <div className="absolute top-1/2 right-0 transform -translate-y-1/2 w-3 h-8 bg-gray-400 group-hover:bg-primary-600 rounded-l-md flex items-center justify-center transition-colors duration-200">
+              <div className="w-0.5 h-4 bg-white rounded-full opacity-70"></div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Map Container */}
