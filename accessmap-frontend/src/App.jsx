@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 // Import pages
-import LandingPage from './pages/LandingPage';
-import MapPage from './pages/MapPage';
-import SurveyPage from './pages/SurveyPage';
-import DashboardPage from './pages/DashboardPage';
-import ChatLogPage from './pages/ChatLogPage';
-import CommunityPage from './pages/CommunityPage';
+import LandingPage from './pages/LandingPage.jsx';
+import MapPage from './pages/MapPage.jsx';
+import SurveyPage from './pages/SurveyPage.jsx';
+import DashboardPage from './pages/DashboardPage.jsx';
+import ChatLogPage from './pages/ChatLogPage.jsx';
+import CommunityPage from './pages/CommunityPage.jsx';
 
 // Import components
-import Navigation from './components/Navigation';
+import Navigation from './components/Navigation.jsx';
 
 function App() {
   return (

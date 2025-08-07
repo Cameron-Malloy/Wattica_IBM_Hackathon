@@ -13,10 +13,10 @@ import {
 import { mockScanResults, mockPriorityList, mockRecommendations } from '../data/mockData';
 
 // Import sidebar components
-import ScanResultsSidebar from '../components/ScanResultsSidebar';
-import PriorityListSidebar from '../components/PriorityListSidebar';
-import RecommendationsSidebar from '../components/RecommendationsSidebar';
-import HowItWorksSidebar from '../components/HowItWorksSidebar';
+import ScanResultsSidebar from '../components/ScanResultsSidebar.jsx';
+import PriorityListSidebar from '../components/PriorityListSidebar.jsx';
+import RecommendationsSidebar from '../components/RecommendationsSidebar.jsx';
+import HowItWorksSidebar from '../components/HowItWorksSidebar.jsx';
 
 // Fix for default markers in React-Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
