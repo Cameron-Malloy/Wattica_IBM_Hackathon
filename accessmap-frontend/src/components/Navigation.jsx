@@ -80,7 +80,7 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile menu dropdown */}
+        {/* Mobile menu dropdown or when the screen is to small to show the normal navigatyion */}
         {isMobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
             <div className="px-2 pt-2 pb-3 space-y-1">

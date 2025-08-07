@@ -5,6 +5,7 @@ import {
   ExclamationTriangleIcon, 
   ExclamationCircleIcon,
   CheckCircleIcon,
+  QuestionMarkCircleIcon,
   Bars3Icon,
   XMarkIcon
 } from '@heroicons/react/24/outline';
@@ -69,7 +70,7 @@ const MapPage = () => {
       
       const newWidth = e.clientX;
       // Constrain width between 280px and 600px
-      const constrainedWidth = Math.min(Math.max(newWidth, 280), 600);
+      const constrainedWidth = Math.min(Math.max(newWidth, 200), 750);
       setSidebarWidth(constrainedWidth);
     };
 
@@ -103,7 +104,7 @@ const MapPage = () => {
     { id: 'scan', name: 'Scan Results', icon: ExclamationTriangleIcon, color: 'text-red-600'},
     { id: 'priority', name: 'Priority List', icon: ExclamationCircleIcon, color: 'text-yellow-600' },
     { id: 'recommendations', name: 'Recommendations', icon: CheckCircleIcon, color: 'text-green-600' },
-    { id: 'how-it-works', name: 'How It Works', icon: Bars3Icon, color: 'text-blue-600' }
+    { id: 'how-it-works', name: 'How It Works', icon: QuestionMarkCircleIcon, color: 'text-blue-600' }
   ];
 
   const renderSidebarContent = () => {
@@ -121,8 +122,29 @@ const MapPage = () => {
     }
   };
 
+  // Legend component
+  const Legend = () => (
+    <div className="absolute bottom-4 right-4 z-[1000] bg-white p-3 rounded-lg shadow-lg opacity-0 hover:opacity-100 transition-opacity duration-300">
+      <h4 className="font-semibold text-sm mb-2 text-gray-700">Accessibility Legend</h4>
+      <div className="space-y-2">
+        <div className="flex items-center">
+          <div className="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+          <span className="text-xs text-gray-600">Critical (8-10)</span>
+        </div>
+        <div className="flex items-center">
+          <div className="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+          <span className="text-xs text-gray-600">Moderate (5-7)</span>
+        </div>
+        <div className="flex items-center">
+          <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+          <span className="text-xs text-gray-600">Good (0-4)</span>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 relative">
       {/* Sidebar */}
       <div 
         className={`bg-white shadow-lg relative ${
@@ -205,7 +227,7 @@ const MapPage = () => {
         {!sidebarOpen && (
           <button
             onClick={() => setSidebarOpen(true)}
-            className="absolute top-4 left-4 z-[1000] bg-white p-2 rounded-md shadow-lg hover:bg-gray-50"
+            className="absolute top-6 left-12 z-[1000] bg-white p-2 rounded-md shadow-lg hover:bg-gray-50"
           >
             <Bars3Icon className="h-5 w-5 text-gray-600" />
           </button>
@@ -218,70 +240,75 @@ const MapPage = () => {
           style={{ height: '100%', width: '100%' }}
           className="z-0"
         >
-          <LayersControl position="topright">
-            {/* Base Map Layer */}
-            <LayersControl.BaseLayer checked name="OpenStreetMap">
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-            </LayersControl.BaseLayer>
+          {/* Base Map Layer */}
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-            {/* Accessibility Issues Overlay */}
-            <LayersControl.Overlay checked name="Accessibility Issues">
-              <>
-                {mapData.scanResults.map((issue) => (
-                  <Marker
-                    key={issue.id}
-                    position={[issue.location.lat, issue.location.lng]}
-                    icon={createCustomIcon(issue.severity)}
-                  >
-                    <Popup>
-                      <div className="p-2">
-                        <h3 className="font-semibold text-gray-900">{issue.issue_type}</h3>
-                        <p className="text-sm text-gray-600 mt-1">{issue.description}</p>
-                        <div className="mt-2 flex items-center justify-between">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            issue.severity === 'critical' ? 'bg-red-100 text-red-800' :
-                            issue.severity === 'moderate' ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-green-100 text-green-800'
-                          }`}>
-                            {issue.severity}
-                          </span>
-                          <span className="text-xs text-gray-500">
-                            Confidence: {Math.round(issue.confidence * 100)}%
-                          </span>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {issue.location.address}
-                        </p>
+          {/* Accessibility Issues Overlay */}
+          {activeTab === 'scan' && (
+            <>
+              {mapData.scanResults.map((issue) => (
+                <Marker
+                  key={issue.id}
+                  position={[issue.location.lat, issue.location.lng]}
+                  icon={createCustomIcon(issue.severity)}
+                >
+                  <Popup>
+                    <div className="p-2">
+                      <h3 className="font-semibold text-gray-900">{issue.issue_type}</h3>
+                      <p className="text-sm text-gray-600 mt-1">{issue.description}</p>
+                      <div className="mt-2 flex items-center justify-between">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          issue.severity === 'critical' ? 'bg-red-100 text-red-800' :
+                          issue.severity === 'moderate' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-green-100 text-green-800'
+                        }`}>
+                          {issue.severity}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          Confidence: {Math.round(issue.confidence * 100)}%
+                        </span>
                       </div>
-                    </Popup>
-                  </Marker>
-                ))}
-              </>
-            </LayersControl.Overlay>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {issue.location.address}
+                      </p>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </>
+          )}
 
-            {/* Priority Areas Overlay */}
-            <LayersControl.Overlay name="Priority Areas">
-              <>
-                {mapData.priorityList.map((area) => (
+          {/* Priority Areas Overlay */}
+          {activeTab === 'priority' && (
+            <>
+              {mapData.priorityList.map((area) => {
+                // Use same color scheme as accessibility markers based on priority score
+                const getSeverityFromScore = (score) => {
+                  if (score >= 8) return 'critical';
+                  if (score >= 5) return 'moderate';
+                  return 'good';
+                };
+                const severity = getSeverityFromScore(area.priority_score);
+                
+                return (
                   <Marker
                     key={`priority-${area.id}`}
                     position={[area.location.lat, area.location.lng]}
-                    icon={L.divIcon({
-                      html: `<div style="background-color: #f59e0b; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">${area.priority_score}</div>`,
-                      className: 'custom-priority-icon',
-                      iconSize: [30, 30],
-                      iconAnchor: [15, 15]
-                    })}
+                    icon={createCustomIcon(severity)}
                   >
                     <Popup>
                       <div className="p-2">
                         <h3 className="font-semibold text-gray-900">Priority Area</h3>
                         <p className="text-sm text-gray-600 mt-1">{area.top_issue}</p>
-                        <div className="mt-2">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        <div className="mt-2 flex items-center justify-between">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            severity === 'critical' ? 'bg-red-100 text-red-800' :
+                            severity === 'moderate' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-green-100 text-green-800'
+                          }`}>
                             Score: {area.priority_score}/10
                           </span>
                         </div>
@@ -290,11 +317,12 @@ const MapPage = () => {
                       </div>
                     </Popup>
                   </Marker>
-                ))}
-              </>
-            </LayersControl.Overlay>
-          </LayersControl>
+                );
+              })}
+            </>
+          )}
         </MapContainer>
+        <Legend />
       </div>
     </div>
   );
