@@ -2,10 +2,10 @@ import os
 import sys
 from populationVulnerability import get_data
 from cleanVulnerabilityData import clean_data
-from watsonx import scoring_function
-from equity_scoring_function import score_location
+# from watsonx import scoring_function
+# from equity_scoring_function import score_location
 import subprocess
-
+import pandas as pd
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -24,12 +24,13 @@ if __name__ == "__main__":
 
     # clean data
     cleanresults_folder = "cleaned_results"
-    os.makedirs(cleanresults_folder, exist_ok=True)
+    os.makedirs(f"census_results/{cleanresults_folder}", exist_ok=True)
     clean_df = clean_data(census_path)
     clean_path = f"{folder}/{cleanresults_folder}/Population_Vulnerability_{state}_clean.csv"
     clean_df.to_csv(clean_path, index=False)
     print(f"Saved cleaned data to {clean_path}")
 
+'''
     # load accessscanner data
     scanner_path = f"../accessscanner/results/accessscanner_data_{state}.csv" # update based on ishitas file structure
     if not os.path.exists(scanner_path):
@@ -43,3 +44,4 @@ if __name__ == "__main__":
     # run generated scoring function
     subprocess.run(["python", f"Scoring_function_{state}.py"])
 
+'''
