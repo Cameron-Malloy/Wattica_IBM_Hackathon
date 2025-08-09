@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, LayersControl } from 'react-leaflet';
 import L from 'leaflet';
 import { 
@@ -48,6 +48,9 @@ const MapPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [sidebarWidth, setSidebarWidth] = useState(384); // Default 24rem (384px)
   const [isResizing, setIsResizing] = useState(false);
+  const [selectedIssue, setSelectedIssue] = useState(null);
+  const mapRef = useRef();
+  const markersRef = useRef({});
   const [mapData, setMapData] = useState({
     scanResults: [],
     priorityList: [],
@@ -97,6 +100,40 @@ const MapPage = () => {
     setIsResizing(true);
   };
 
+  // Handle selecting an issue from the sidebar
+  const handleSelectScanResult = (issue) => {
+    setSelectedIssue(issue);
+    
+    // Pan map to the issue location
+    if (mapRef.current) {
+      mapRef.current.flyTo([issue.location.lat, issue.location.lng], 16);
+    }
+    
+    // Open the marker popup
+    setTimeout(() => {
+      const marker = markersRef.current[issue.id];
+      if (marker) {
+        marker.openPopup();
+      }
+    }, 500); // Small delay to allow map animation to complete
+  };
+
+  // Handle selecting a priority area from the sidebar
+  const handleSelectPriorityArea = (area) => {
+    // Pan map to the priority area location
+    if (mapRef.current) {
+      mapRef.current.flyTo([area.location.lat, area.location.lng], 16);
+    }
+
+    // Open the marker popup
+    setTimeout(() => {
+      const marker = markersRef.current[`priority-${area.id}`];
+      if (marker) {
+        marker.openPopup();
+      }
+    }, 500); // Small delay to allow map animation to complete
+  };
+
   // San Francisco center coordinates
   const center = [37.7749, -122.4194];
 
@@ -110,15 +147,15 @@ const MapPage = () => {
   const renderSidebarContent = () => {
     switch (activeTab) {
       case 'scan':
-        return <ScanResultsSidebar data={mapData.scanResults} />;
+        return <ScanResultsSidebar data={mapData.scanResults} onSelectScanResult={handleSelectScanResult} />;
       case 'priority':
-        return <PriorityListSidebar data={mapData.priorityList} />;
+        return <PriorityListSidebar data={mapData.priorityList} onSelectPriorityArea={handleSelectPriorityArea} />;
       case 'recommendations':
         return <RecommendationsSidebar data={mapData.recommendations} />;
       case 'how-it-works':
         return <HowItWorksSidebar />;
       default:
-        return <ScanResultsSidebar data={mapData.scanResults} />;
+        return <ScanResultsSidebar data={mapData.scanResults} onSelectScanResult={handleSelectScanResult} />;
     }
   };
 
@@ -239,6 +276,7 @@ const MapPage = () => {
           zoom={13}
           style={{ height: '100%', width: '100%' }}
           className="z-0"
+          ref={mapRef}
         >
           {/* Base Map Layer */}
           <TileLayer
@@ -254,6 +292,11 @@ const MapPage = () => {
                   key={issue.id}
                   position={[issue.location.lat, issue.location.lng]}
                   icon={createCustomIcon(issue.severity)}
+                  ref={(ref) => {
+                    if (ref) {
+                      markersRef.current[issue.id] = ref;
+                    }
+                  }}
                 >
                   <Popup>
                     <div className="p-2">
@@ -298,6 +341,11 @@ const MapPage = () => {
                     key={`priority-${area.id}`}
                     position={[area.location.lat, area.location.lng]}
                     icon={createCustomIcon(severity)}
+                    ref={(ref) => {
+                    if (ref) {
+                      markersRef.current[`priority-${area.id}`] = ref;
+                    }
+                  }}
                   >
                     <Popup>
                       <div className="p-2">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExclamationCircleIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
 
-const PriorityListSidebar = ({ data }) => {
+const PriorityListSidebar = ({ data, onSelectPriorityArea }) => {
   const getPriorityColor = (score) => {
     if (score >= 9) return 'bg-red-100 text-red-800 border-red-300';
     if (score >= 7) return 'bg-yellow-100 text-yellow-800 border-yellow-300';
@@ -40,11 +40,15 @@ const PriorityListSidebar = ({ data }) => {
       </div>
 
       {/* Priority Areas List */}
-      <div className="space-y-3">
         {data
           .sort((a, b) => b.priority_score - a.priority_score)
           .map((area) => (
-            <div key={area.id} className="card border-l-4 border-l-yellow-400 p-3">
+            <button
+              key={area.id}
+              className="w-full text-left duration-200 hover:shadow-lg bg-yellow-50 space-y-3"
+              onClick={() => onSelectPriorityArea && onSelectPriorityArea(area)}
+            >
+            <div className="card border-l-4 border-l-yellow-400 p-3">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
@@ -98,8 +102,8 @@ const PriorityListSidebar = ({ data }) => {
                 </div>
               </div>
             </div>
+            </button>
           ))}
-      </div>
 
       {/* SDG Callout */}
       <div className="bg-green-50 border border-green-200 rounded-lg p-3 mt-4">

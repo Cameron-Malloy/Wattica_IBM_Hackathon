@@ -1,7 +1,8 @@
 import React from 'react';
 import { ExclamationTriangleIcon, MapPinIcon } from '@heroicons/react/24/outline';
 
-const ScanResultsSidebar = ({ data }) => {
+// onSelectScanResult: function(issue) => highlights the issue on the map in parent component
+const ScanResultsSidebar = ({ data, onSelectScanResult }) => {
   const getSeverityColor = (severity) => {
     switch (severity) {
       case 'critical':
@@ -58,36 +59,38 @@ const ScanResultsSidebar = ({ data }) => {
       {/* Issues List */}
       <div className="space-y-3">
         {data.map((issue) => (
-          <div key={issue.id} className="card border-l-4 border-l-red-400 p-3">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center space-x-2">
-                  <span className="text-lg">{getSeverityIcon(issue.severity)}</span>
-                  <h4 className="font-medium text-gray-900">{issue.issue_type}</h4>
-                </div>
-                
-                <p className="text-sm text-gray-600 mt-1">{issue.description}</p>
-                
-                <div className="flex items-center space-x-2 mt-2">
-                  <MapPinIcon className="h-4 w-4 text-gray-400" />
-                  <span className="text-xs text-gray-500">{issue.location.address}</span>
-                </div>
-                
-                <div className="flex items-center justify-between mt-2">
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getSeverityColor(issue.severity)}`}>
-                    {issue.severity}
-                  </span>
-                  <span className="text-xs text-gray-500">
-                    {Math.round(issue.confidence * 100)}% confidence
-                  </span>
-                </div>
-                
-                <div className="text-xs text-gray-400 mt-1">
-                  Detected: {new Date(issue.detected_date).toLocaleDateString()}
+            <button
+              key={issue.id}
+              className="w-full text-left duration-200 hover:shadow-lg bg-yellow-50 space-y-3"
+              onClick={() => onSelectScanResult && onSelectScanResult(issue)}
+            >
+            <div className="card border-l-4 border-l-red-400 p-3 rounded-lg">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg">{getSeverityIcon(issue.severity)}</span>
+                    <h4 className="font-medium text-gray-900">{issue.issue_type}</h4>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">{issue.description}</p>
+                  <div className="flex items-center space-x-2 mt-2">
+                    <MapPinIcon className="h-4 w-4 text-gray-400" />
+                    <span className="text-xs text-gray-500">{issue.location.address}</span>
+                  </div>
+                  <div className="flex items-center justify-between mt-2">
+                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getSeverityColor(issue.severity)}`}> 
+                      {issue.severity}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      {Math.round(issue.confidence * 100)}% confidence
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-400 mt-1">
+                    Detected: {new Date(issue.detected_date).toLocaleDateString()}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            </button>
         ))}
       </div>
 
