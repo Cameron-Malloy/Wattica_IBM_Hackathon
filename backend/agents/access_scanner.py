@@ -4,6 +4,8 @@ import logging
 from typing import List, Dict, Any
 from datetime import datetime
 import os
+import time
+import requests
 from ibm_watsonx_ai.foundation_models import Model
 from ibm_watsonx_ai import Credentials
 
@@ -26,6 +28,17 @@ class AccessScannerAgent:
             credentials=Credentials(**credentials_dict),
             project_id=watsonx_credentials["project_id"]
         )
+        # Simple on-disk geocode cache to avoid repeated API calls
+        self.geo_cache_path = os.path.join(os.path.dirname(__file__), "..", "api_results", "geo_cache_ca.json")
+        try:
+            os.makedirs(os.path.dirname(self.geo_cache_path), exist_ok=True)
+            if os.path.exists(self.geo_cache_path):
+                with open(self.geo_cache_path, "r") as f:
+                    self.geo_cache = json.load(f)
+            else:
+                self.geo_cache = {}
+        except Exception:
+            self.geo_cache = {}
         
     def scan_accessibility_gaps(self, census_data: pd.DataFrame, state: str) -> List[Dict[str, Any]]:
         """
@@ -36,16 +49,46 @@ class AccessScannerAgent:
         """
         logger.info(f"🔍 AccessScanner: Scanning accessibility gaps for {state}")
         
-        # Prepare larger data sample for AI analysis
-        sample_data = census_data.head(25).to_dict('records')
+        # Use a more robust approach - generate multiple batches over the full dataset
+        all_results = []
+        # Process data in batches to get more results
+        batch_size = 50
+        num_batches = (len(census_data) + batch_size - 1) // batch_size
+        
+        for batch_num in range(num_batches):
+            start_idx = batch_num * batch_size
+            end_idx = min(start_idx + batch_size, len(census_data))
+            batch_data = census_data.iloc[start_idx:end_idx].to_dict('records')
+            
+            logger.info(f"📊 Processing batch {batch_num + 1}/{num_batches} with {len(batch_data)} cities")
+            
+            batch_results = self._generate_batch_results(batch_data, state, batch_num)
+            all_results.extend(batch_results)
+            
+            # Stop if we have enough results
+            if len(all_results) >= 45:
+                break
+        
+        logger.info(f"✅ Generated {len(all_results)} total accessibility gaps")
+        # Deduplicate by location + issue_type
+        unique = {}
+        for item in all_results:
+            key = (item.get("location"), item.get("issue_type"))
+            if key not in unique:
+                unique[key] = item
+        deduped = list(unique.values())
+        return deduped[:60]
+    
+    def _generate_batch_results(self, batch_data: List[Dict], state: str, batch_num: int) -> List[Dict[str, Any]]:
+        """Generate results for a batch of cities"""
         
         prompt = f"""
         You are AccessScannerAgent, an expert accessibility auditor analyzing census data.
 
-        Census Data for {state}:
-        {json.dumps(sample_data, indent=2)}
+        Census Data for {state} (Batch {batch_num + 1}):
+        {json.dumps(batch_data, indent=2)}
 
-        Analyze this data and identify 10-15 accessibility barriers across different locations. Return ONLY a JSON array using this EXACT format:
+        Generate 10-15 accessibility barriers for these cities. Return ONLY a JSON array using this EXACT format:
         [
             {{
                 "location": "City Name, {state}",
@@ -64,53 +107,46 @@ class AccessScannerAgent:
             response = self.model.generate(
                 prompt=prompt, 
                 params={
-                    'max_new_tokens': 800,  # Increased for complete JSON
-                    'temperature': 0.1,     # Lower for more consistent output
-                    'stop_sequences': ['}]'] # Stop after JSON ends
+                    'max_new_tokens': 1000,
+                    'temperature': 0.3,
+                    'stop_sequences': ['}]']
                 }
             )
             ai_response = response['results'][0]['generated_text']
             
-            logger.info(f"🤖 WatsonX Response: {ai_response[:200]}...")
-            
-            # Improved JSON extraction
+            # Extract JSON
             json_start = ai_response.find('[')
             json_end = ai_response.rfind(']')
             
             if json_start != -1 and json_end > json_start:
                 json_str = ai_response[json_start:json_end+1]
-                
-                # Fix common JSON issues
                 json_str = json_str.replace('\n', ' ').replace('\t', ' ')
                 while '  ' in json_str:
                     json_str = json_str.replace('  ', ' ')
                 
-                logger.info(f"📋 Extracted JSON: {json_str[:100]}...")
-                
                 try:
                     ai_results = json.loads(json_str)
-                    logger.info(f"✅ Successfully parsed {len(ai_results)} AI results")
+                    logger.info(f"✅ Batch {batch_num + 1}: Generated {len(ai_results)} results")
                     
-                    # Enhance AI results with census data
-                    return self._enhance_ai_results(ai_results, census_data, state)
+                    # Enhance results with census data
+                    enhanced_results = self._enhance_ai_results(ai_results, batch_data, state)
+                    return enhanced_results
                     
                 except json.JSONDecodeError as e:
-                    logger.warning(f"JSON parsing failed: {e}")
-                    logger.warning(f"Invalid JSON: {json_str[:200]}...")
+                    logger.warning(f"JSON parsing failed for batch {batch_num + 1}: {e}")
                     
-            logger.error("Could not parse AI response - WatsonX required")
             return []
                 
         except Exception as e:
-            logger.error(f"AccessScanner AI failed: {e} - WatsonX required")
+            logger.error(f"Batch {batch_num + 1} failed: {e}")
             return []
     
-    def _enhance_ai_results(self, ai_results: List[Dict], census_data: pd.DataFrame, state: str) -> List[Dict[str, Any]]:
+    def _enhance_ai_results(self, ai_results: List[Dict], census_data: List[Dict], state: str) -> List[Dict[str, Any]]:
         """Enhance AI results with real census data and coordinates"""
         enhanced_results = []
         
         # Get real census data for locations
-        census_dict = {row['place']: row for _, row in census_data.iterrows()}
+        census_dict = {row['place']: row for row in census_data}
         
         for i, ai_result in enumerate(ai_results):
             # Extract location name
@@ -130,45 +166,28 @@ class AccessScannerAgent:
                 place_name = matching_census['place']
             
             if matching_census is not None:
-                # Generate realistic coordinates for this California place using improved algorithm
-                import hashlib
-                place_hash = int(hashlib.md5(place_name.encode()).hexdigest()[:8], 16)
-                
-                # California coordinate bounds (more accurate)
-                ca_lat_min, ca_lat_max = 32.5343, 42.0095  # Actual CA bounds
-                ca_lng_min, ca_lng_max = -124.4096, -114.1318
-                
-                # Generate coordinates with better distribution
-                lat_seed = place_hash % 100000
-                lng_seed = (place_hash // 100000) % 100000
-                
-                lat = ca_lat_min + (lat_seed / 100000) * (ca_lat_max - ca_lat_min)
-                lng = ca_lng_min + (lng_seed / 100000) * (ca_lng_max - ca_lng_min)
-                
-                # Apply demographic-based clustering
-                elderly_pct = float(matching_census.get('percent_over_65', 0)) * 100
-                income = float(matching_census.get('median_income', 50000) or 50000)
-                
-                # Elderly populations cluster slightly south (warmer weather)
-                if elderly_pct > 20:
-                    lat -= (ca_lat_max - ca_lat_min) * 0.1
-                
-                # Higher income areas cluster slightly west (coast)
-                if income > 80000:
-                    lng -= (ca_lng_max - ca_lng_min) * 0.1
-                
-                # Ensure bounds
-                lat = max(ca_lat_min, min(ca_lat_max, lat))
-                lng = max(ca_lng_min, min(ca_lng_max, lng))
+                # Use proper geocoding for California cities (Nominatim with cache)
+                query = f"{place_name}, California"
+                coordinates = self._geocode_city(query)
+                if not coordinates:
+                    # Try without suffixes
+                    base_place = place_name.replace(" city", "").replace(" town", "").replace(" CDP", "")
+                    query = f"{base_place}, CA"
+                    coordinates = self._geocode_city(query)
+                # If still not found, skip this item rather than generating fake coords
+                if not coordinates:
+                    logger.warning(f"Geocoding failed for {place_name}; skipping this result to avoid mock data")
+                    continue
                 
                 # Calculate demographics
+                elderly_pct = float(matching_census.get('percent_over_65', 0)) * 100
                 disabled_pct = float(matching_census.get('percent_disabled', 0)) * 100
                 
                 # Build enhanced result with AI insight + real data
                 enhanced_result = {
                     "id": f"scan_{i+1}",
                     "location": f"{place_name}, {state}",
-                    "coordinates": {"lat": round(lat, 3), "lng": round(lng, 3)},
+                    "coordinates": coordinates,
                     "issue_type": ai_result.get('issue_type', 'Accessibility Barrier'),
                     "severity": ai_result.get('severity', 'moderate'),
                     "description": ai_result.get('description', 'AI-identified accessibility issue'),
@@ -197,3 +216,34 @@ class AccessScannerAgent:
         if not risk_factors: risk_factors.append('Standard risk profile')
         
         return risk_factors
+
+    def _geocode_city(self, query: str) -> dict | None:
+        """Geocode a city name using OpenStreetMap Nominatim with disk caching."""
+        try:
+            key = query.strip().lower()
+            if key in self.geo_cache:
+                return self.geo_cache[key]
+            url = "https://nominatim.openstreetmap.org/search"
+            params = {"q": query, "format": "json", "limit": 1, "countrycodes": "us"}
+            headers = {"User-Agent": "AccessMap/1.0 (contact: dev@accessmap.local)"}
+            resp = requests.get(url, params=params, headers=headers, timeout=15)
+            if resp.status_code == 200:
+                data = resp.json()
+                if data:
+                    lat = float(data[0]["lat"])
+                    lon = float(data[0]["lon"])
+                    coords = {"lat": round(lat, 6), "lng": round(lon, 6)}
+                    self.geo_cache[key] = coords
+                    # Persist cache promptly
+                    try:
+                        with open(self.geo_cache_path, "w") as f:
+                            json.dump(self.geo_cache, f)
+                    except Exception:
+                        pass
+                    # Be polite to Nominatim
+                    time.sleep(1.05)
+                    return coords
+            logger.warning(f"Geocoding HTTP {resp.status_code if 'resp' in locals() else 'ERR'} for {query}")
+        except Exception as e:
+            logger.warning(f"Geocoding failed for {query}: {e}")
+        return None

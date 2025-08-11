@@ -20,7 +20,7 @@ print("🔍 DEBUG: Testing WatsonX AccessScanner")
 print(f"API Key loaded: {'✅' if watsonx_creds['api_key'] else '❌'}")
 print(f"Project ID: {'✅' if watsonx_creds['project_id'] else '❌'}")
 
-# Create sample census data
+# Create sample census data with more cities
 sample_data = pd.DataFrame([
     {
         'place': 'Los Angeles city, CA',
@@ -39,6 +39,48 @@ sample_data = pd.DataFrame([
         'percent_over_65': 0.14,
         'percent_disabled': 0.13,
         'median_income': 55000
+    },
+    {
+        'place': 'San Diego city, CA',
+        'percent_over_65': 0.15,
+        'percent_disabled': 0.10,
+        'median_income': 70000
+    },
+    {
+        'place': 'Sacramento city, CA',
+        'percent_over_65': 0.13,
+        'percent_disabled': 0.12,
+        'median_income': 60000
+    },
+    {
+        'place': 'Fresno city, CA',
+        'percent_over_65': 0.11,
+        'percent_disabled': 0.14,
+        'median_income': 45000
+    },
+    {
+        'place': 'Long Beach city, CA',
+        'percent_over_65': 0.16,
+        'percent_disabled': 0.11,
+        'median_income': 68000
+    },
+    {
+        'place': 'Bakersfield city, CA',
+        'percent_over_65': 0.10,
+        'percent_disabled': 0.13,
+        'median_income': 52000
+    },
+    {
+        'place': 'Anaheim city, CA',
+        'percent_over_65': 0.14,
+        'percent_disabled': 0.09,
+        'median_income': 72000
+    },
+    {
+        'place': 'Santa Ana city, CA',
+        'percent_over_65': 0.13,
+        'percent_disabled': 0.10,
+        'median_income': 58000
     }
 ])
 

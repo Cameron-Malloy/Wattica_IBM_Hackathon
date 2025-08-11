@@ -1,0 +1,92 @@
+INFO:     Started server process [6157]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8002 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57755 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57784 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57786 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57784 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57784 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57784 - "OPTIONS /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57786 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57786 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57784 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57784 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57788 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57815 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57815 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57815 - "OPTIONS /analyze HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57817 - "POST /analyze HTTP/1.1" 200 OK
+2025-08-11 02:12:43,553 - __main__ - INFO - Loading existing census data from census_results/Population_Vulnerability_CA_clean_real.csv
+2025-08-11 02:12:43,562 - cleanVulnerabilityData - INFO - Cleaning census data...
+2025-08-11 02:12:43,565 - cleanVulnerabilityData - INFO - Cleaned data: 1349 places remaining
+2025-08-11 02:12:43,565 - cleanVulnerabilityData - INFO - Adding vulnerability scores...
+2025-08-11 02:12:43,567 - cleanVulnerabilityData - INFO - Vulnerability scores added successfully
+2025-08-11 02:12:43,568 - cleanVulnerabilityData - INFO - Preparing data for agents...
+2025-08-11 02:12:43,570 - cleanVulnerabilityData - INFO - Data prepared for agents successfully
+2025-08-11 02:12:43,571 - multi_agent_orchestrator - INFO - 🤖 Initializing Multi-Agent System...
+/Users/cameronmalloy/Wattica_IBM_Hackathon/backend/venv/lib/python3.13/site-packages/ibm_watsonx_ai/foundation_models/model.py:105: DeprecationWarning: The `Model` class is deprecated and will be removed in a future release. Please use the `ModelInference` class instead. To update your imports, use: `from ibm_watsonx_ai.foundation_models import ModelInference`.
+  warn(model_class_deprecated_warning, category=DeprecationWarning)
+2025-08-11 02:12:44,804 - ibm_watsonx_ai.client - INFO - Client successfully initialized
+2025-08-11 02:12:46,277 - httpx - INFO - HTTP Request: GET https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200 "HTTP/1.1 200 OK"
+2025-08-11 02:12:46,306 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished Get available foundation models for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200'
+/Users/cameronmalloy/Wattica_IBM_Hackathon/backend/venv/lib/python3.13/site-packages/ibm_watsonx_ai/foundation_models/model.py:105: DeprecationWarning: The `Model` class is deprecated and will be removed in a future release. Please use the `ModelInference` class instead. To update your imports, use: `from ibm_watsonx_ai.foundation_models import ModelInference`.
+  warn(model_class_deprecated_warning, category=DeprecationWarning)
+2025-08-11 02:12:46,899 - ibm_watsonx_ai.client - INFO - Client successfully initialized
+2025-08-11 02:12:47,534 - httpx - INFO - HTTP Request: GET https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200 "HTTP/1.1 200 OK"
+2025-08-11 02:12:47,575 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished Get available foundation models for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200'
+/Users/cameronmalloy/Wattica_IBM_Hackathon/backend/venv/lib/python3.13/site-packages/ibm_watsonx_ai/foundation_models/model.py:105: DeprecationWarning: The `Model` class is deprecated and will be removed in a future release. Please use the `ModelInference` class instead. To update your imports, use: `from ibm_watsonx_ai.foundation_models import ModelInference`.
+  warn(model_class_deprecated_warning, category=DeprecationWarning)
+2025-08-11 02:12:48,488 - ibm_watsonx_ai.client - INFO - Client successfully initialized
+2025-08-11 02:12:49,062 - httpx - INFO - HTTP Request: GET https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200 "HTTP/1.1 200 OK"
+2025-08-11 02:12:49,097 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished Get available foundation models for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200'
+2025-08-11 02:12:49,102 - multi_agent_orchestrator - INFO - ✅ All agents initialized successfully
+2025-08-11 02:12:49,102 - multi_agent_orchestrator - INFO - 🚀 Starting complete multi-agent analysis for CA
+2025-08-11 02:12:49,102 - multi_agent_orchestrator - INFO - 📊 Step 1: Running AccessScanner analysis...
+2025-08-11 02:12:49,102 - agents.access_scanner - INFO - 🔍 AccessScanner: Scanning accessibility gaps for CA
+2025-08-11 02:12:49,105 - agents.access_scanner - INFO - 📊 Processing batch 1/27 with 50 cities
+2025-08-11 02:13:00,254 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 02:13:00,255 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 02:13:00,256 - agents.access_scanner - INFO - ✅ Batch 1: Generated 9 results
+2025-08-11 02:13:00,653 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Ahwahnee CDP, California
+2025-08-11 02:13:03,227 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Airport CDP, California
+2025-08-11 02:13:05,798 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Alhambra Valley CDP, California
+2025-08-11 02:13:11,648 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Allendale CDP, California
+2025-08-11 02:13:14,184 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Alta CDP, California
+2025-08-11 02:13:16,811 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Alta Sierra CDP (Nevada County), California
+2025-08-11 02:13:20,663 - agents.access_scanner - INFO - ✅ Enhanced 9 WatsonX AI results
+2025-08-11 02:13:20,664 - agents.access_scanner - INFO - 📊 Processing batch 2/27 with 50 cities
+2025-08-11 02:13:33,707 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 02:13:33,707 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 02:13:33,708 - agents.access_scanner - INFO - ✅ Batch 2: Generated 11 results
+2025-08-11 02:13:34,071 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Auberry CDP, California
+2025-08-11 02:13:36,638 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Avery CDP, California
+2025-08-11 02:13:39,440 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Bakersfield Country Club CDP, California
+2025-08-11 02:13:46,120 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Bangor CDP, California
+2025-08-11 02:13:52,240 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Bass Lake CDP, California
+2025-08-11 02:13:54,658 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Bayview CDP (Humboldt County), California
+2025-08-11 02:13:58,691 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Bear Valley Springs CDP, California
+2025-08-11 02:14:00,204 - agents.access_scanner - INFO - ✅ Enhanced 11 WatsonX AI results
+2025-08-11 02:14:00,205 - agents.access_scanner - INFO - 📊 Processing batch 3/27 with 50 cities
+2025-08-11 02:14:13,327 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 02:14:13,327 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 02:14:13,328 - agents.access_scanner - INFO - ✅ Batch 3: Generated 11 results
+2025-08-11 02:14:16,977 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Big Bend CDP, California
+2025-08-11 02:14:19,901 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Big Lagoon CDP, California
+2025-08-11 02:14:22,421 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Big Pine CDP, California
+2025-08-11 02:14:26,033 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Big River CDP, California
+2025-08-11 02:14:28,024 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Bluewater CDP, California
+2025-08-11 02:14:30,593 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Bonita CDP, California
+2025-08-11 02:14:33,089 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Boronda CDP, California
+2025-08-11 02:14:35,809 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Boulder Creek CDP, California
+2025-08-11 02:14:42,111 - agents.access_scanner - INFO - ✅ Enhanced 11 WatsonX AI results
+2025-08-11 02:14:42,112 - agents.access_scanner - INFO - 📊 Processing batch 4/27 with 50 cities
+2025-08-11 02:15:37,848 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 02:15:37,849 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 02:15:37,849 - agents.access_scanner - INFO - ✅ Batch 4: Generated 9 results
+2025-08-11 02:15:40,205 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Burney CDP, California
+2025-08-11 02:15:43,140 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Butte Creek Canyon CDP, California
+2025-08-11 02:15:46,314 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Butte Valley CDP, California
+2025-08-11 02:15:50,242 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Calpella CDP, California
+2025-08-11 02:15:52,817 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Camanche Village CDP, California
+2025-08-11 02:15:56,963 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Cambrian Park CDP, California

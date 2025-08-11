@@ -24,6 +24,7 @@ import {
   UsersIcon
 } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
+import { getCaliforniaCityCoordinates } from '../utils/geocodingService';
 
 // Fix Leaflet marker icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -33,7 +34,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// California cities with coordinates
+// California cities with coordinates (fallback)
 const CALIFORNIA_CITIES_DATA = {
   'Los Angeles': { lat: 34.0522, lng: -118.2437 },
   'San Francisco': { lat: 37.7749, lng: -122.4194 },
@@ -130,7 +131,13 @@ const MapPage = () => {
 
   // Function to get coordinates for a city
   const getCityCoordinates = (cityName) => {
-    // Try exact match first
+    // Use geocoding service first
+    const geocodedCoords = getCaliforniaCityCoordinates(cityName);
+    if (geocodedCoords) {
+      return geocodedCoords;
+    }
+    
+    // Try exact match with fallback data
     if (CALIFORNIA_CITIES_DATA[cityName]) {
       return CALIFORNIA_CITIES_DATA[cityName];
     }

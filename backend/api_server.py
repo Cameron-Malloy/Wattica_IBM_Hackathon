@@ -8,8 +8,17 @@ from typing import Dict, Any, Optional
 from datetime import datetime
 import os
 
-from multi_agent_orchestrator import MultiAgentOrchestrator
-from cleanVulnerabilityData import clean_data, add_vulnerability_score, prepare_data_for_agents
+# Support running as a module (uvicorn backend.api_server:app) and as a script
+try:
+    from .multi_agent_orchestrator import MultiAgentOrchestrator  # type: ignore
+    from .cleanVulnerabilityData import (  # type: ignore
+        clean_data,
+        add_vulnerability_score,
+        prepare_data_for_agents,
+    )
+except Exception:
+    from multi_agent_orchestrator import MultiAgentOrchestrator
+    from cleanVulnerabilityData import clean_data, add_vulnerability_score, prepare_data_for_agents
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
