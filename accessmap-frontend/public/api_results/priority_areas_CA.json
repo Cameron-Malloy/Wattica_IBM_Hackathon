@@ -1,0 +1,308 @@
+{
+  "priority_areas": [
+    {
+      "id": "priority_1",
+      "location": "Los Angeles, CA",
+      "coordinates": {
+        "lat": 34.0522,
+        "lng": -118.2437
+      },
+      "priority_score": 10.0,
+      "priority_level": "Immediate",
+      "top_issue": "Missing Curb Ramps",
+      "equity_factors": [
+        "Standard demographics"
+      ],
+      "vulnerable_population": "10% elderly, 5% disabled, median income $45,000",
+      "recommended_timeline": "3-6 months",
+      "potential_impact": "high",
+      "implementation_cost": "high",
+      "rationale": "Priority 10.0/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_2",
+      "location": "San Francisco, CA",
+      "coordinates": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "priority_score": 10.0,
+      "priority_level": "Immediate",
+      "top_issue": "Broken Sidewalk",
+      "equity_factors": [
+        "Standard demographics"
+      ],
+      "vulnerable_population": "11% elderly, 6% disabled, median income $52,000",
+      "recommended_timeline": "3-6 months",
+      "potential_impact": "high",
+      "implementation_cost": "high",
+      "rationale": "Priority 10.0/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_3",
+      "location": "San Diego, CA",
+      "coordinates": {
+        "lat": 32.7157,
+        "lng": -117.1611
+      },
+      "priority_score": 10.0,
+      "priority_level": "Immediate",
+      "top_issue": "Inaccessible Transit",
+      "equity_factors": [
+        "Standard demographics"
+      ],
+      "vulnerable_population": "12% elderly, 7% disabled, median income $59,000",
+      "recommended_timeline": "3-6 months",
+      "potential_impact": "high",
+      "implementation_cost": "high",
+      "rationale": "Priority 10.0/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_4",
+      "location": "San Jose, CA",
+      "coordinates": {
+        "lat": 37.3382,
+        "lng": -121.8863
+      },
+      "priority_score": 8.8,
+      "priority_level": "Immediate",
+      "top_issue": "Inaccessible Transit",
+      "equity_factors": [
+        "Standard demographics"
+      ],
+      "vulnerable_population": "13% elderly, 8% disabled, median income $66,000",
+      "recommended_timeline": "3-6 months",
+      "potential_impact": "high",
+      "implementation_cost": "high",
+      "rationale": "Priority 8.8/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_5",
+      "location": "Fresno, CA",
+      "coordinates": {
+        "lat": 36.7378,
+        "lng": -119.7871
+      },
+      "priority_score": 8.9,
+      "priority_level": "Immediate",
+      "top_issue": "No Tactile Paving",
+      "equity_factors": [
+        "Standard demographics"
+      ],
+      "vulnerable_population": "14% elderly, 9% disabled, median income $73,000",
+      "recommended_timeline": "3-6 months",
+      "potential_impact": "high",
+      "implementation_cost": "high",
+      "rationale": "Priority 8.9/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_6",
+      "location": "Sacramento, CA",
+      "coordinates": {
+        "lat": 38.5816,
+        "lng": -121.4944
+      },
+      "priority_score": 8.5,
+      "priority_level": "Immediate",
+      "top_issue": "Steep Grade",
+      "equity_factors": [
+        "Standard demographics"
+      ],
+      "vulnerable_population": "15% elderly, 10% disabled, median income $55,000",
+      "recommended_timeline": "3-6 months",
+      "potential_impact": "high",
+      "implementation_cost": "high",
+      "rationale": "Priority 8.5/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_7",
+      "location": "Long Beach, CA",
+      "coordinates": {
+        "lat": 33.7701,
+        "lng": -118.1937
+      },
+      "priority_score": 7.6,
+      "priority_level": "Short-term",
+      "top_issue": "No Tactile Paving",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "16% elderly, 11% disabled, median income $62,000",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 7.6/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_8",
+      "location": "Oakland, CA",
+      "coordinates": {
+        "lat": 37.8044,
+        "lng": -122.2711
+      },
+      "priority_score": 7.7,
+      "priority_level": "Short-term",
+      "top_issue": "Steep Grade",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "17% elderly, 12% disabled, median income $69,000",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 7.699999999999999/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_9",
+      "location": "Bakersfield, CA",
+      "coordinates": {
+        "lat": 35.3733,
+        "lng": -119.0187
+      },
+      "priority_score": 6.8,
+      "priority_level": "Short-term",
+      "top_issue": "Poor Lighting",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "18% elderly, 13% disabled, median income $76,000",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 6.8/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_10",
+      "location": "Anaheim, CA",
+      "coordinates": {
+        "lat": 33.8366,
+        "lng": -117.9143
+      },
+      "priority_score": 6.4,
+      "priority_level": "Short-term",
+      "top_issue": "Poor Lighting",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "19% elderly, 14% disabled, median income $83,000",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 6.4/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_11",
+      "location": "Santa Ana, CA",
+      "coordinates": {
+        "lat": 33.7456,
+        "lng": -117.8677
+      },
+      "priority_score": 6.0,
+      "priority_level": "Short-term",
+      "top_issue": "Missing Accessible Parking",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "20% elderly, 5% disabled, median income $65,000",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 6.0/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_12",
+      "location": "Riverside, CA",
+      "coordinates": {
+        "lat": 33.9533,
+        "lng": -117.3962
+      },
+      "priority_score": 5.6,
+      "priority_level": "Medium-term",
+      "top_issue": "Blocked Walkway",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "21% elderly, 6% disabled, median income $72,000",
+      "recommended_timeline": "12+ months",
+      "potential_impact": "low",
+      "implementation_cost": "medium",
+      "rationale": "Priority 5.6/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_13",
+      "location": "Stockton, CA",
+      "coordinates": {
+        "lat": 37.9577,
+        "lng": -121.2908
+      },
+      "priority_score": 5.2,
+      "priority_level": "Medium-term",
+      "top_issue": "Missing Accessible Parking",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "22% elderly, 7% disabled, median income $79,000",
+      "recommended_timeline": "12+ months",
+      "potential_impact": "low",
+      "implementation_cost": "medium",
+      "rationale": "Priority 5.199999999999999/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_14",
+      "location": "Irvine, CA",
+      "coordinates": {
+        "lat": 33.6846,
+        "lng": -117.8265
+      },
+      "priority_score": 4.8,
+      "priority_level": "Medium-term",
+      "top_issue": "Blocked Walkway",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "23% elderly, 8% disabled, median income $86,000",
+      "recommended_timeline": "12+ months",
+      "potential_impact": "low",
+      "implementation_cost": "medium",
+      "rationale": "Priority 4.8/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_15",
+      "location": "Chula Vista, CA",
+      "coordinates": {
+        "lat": 32.6401,
+        "lng": -117.0842
+      },
+      "priority_score": 4.4,
+      "priority_level": "Medium-term",
+      "top_issue": "Narrow Sidewalks",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "24% elderly, 9% disabled, median income $93,000",
+      "recommended_timeline": "12+ months",
+      "potential_impact": "low",
+      "implementation_cost": "medium",
+      "rationale": "Priority 4.3999999999999995/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    }
+  ],
+  "metadata": {
+    "agent": "EquityAdvisor",
+    "state": "CA"
+  }
+}

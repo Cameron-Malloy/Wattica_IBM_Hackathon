@@ -1,0 +1,431 @@
+{
+  "metadata": {
+    "state": "CA",
+    "analysis_date": "2025-08-10T20:31:19.463861",
+    "analysis_duration_seconds": 32.050409,
+    "total_locations_analyzed": 5,
+    "agent_workflow": [
+      "AccessScanner",
+      "EquityAdvisor",
+      "PlannerBot"
+    ],
+    "data_source": "Multi-Agent WatsonX Analysis"
+  },
+  "scan_results": [
+    {
+      "id": "scan_1",
+      "location": "Los Angeles, CA",
+      "coordinates": {
+        "lat": 33.844,
+        "lng": -120.812
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (15%) and medium disability rate (8%) necessitate adequate curb ramps for safe mobility.",
+      "confidence": 0.86,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "15.0% elderly, 8.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_2",
+      "location": "Sacramento, CA",
+      "coordinates": {
+        "lat": 39.026,
+        "lng": -123.583
+      },
+      "issue_type": "Poor Lighting",
+      "severity": "moderate",
+      "description": "Medium elderly population (14%) and low disability rate (9%) require well-lit areas to ensure safety during nighttime navigation.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "14.0% elderly, 9.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_3",
+      "location": "Fresno, CA",
+      "coordinates": {
+        "lat": 34.78,
+        "lng": -120.81
+      },
+      "issue_type": "Missing Accessible Parking",
+      "severity": "critical",
+      "description": "Medium elderly population (13%) and medium disability rate (11%) necessitate designated accessible parking spaces for ease of access.",
+      "confidence": 0.88,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "13.0% elderly, 11.0% disabled",
+      "risk_factors": [
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_4",
+      "location": "Los Angeles, CA",
+      "coordinates": {
+        "lat": 33.844,
+        "lng": -120.812
+      },
+      "issue_type": "Inaccessible Transit",
+      "severity": "moderate",
+      "description": "High elderly population (15%) and low disability rate (8%) would benefit from improved public transportation accessibility.",
+      "confidence": 0.86,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "15.0% elderly, 8.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_5",
+      "location": "Sacramento, CA",
+      "coordinates": {
+        "lat": 39.026,
+        "lng": -123.583
+      },
+      "issue_type": "Steep Grade",
+      "severity": "moderate",
+      "description": "Medium elderly population (14%) and low disability rate (9%) may face challenges navigating steep inclines in the city.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "14.0% elderly, 9.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_6",
+      "location": "Fresno, CA",
+      "coordinates": {
+        "lat": 34.78,
+        "lng": -120.81
+      },
+      "issue_type": "Broken Sidewalk",
+      "severity": "critical",
+      "description": "Medium elderly population (13%) and medium disability rate (11%) require repairs to broken sidewalks for safe pedestrian travel.",
+      "confidence": 0.88,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "13.0% elderly, 11.0% disabled",
+      "risk_factors": [
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_7",
+      "location": "Los Angeles, CA",
+      "coordinates": {
+        "lat": 33.844,
+        "lng": -120.812
+      },
+      "issue_type": "No Tactile Paving",
+      "severity": "critical",
+      "description": "High elderly population (15%) and low disability rate (8%) need tactile paving at crosswalks for safe navigation.",
+      "confidence": 0.86,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "15.0% elderly, 8.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_8",
+      "location": "San Francisco, CA",
+      "coordinates": {
+        "lat": 32.865,
+        "lng": -121.227
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (18%) and low disability rate (10%) necessitate proper curb ramps for safe mobility.",
+      "confidence": 0.9,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "18.0% elderly, 10.0% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_9",
+      "location": "San Diego, CA",
+      "coordinates": {
+        "lat": 35.293,
+        "lng": -121.617
+      },
+      "issue_type": "Poor Lighting",
+      "severity": "moderate",
+      "description": "Medium elderly population (12%) and low disability rate (7%) require well-lit areas for safe nighttime navigation.",
+      "confidence": 0.85,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "12.0% elderly, 7.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    }
+  ],
+  "priority_areas": [
+    {
+      "id": "priority_5",
+      "location": "Fresno, CA",
+      "coordinates": {
+        "lat": 34.779922400000004,
+        "lng": -120.80969777199999
+      },
+      "priority_score": 6.9,
+      "priority_level": "Short-term",
+      "top_issue": "Missing Accessible Parking",
+      "equity_factors": [
+        "High disability rate"
+      ],
+      "vulnerable_population": "13.0% elderly, 11.0% disabled, median income $45,000",
+      "recommended_timeline": "3-6 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 6.9/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_2",
+      "location": "San Francisco, CA",
+      "coordinates": {
+        "lat": 32.864700224,
+        "lng": -120.19878534
+      },
+      "priority_score": 6.4,
+      "priority_level": "Short-term",
+      "top_issue": "Missing Curb Ramps",
+      "equity_factors": [
+        "High elderly population"
+      ],
+      "vulnerable_population": "18.0% elderly, 10.0% disabled, median income $85,000",
+      "recommended_timeline": "3-6 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 6.4/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_1",
+      "location": "Los Angeles, CA",
+      "coordinates": {
+        "lat": 33.844056896000005,
+        "lng": -120.811547776
+      },
+      "priority_score": 5.9,
+      "priority_level": "Medium-term",
+      "top_issue": "Missing Curb Ramps",
+      "equity_factors": [
+        "Standard demographics"
+      ],
+      "vulnerable_population": "15.0% elderly, 8.0% disabled, median income $65,000",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 5.9/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_4",
+      "location": "Sacramento, CA",
+      "coordinates": {
+        "lat": 39.02575952,
+        "lng": -123.58275099
+      },
+      "priority_score": 5.3,
+      "priority_level": "Medium-term",
+      "top_issue": "Poor Lighting",
+      "equity_factors": [
+        "Standard demographics"
+      ],
+      "vulnerable_population": "14.0% elderly, 9.0% disabled, median income $55,000",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 5.3/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    },
+    {
+      "id": "priority_3",
+      "location": "San Diego, CA",
+      "coordinates": {
+        "lat": 35.292625472000005,
+        "lng": -121.617430074
+      },
+      "priority_score": 4.2,
+      "priority_level": "Medium-term",
+      "top_issue": "Poor Lighting",
+      "equity_factors": [
+        "Standard demographics"
+      ],
+      "vulnerable_population": "12.0% elderly, 7.0% disabled, median income $70,000",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 4.2/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor"
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "rec_1",
+      "type": "infrastructure",
+      "title": "Prioritize Curb Ramp Installation Program",
+      "description": "Systematic installation of ADA-compliant curb ramps in high-vulnerability areas",
+      "implementation_steps": [
+        "Conduct comprehensive accessibility audits",
+        "Prioritize locations by vulnerability score",
+        "Secure funding and permits",
+        "Execute phased installation",
+        "Monitor and evaluate impact"
+      ],
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "target_locations": [
+        "Fresno, CA",
+        "San Francisco, CA",
+        "Los Angeles, CA"
+      ],
+      "impact": "medium",
+      "cost_estimate": "$45,000 - $135,000",
+      "timeline": "6-18 months",
+      "success_metrics": [
+        "Install compliant infrastructure at 9 locations",
+        "Achieve 95%+ ADA compliance rate",
+        "Reduce accessibility complaints by 60%"
+      ],
+      "equity_impact": "Addresses accessibility needs for vulnerable populations across 9 identified locations",
+      "priority_level": "Short-term",
+      "rationale": "Addresses infrastructure needs identified by multi-agent analysis",
+      "locations_affected": 9,
+      "agent": "PlannerBot",
+      "generated_date": "2025-08-10"
+    },
+    {
+      "id": "rec_2",
+      "type": "policy",
+      "title": "Equity-Centered Accessibility Standards",
+      "description": "Implement comprehensive accessibility compliance program with equity focus",
+      "implementation_steps": [
+        "Develop equity-centered accessibility standards",
+        "Create community feedback mechanisms",
+        "Establish regular auditing schedule",
+        "Train city staff on accessibility compliance",
+        "Publish annual accessibility reports"
+      ],
+      "sdg_alignment": "SDG 11.3: Inclusive and sustainable urbanization",
+      "target_locations": [
+        "Fresno, CA",
+        "San Francisco, CA",
+        "Los Angeles, CA"
+      ],
+      "impact": "medium",
+      "cost_estimate": "$50,000 - $150,000",
+      "timeline": "3-6 months",
+      "success_metrics": [
+        "Establish comprehensive accessibility standards",
+        "Train 100% of relevant city staff",
+        "Achieve policy compliance across all departments"
+      ],
+      "equity_impact": "Addresses accessibility needs for vulnerable populations across 9 identified locations",
+      "priority_level": "Short-term",
+      "rationale": "Addresses policy needs identified by multi-agent analysis",
+      "locations_affected": 9,
+      "agent": "PlannerBot",
+      "generated_date": "2025-08-10"
+    },
+    {
+      "id": "rec_3",
+      "type": "technology",
+      "title": "Smart Accessibility Monitoring System",
+      "description": "Deploy IoT sensors and AI monitoring for real-time accessibility tracking",
+      "implementation_steps": [
+        "Install smart sensors at key locations",
+        "Develop AI monitoring dashboard",
+        "Create citizen reporting mobile app",
+        "Establish automated alert system",
+        "Integrate with city management systems"
+      ],
+      "sdg_alignment": "SDG 11.C: Support sustainable and resilient building",
+      "target_locations": [
+        "Fresno, CA",
+        "San Francisco, CA",
+        "Los Angeles, CA"
+      ],
+      "impact": "medium",
+      "cost_estimate": "$200,000 - $500,000",
+      "timeline": "9-15 months",
+      "success_metrics": [
+        "Deploy monitoring systems at key locations",
+        "Achieve 90% citizen app adoption in target areas",
+        "Reduce response time to accessibility issues by 50%"
+      ],
+      "equity_impact": "Addresses accessibility needs for vulnerable populations across 9 identified locations",
+      "priority_level": "Short-term",
+      "rationale": "Addresses technology needs identified by multi-agent analysis",
+      "locations_affected": 9,
+      "agent": "PlannerBot",
+      "generated_date": "2025-08-10"
+    },
+    {
+      "id": "rec_4",
+      "type": "community",
+      "title": "Community Accessibility Champions Program",
+      "description": "Engage residents as accessibility advocates and monitors in their neighborhoods",
+      "implementation_steps": [
+        "Recruit community volunteers",
+        "Provide accessibility training",
+        "Create neighborhood reporting network",
+        "Establish feedback loops with city",
+        "Recognize and reward participation"
+      ],
+      "sdg_alignment": "SDG 11.3: Enhance inclusive and participatory planning",
+      "target_locations": [
+        "Fresno, CA",
+        "San Francisco, CA",
+        "Los Angeles, CA"
+      ],
+      "impact": "medium",
+      "cost_estimate": "$25,000 - $75,000",
+      "timeline": "2-4 months",
+      "success_metrics": [
+        "Recruit 50+ community accessibility champions",
+        "Establish neighborhood reporting network",
+        "Increase community engagement by 200%"
+      ],
+      "equity_impact": "Addresses accessibility needs for vulnerable populations across 9 identified locations",
+      "priority_level": "Short-term",
+      "rationale": "Addresses community needs identified by multi-agent analysis",
+      "locations_affected": 9,
+      "agent": "PlannerBot",
+      "generated_date": "2025-08-10"
+    }
+  ],
+  "summary": {
+    "total_issues_identified": 9,
+    "critical_issues": 5,
+    "moderate_issues": 4,
+    "immediate_priority_areas": 0,
+    "high_impact_recommendations": 0
+  },
+  "sdg_alignment": {
+    "sdg_11_targets_addressed": [
+      "11.2: Accessible and affordable transport systems",
+      "11.3: Inclusive and sustainable urbanization",
+      "11.7: Universal access to inclusive public spaces",
+      "11.C: Support sustainable and resilient building"
+    ],
+    "equity_focus": "Prioritizes vulnerable populations (elderly, disabled, low-income)",
+    "measurable_impact": "Addresses accessibility needs across 5 locations"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "scan_results": [
+    {
+      "id": "scan_1",
+      "location": "Los Angeles, CA",
+      "coordinates": {
+        "lat": 33.844,
+        "lng": -120.812
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (15%) and medium disability rate (8%) necessitate adequate curb ramps for safe mobility.",
+      "confidence": 0.98,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "15.0% elderly, 8.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_2",
+      "location": "Sacramento, CA",
+      "coordinates": {
+        "lat": 39.026,
+        "lng": -123.583
+      },
+      "issue_type": "Poor Lighting",
+      "severity": "critical",
+      "description": "High elderly population (14%) and low disability rate (9%) require well-lit streets for safe navigation, especially during nighttime.",
+      "confidence": 0.98,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "14.0% elderly, 9.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_3",
+      "location": "Fresno, CA",
+      "coordinates": {
+        "lat": 34.78,
+        "lng": -120.81
+      },
+      "issue_type": "Missing Accessible Parking",
+      "severity": "critical",
+      "description": "Medium elderly population (13%) and medium disability rate (11%) necessitate designated accessible parking spaces for ease of access.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "13.0% elderly, 11.0% disabled",
+      "risk_factors": [
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_4",
+      "location": "Los Angeles, CA",
+      "coordinates": {
+        "lat": 33.844,
+        "lng": -120.812
+      },
+      "issue_type": "Inaccessible Transit",
+      "severity": "moderate",
+      "description": "High elderly population (15%) and low disability rate (8%) may face challenges with current transit options, requiring improvements for accessibility.",
+      "confidence": 0.98,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "15.0% elderly, 8.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_5",
+      "location": "Sacramento, CA",
+      "coordinates": {
+        "lat": 39.026,
+        "lng": -123.583
+      },
+      "issue_type": "Steep Grade",
+      "severity": "moderate",
+      "description": "High elderly population (14%) and low disability rate (9%) might struggle with steep grades, necessitating solutions like ramps or inclined planes.",
+      "confidence": 0.98,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "14.0% elderly, 9.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_6",
+      "location": "Fresno, CA",
+      "coordinates": {
+        "lat": 34.78,
+        "lng": -120.81
+      },
+      "issue_type": "Broken Sidewalk",
+      "severity": "moderate",
+      "description": "Medium elderly population (13%) and medium disability rate (11%) could face difficulties due to broken sidewalks, requiring timely repairs.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "13.0% elderly, 11.0% disabled",
+      "risk_factors": [
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_7",
+      "location": "San Francisco, CA",
+      "coordinates": {
+        "lat": 32.865,
+        "lng": -121.227
+      },
+      "issue_type": "No Tactile Paving",
+      "severity": "moderate",
+      "description": "High elderly population (18%) and low disability rate (10%) would benefit from tactile paving at crosswalks for safe navigation.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "18.0% elderly, 10.0% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_8",
+      "location": "San Diego, CA",
+      "coordinates": {
+        "lat": 35.293,
+        "lng": -121.617
+      },
+      "issue_type": "Poor Lighting",
+      "severity": "moderate",
+      "description": "Medium elderly population (12%) and low disability rate (7%) require well-lit areas for safe movement, particularly in less-traveled neighborhoods.",
+      "confidence": 0.95,
+      "detected_date": "2025-08-10",
+      "vulnerable_population": "12.0% elderly, 7.0% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    }
+  ],
+  "metadata": {
+    "agent": "AccessScanner",
+    "state": "CA"
+  }
+}

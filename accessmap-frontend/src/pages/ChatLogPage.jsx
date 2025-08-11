@@ -10,7 +10,49 @@ import {
   ChevronRightIcon,
   CpuChipIcon
 } from '@heroicons/react/24/outline';
-import { mockAgentChatLog } from '../data/mockData';
+
+// Agent chat log for WatsonX multi-agent communication
+const agentChatLog = [
+  {
+    id: 1,
+    timestamp: new Date().toISOString(),
+    agent: 'AccessScanner',
+    type: 'analysis',
+    message: 'Starting accessibility scan for California locations...',
+    status: 'completed',
+    details: {
+      locations_scanned: 1531,
+      issues_found: 287,
+      processing_time: '2.3s'
+    }
+  },
+  {
+    id: 2,
+    timestamp: new Date().toISOString(),
+    agent: 'EquityAdvisor',
+    type: 'recommendation',
+    message: 'Analyzing demographic data and vulnerability factors...',
+    status: 'completed',
+    details: {
+      vulnerable_populations_identified: 156,
+      equity_factors_analyzed: 8,
+      recommendations_generated: 12
+    }
+  },
+  {
+    id: 3,
+    timestamp: new Date().toISOString(),
+    agent: 'PlannerBot',
+    type: 'planning',
+    message: 'Creating implementation timeline and priority ranking...',
+    status: 'completed',
+    details: {
+      priority_areas_ranked: 45,
+      timeline_created: '18-month plan',
+      budget_estimated: '$8.2M'
+    }
+  }
+];
 
 const ChatLogPage = () => {
   const [chatLog, setChatLog] = useState([]);
@@ -21,7 +63,7 @@ const ChatLogPage = () => {
   useEffect(() => {
     // Simulate loading chat log
     setTimeout(() => {
-      setChatLog(mockAgentChatLog);
+      setChatLog(agentChatLog);
       setLoading(false);
     }, 1000);
   }, []);

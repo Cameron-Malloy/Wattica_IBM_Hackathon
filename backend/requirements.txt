@@ -1,0 +1,27 @@
+# Core data processing
+pandas>=1.5.0
+numpy>=1.21.0
+
+# Census data API
+census>=0.8.19
+
+# IBM WatsonX AI
+ibm-watsonx-ai>=0.2.6
+
+# FastAPI for API endpoints
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# Environment and configuration
+python-dotenv>=0.19.0
+
+# Logging and utilities
+requests>=2.28.0
+
+# Additional AI/ML libraries
+openai>=1.0.0  # For potential OpenAI integration
+langchain>=0.0.300  # For advanced agent orchestration
+langchain-openai>=0.0.200
+chromadb>=0.4.0  # Vector database for embeddings
+sentence-transformers>=2.2.0  # For embeddings

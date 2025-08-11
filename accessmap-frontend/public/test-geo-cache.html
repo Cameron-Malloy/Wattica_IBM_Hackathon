@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo Caching Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Geo Caching Test Page</h1>
+    <p>This page tests the geo caching functionality to ensure coordinates are being generated correctly.</p>
+
+    <div class="test-section">
+        <h2>📍 Test 1: Major City Coordinates</h2>
+        <div id="test1-results">Testing...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>📍 Test 2: Census Data Cities</h2>
+        <div id="test2-results">Testing...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Test 3: Cache Statistics</h2>
+        <div id="test3-results">Testing...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>📍 Test 4: Generated Data</h2>
+        <div id="test4-results">Testing...</div>
+    </div>
+
+    <script type="module">
+        // Import the geocoding service
+        import { getCaliforniaCityCoordinates, getCityCacheStats } from './src/utils/geocodingService.js';
+        import { getAllAccessibilityData, getCityCoverageStats } from './src/data/equityAgentAPI.js';
+
+        console.log('🧪 Starting Geo Caching Tests...');
+
+        // Test 1: Major City Coordinates
+        async function testMajorCities() {
+            const testCities = ['Los Angeles', 'San Francisco', 'San Diego', 'Sacramento'];
+            const results = [];
+            
+            testCities.forEach(city => {
+                const coords = getCaliforniaCityCoordinates(city);
+                if (coords) {
+                    results.push(`✅ ${city}: ${coords.lat}, ${coords.lng}`);
+                } else {
+                    results.push(`❌ ${city}: No coordinates found`);
+                }
+            });
+            
+            document.getElementById('test1-results').innerHTML = results.join('<br>');
+            return results;
+        }
+
+        // Test 2: Census Data Cities
+        async function testCensusCities() {
+            const censusCities = ['La Presa', 'Acton', 'Adelanto', 'Agoura Hills'];
+            const results = [];
+            
+            censusCities.forEach(city => {
+                const coords = getCaliforniaCityCoordinates(city);
+                if (coords) {
+                    results.push(`✅ ${city}: ${coords.lat}, ${coords.lng}`);
+                } else {
+                    results.push(`❌ ${city}: No coordinates found`);
+                }
+            });
+            
+            document.getElementById('test2-results').innerHTML = results.join('<br>');
+            return results;
+        }
+
+        // Test 3: Cache Statistics
+        async function testCacheStats() {
+            try {
+                const stats = getCityCacheStats();
+                const coverage = getCityCoverageStats();
+                
+                const results = [
+                    `✅ Total cities in cache: ${stats.totalCities}`,
+                    `✅ Regional distribution: ${JSON.stringify(stats.regions, null, 2)}`,
+                    `✅ Cache coverage: ${coverage.cache_coverage.coverage_percentage}%`,
+                    `✅ Enhanced API cities: ${coverage.cache_coverage.enhanced_api_cities}`
+                ];
+                
+                document.getElementById('test3-results').innerHTML = results.join('<br>');
+                return results;
+            } catch (error) {
+                document.getElementById('test3-results').innerHTML = `❌ Error: ${error.message}`;
+                return [`❌ Error: ${error.message}`];
+            }
+        }
+
+        // Test 4: Generated Data
+        async function testGeneratedData() {
+            try {
+                const data = getAllAccessibilityData();
+                const results = [
+                    `✅ Generated ${data.gaps.length} accessibility gaps`,
+                    `✅ Generated ${data.priorities.length} priority items`,
+                    `✅ Generated ${data.recommendations.length} recommendations`,
+                    `✅ Generated ${data.community_feedback.length} community feedback items`
+                ];
+                
+                // Check if coordinates are present
+                const gapsWithCoords = data.gaps.filter(gap => gap.coordinates);
+                const prioritiesWithCoords = data.priorities.filter(priority => priority.coordinates);
+                
+                results.push(`✅ Gaps with coordinates: ${gapsWithCoords.length}/${data.gaps.length}`);
+                results.push(`✅ Priorities with coordinates: ${prioritiesWithCoords.length}/${data.priorities.length}`);
+                
+                // Show sample data
+                if (gapsWithCoords.length > 0) {
+                    const sample = gapsWithCoords[0];
+                    results.push(`📍 Sample gap: ${sample.location} at ${sample.coordinates.lat}, ${sample.coordinates.lng}`);
+                }
+                
+                document.getElementById('test4-results').innerHTML = results.join('<br>');
+                return results;
+            } catch (error) {
+                document.getElementById('test4-results').innerHTML = `❌ Error: ${error.message}`;
+                return [`❌ Error: ${error.message}`];
+            }
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            console.log('🏃 Running all tests...');
+            
+            await testMajorCities();
+            await testCensusCities();
+            await testCacheStats();
+            await testGeneratedData();
+            
+            console.log('🏁 All tests complete!');
+        }
+
+        // Run tests when page loads
+        window.addEventListener('load', runAllTests);
+    </script>
+</body>
+</html>

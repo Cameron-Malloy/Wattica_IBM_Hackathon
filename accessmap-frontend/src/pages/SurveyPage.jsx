@@ -7,8 +7,52 @@ import {
   PhotoIcon,
   MapPinIcon
 } from '@heroicons/react/24/outline';
-import { mockSurveyQuestions } from '../data/mockData';
 import toast from 'react-hot-toast';
+
+// Survey questions for accessibility assessment
+const surveyQuestions = [
+  {
+    id: 1,
+    type: 'slider',
+    question: 'How would you rate the overall accessibility of sidewalks in your area?',
+    min: 1,
+    max: 5,
+    labels: ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent']
+  },
+  {
+    id: 2,
+    type: 'multiple-choice',
+    question: 'What accessibility barriers do you encounter most often?',
+    options: [
+      'Broken or missing curb ramps',
+      'Uneven sidewalk surfaces',
+      'Obstacles blocking pathways',
+      'Lack of audio signals at crossings',
+      'Poor lighting',
+      'Other'
+    ]
+  },
+  {
+    id: 3,
+    type: 'slider',
+    question: 'How safe do you feel navigating your neighborhood?',
+    min: 1,
+    max: 5,
+    labels: ['Very Unsafe', 'Unsafe', 'Neutral', 'Safe', 'Very Safe']
+  },
+  {
+    id: 4,
+    type: 'multiple-choice',
+    question: 'Do you or someone in your household use mobility assistance?',
+    options: [
+      'Wheelchair',
+      'Walker or cane',
+      'Visual assistance (guide dog/cane)',
+      'None',
+      'Prefer not to answer'
+    ]
+  }
+];
 
 const SurveyPage = () => {
   const [responses, setResponses] = useState({});
@@ -93,7 +137,7 @@ const SurveyPage = () => {
 
             {/* Questions */}
             <div className="space-y-8">
-              {mockSurveyQuestions.map((question, index) => (
+              {surveyQuestions.map((question, index) => (
                 <div key={question.id} className="border-b border-gray-200 pb-6 last:border-b-0">
                   <h3 className="text-lg font-medium text-gray-900 mb-4">
                     {index + 1}. {question.question}

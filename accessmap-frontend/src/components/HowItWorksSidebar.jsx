@@ -126,7 +126,6 @@ const HowItWorksSidebar = () => {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm text-blue-800">Backend Framework:</span>
-            <span className="text-sm font-medium text-blue-900">LangChain</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-blue-800">AI Platform:</span>

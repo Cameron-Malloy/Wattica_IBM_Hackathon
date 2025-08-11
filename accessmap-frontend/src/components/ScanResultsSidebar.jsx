@@ -7,8 +7,12 @@ const ScanResultsSidebar = ({ data, onSelectScanResult }) => {
     switch (severity) {
       case 'critical':
         return 'bg-red-100 text-red-800 border-red-300';
+      case 'high':
+        return 'bg-orange-100 text-orange-800 border-orange-300';
       case 'moderate':
         return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+      case 'low':
+        return 'bg-green-100 text-green-800 border-green-300';
       case 'good':
         return 'bg-green-100 text-green-800 border-green-300';
       default:
@@ -17,7 +21,9 @@ const ScanResultsSidebar = ({ data, onSelectScanResult }) => {
   };
 
   const getSeverityIcon = (severity) => {
-    return severity === 'critical' ? '🔴' : severity === 'moderate' ? '🟡' : '🟢';
+    return severity === 'critical' ? '🔴' : 
+           severity === 'high' ? '🟠' :
+           severity === 'moderate' ? '🟡' : '🟢';
   };
 
   return (
@@ -49,9 +55,9 @@ const ScanResultsSidebar = ({ data, onSelectScanResult }) => {
           </div>
           <div>
             <div className="text-lg font-bold text-green-600">
-              {data.filter(item => item.severity === 'good').length}
+              {data.filter(item => item.severity === 'low' || item.severity === 'good').length}
             </div>
-            <div className="text-xs text-gray-600">Good</div>
+            <div className="text-xs text-gray-600">Low</div>
           </div>
         </div>
       </div>
@@ -74,7 +80,7 @@ const ScanResultsSidebar = ({ data, onSelectScanResult }) => {
                   <p className="text-sm text-gray-600 mt-1">{issue.description}</p>
                   <div className="flex items-center space-x-2 mt-2">
                     <MapPinIcon className="h-4 w-4 text-gray-400" />
-                    <span className="text-xs text-gray-500">{issue.location.address}</span>
+                    <span className="text-xs text-gray-500">{issue.location}</span>
                   </div>
                   <div className="flex items-center justify-between mt-2">
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getSeverityColor(issue.severity)}`}> 
@@ -85,7 +91,7 @@ const ScanResultsSidebar = ({ data, onSelectScanResult }) => {
                     </span>
                   </div>
                   <div className="text-xs text-gray-400 mt-1">
-                    Detected: {new Date(issue.detected_date).toLocaleDateString()}
+                    Detected: {issue.detected_date ? new Date(issue.detected_date).toLocaleDateString() : 'Recent Scan'}
                   </div>
                 </div>
               </div>
@@ -98,8 +104,8 @@ const ScanResultsSidebar = ({ data, onSelectScanResult }) => {
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-4">
         <h4 className="font-medium text-blue-900 mb-2">About AccessScanner</h4>
         <p className="text-sm text-blue-800">
-          Uses computer vision and machine learning to automatically detect accessibility barriers 
-          in street-level imagery and infrastructure data.
+          Uses demographic vulnerability data (elderly population %, disability rates, income levels) 
+          from U.S. Census Bureau to identify accessibility barriers in areas serving vulnerable populations.
         </p>
       </div>
     </div>

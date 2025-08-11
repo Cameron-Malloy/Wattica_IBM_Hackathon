@@ -34,14 +34,14 @@ const PriorityListSidebar = ({ data, onSelectPriorityArea }) => {
           </div>
           <div className="text-sm text-gray-600">Priority Areas Identified</div>
           <div className="text-xs text-gray-500 mt-1">
-            Avg Score: {data.length > 0 ? (data.reduce((sum, item) => sum + item.priority_score, 0) / data.length).toFixed(1) : 0}/10
+            Avg Score: {data.length > 0 ? (data.reduce((sum, item) => sum + (item.priority_score || 0), 0) / data.length).toFixed(1) : 0}/10
           </div>
         </div>
       </div>
 
       {/* Priority Areas List */}
         {data
-          .sort((a, b) => b.priority_score - a.priority_score)
+          .sort((a, b) => (b.priority_score || 0) - (a.priority_score || 0))
           .map((area) => (
             <button
               key={area.id}
@@ -52,7 +52,7 @@ const PriorityListSidebar = ({ data, onSelectPriorityArea }) => {
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-medium text-gray-900">{area.location.address}</h4>
+                    <h4 className="font-medium text-gray-900">{area.location}</h4>
                     <div className="text-right">
                       <div className="text-lg font-bold text-yellow-600">{area.priority_score}</div>
                       <div className="text-xs text-gray-500">Score</div>
@@ -63,7 +63,7 @@ const PriorityListSidebar = ({ data, onSelectPriorityArea }) => {
                   
                   <div className="flex items-center space-x-2 mt-2">
                     <MapPinIcon className="h-4 w-4 text-gray-400" />
-                    <span className="text-xs text-gray-500">{area.location.address}</span>
+                    <span className="text-xs text-gray-500">{area.location}</span>
                   </div>
                   
                   {/* Priority Badge */}
@@ -83,7 +83,7 @@ const PriorityListSidebar = ({ data, onSelectPriorityArea }) => {
                   <div className="mt-2">
                     <h5 className="text-xs font-medium text-gray-700 mb-1">Equity Factors:</h5>
                     <div className="flex flex-wrap gap-1">
-                      {area.equity_factors.map((factor, index) => (
+                      {(area.equity_factors || []).map((factor, index) => (
                         <span 
                           key={index}
                           className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-100 text-blue-800"
@@ -97,7 +97,7 @@ const PriorityListSidebar = ({ data, onSelectPriorityArea }) => {
                   {/* Timeline */}
                   <div className="flex items-center space-x-2 mt-2">
                     <ClockIcon className="h-4 w-4 text-gray-400" />
-                    <span className="text-xs text-gray-600">{area.recommended_timeline}</span>
+                    <span className="text-xs text-gray-600">{area.recommended_timeline || area.timeline}</span>
                   </div>
                 </div>
               </div>
@@ -122,8 +122,9 @@ const PriorityListSidebar = ({ data, onSelectPriorityArea }) => {
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
         <h4 className="font-medium text-yellow-900 mb-2">About EquityAdvisor</h4>
         <p className="text-sm text-yellow-800">
-          Analyzes demographic data, income levels, disability rates, and transportation access 
-          to prioritize accessibility improvements in areas serving vulnerable populations.
+          Analyzes U.S. Census American Community Survey data including demographic data, income levels, 
+          disability rates, and elderly population percentages to prioritize accessibility improvements 
+          in areas serving vulnerable populations.
         </p>
       </div>
     </div>

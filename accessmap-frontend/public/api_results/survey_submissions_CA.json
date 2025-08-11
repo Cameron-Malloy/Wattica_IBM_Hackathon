@@ -1,0 +1,36 @@
+[
+  {
+    "id": "survey_1",
+    "submitted_at": "2025-08-10T19:05:09.423335",
+    "location": {
+      "address": "Mission Viejo",
+      "city": "Ladera Ranch",
+      "state": "CA",
+      "coordinates": {
+        "lat": 34.02365569427213,
+        "lng": -118.28669069633563
+      }
+    },
+    "issue": {
+      "type": "Broken or uneven sidewalks",
+      "description": "fff",
+      "photo_url": null
+    },
+    "impact": {
+      "frequency": "monthly",
+      "daily_impact": "fe",
+      "affected_population": ""
+    },
+    "demographics": {
+      "age_group": "over_65",
+      "mobility_aids": "",
+      "accessibility_needs": ""
+    },
+    "contact": {
+      "anonymous": true,
+      "name": "",
+      "email": "",
+      "phone": ""
+    }
+  }
+]
