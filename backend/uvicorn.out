@@ -149,3 +149,242 @@ INFO:     127.0.0.1:58486 - "GET /status/all HTTP/1.1" 404 Not Found
 INFO:     127.0.0.1:58486 - "GET /status/all HTTP/1.1" 404 Not Found
 INFO:     127.0.0.1:58486 - "GET /latest/CA HTTP/1.1" 200 OK
 INFO:     127.0.0.1:58486 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63221 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63229 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63229 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63232 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63232 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63232 - "OPTIONS /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63229 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63229 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63232 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63233 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63229 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63244 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63245 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63249 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63250 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63252 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63249 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63259 - "GET /api/results/latest/CA HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63262 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63263 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63265 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63262 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63268 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63269 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63271 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63268 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63278 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63278 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63331 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63331 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63331 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63331 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63333 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63331 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63333 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63333 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63331 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63331 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63333 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63333 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63335 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63335 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63333 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63474 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63475 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63475 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63474 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63474 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63475 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63475 - "OPTIONS /analyze HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63474 - "POST /analyze HTTP/1.1" 200 OK
+2025-08-11 16:34:22,591 - api_server - INFO - Loading existing census data from census_results/Population_Vulnerability_CA_clean_real.csv
+2025-08-11 16:34:22,602 - cleanVulnerabilityData - INFO - Cleaning census data...
+2025-08-11 16:34:22,606 - cleanVulnerabilityData - INFO - Cleaned data: 1349 places remaining
+2025-08-11 16:34:22,607 - cleanVulnerabilityData - INFO - Adding vulnerability scores...
+2025-08-11 16:34:22,608 - cleanVulnerabilityData - INFO - Vulnerability scores added successfully
+2025-08-11 16:34:22,608 - cleanVulnerabilityData - INFO - Preparing data for agents...
+2025-08-11 16:34:22,610 - cleanVulnerabilityData - INFO - Data prepared for agents successfully
+2025-08-11 16:34:22,610 - multi_agent_orchestrator - INFO - 🤖 Initializing Multi-Agent System...
+/Users/cameronmalloy/Wattica_IBM_Hackathon/backend/venv/lib/python3.13/site-packages/ibm_watsonx_ai/foundation_models/model.py:105: DeprecationWarning: The `Model` class is deprecated and will be removed in a future release. Please use the `ModelInference` class instead. To update your imports, use: `from ibm_watsonx_ai.foundation_models import ModelInference`.
+  warn(model_class_deprecated_warning, category=DeprecationWarning)
+2025-08-11 16:34:23,641 - ibm_watsonx_ai.client - INFO - Client successfully initialized
+2025-08-11 16:34:25,518 - httpx - INFO - HTTP Request: GET https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200 "HTTP/1.1 200 OK"
+2025-08-11 16:34:25,581 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished Get available foundation models for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200'
+/Users/cameronmalloy/Wattica_IBM_Hackathon/backend/venv/lib/python3.13/site-packages/ibm_watsonx_ai/foundation_models/model.py:105: DeprecationWarning: The `Model` class is deprecated and will be removed in a future release. Please use the `ModelInference` class instead. To update your imports, use: `from ibm_watsonx_ai.foundation_models import ModelInference`.
+  warn(model_class_deprecated_warning, category=DeprecationWarning)
+2025-08-11 16:34:26,494 - ibm_watsonx_ai.client - INFO - Client successfully initialized
+2025-08-11 16:34:27,314 - httpx - INFO - HTTP Request: GET https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200 "HTTP/1.1 200 OK"
+2025-08-11 16:34:27,407 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished Get available foundation models for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200'
+/Users/cameronmalloy/Wattica_IBM_Hackathon/backend/venv/lib/python3.13/site-packages/ibm_watsonx_ai/foundation_models/model.py:105: DeprecationWarning: The `Model` class is deprecated and will be removed in a future release. Please use the `ModelInference` class instead. To update your imports, use: `from ibm_watsonx_ai.foundation_models import ModelInference`.
+  warn(model_class_deprecated_warning, category=DeprecationWarning)
+2025-08-11 16:34:28,026 - ibm_watsonx_ai.client - INFO - Client successfully initialized
+2025-08-11 16:34:28,907 - httpx - INFO - HTTP Request: GET https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200 "HTTP/1.1 200 OK"
+2025-08-11 16:34:29,073 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished Get available foundation models for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2025-07-16&project_id=e418e3a6-0d2d-4990-986e-1888d9fa098e&filters=function_text_generation%2C%21lifecycle_withdrawn%3Aand&limit=200'
+2025-08-11 16:34:29,077 - multi_agent_orchestrator - INFO - ✅ All agents initialized successfully
+2025-08-11 16:34:29,077 - multi_agent_orchestrator - INFO - 🚀 Starting complete multi-agent analysis for CA
+2025-08-11 16:34:29,077 - multi_agent_orchestrator - INFO - 📊 Step 1: Running AccessScanner analysis...
+2025-08-11 16:34:29,077 - agents.access_scanner - INFO - 🔍 AccessScanner: Scanning accessibility gaps for CA
+2025-08-11 16:34:29,078 - agents.access_scanner - INFO - 📊 Processing batch 1/27 with 50 cities
+2025-08-11 16:35:26,401 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:35:26,403 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:35:26,405 - agents.access_scanner - INFO - 📊 Processing batch 2/27 with 50 cities
+2025-08-11 16:35:41,041 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:35:41,042 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:35:41,044 - agents.access_scanner - INFO - 📊 Processing batch 3/27 with 50 cities
+2025-08-11 16:35:55,306 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:35:55,307 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:35:55,309 - agents.access_scanner - INFO - 📊 Processing batch 4/27 with 50 cities
+2025-08-11 16:36:07,664 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:36:07,665 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:36:07,665 - agents.access_scanner - INFO - ✅ Batch 4: Generated 11 results
+2025-08-11 16:36:08,143 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Burney CDP, California
+2025-08-11 16:36:09,407 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Butte Creek Canyon CDP, California
+2025-08-11 16:36:10,430 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Butte Valley CDP, California
+2025-08-11 16:36:11,351 - agents.access_scanner - WARNING - Geocoding HTTP 200 for California Pines CDP, California
+2025-08-11 16:36:12,683 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Cameron Park CDP, California
+2025-08-11 16:36:14,938 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Camino CDP, California
+2025-08-11 16:36:20,159 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Carmel-by-the-Sea city, California
+2025-08-11 16:36:21,929 - agents.access_scanner - INFO - ✅ Enhanced 11 WatsonX AI results
+2025-08-11 16:36:21,931 - agents.access_scanner - INFO - 📊 Processing batch 5/27 with 50 cities
+2025-08-11 16:36:35,519 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:36:35,520 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:36:35,521 - agents.access_scanner - INFO - ✅ Batch 5: Generated 11 results
+2025-08-11 16:36:37,961 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Catheys Valley CDP, California
+2025-08-11 16:36:40,308 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Cayucos CDP, California
+2025-08-11 16:36:42,938 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Cazadero CDP, California
+2025-08-11 16:36:45,464 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Cedarville CDP, California
+2025-08-11 16:36:48,052 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Centerville CDP (Shasta County), California
+2025-08-11 16:36:52,823 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Cedar Ridge CDP, California
+2025-08-11 16:36:55,418 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Cedar Flat CDP, California
+2025-08-11 16:36:58,215 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Challenge-Brownsville CDP, California
+2025-08-11 16:37:00,643 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Cedarville CDP, California
+2025-08-11 16:37:00,643 - agents.access_scanner - INFO - ✅ Enhanced 11 WatsonX AI results
+2025-08-11 16:37:00,644 - agents.access_scanner - INFO - 📊 Processing batch 6/27 with 50 cities
+2025-08-11 16:38:10,307 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:38:10,307 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:38:10,308 - agents.access_scanner - INFO - 📊 Processing batch 7/27 with 50 cities
+2025-08-11 16:38:47,305 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:38:47,307 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:38:47,310 - agents.access_scanner - INFO - 📊 Processing batch 8/27 with 50 cities
+2025-08-11 16:39:23,626 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:39:23,628 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:39:23,628 - agents.access_scanner - INFO - ✅ Batch 8: Generated 8 results
+2025-08-11 16:39:24,224 - agents.access_scanner - WARNING - Geocoding HTTP 200 for East Oakdale CDP, California
+2025-08-11 16:39:26,905 - agents.access_scanner - WARNING - Geocoding HTTP 200 for East San Gabriel CDP, California
+2025-08-11 16:39:31,536 - agents.access_scanner - WARNING - Geocoding HTTP 200 for East Whittier CDP, California
+2025-08-11 16:39:34,188 - agents.access_scanner - WARNING - Geocoding HTTP 200 for East Tulare Villa CDP, California
+2025-08-11 16:39:36,043 - agents.access_scanner - ERROR - Batch 8 failed: 'list' object has no attribute 'iloc'
+2025-08-11 16:39:36,047 - agents.access_scanner - INFO - 📊 Processing batch 9/27 with 50 cities
+2025-08-11 16:40:40,354 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:40:40,355 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:40:40,357 - agents.access_scanner - INFO - 📊 Processing batch 10/27 with 50 cities
+2025-08-11 16:40:54,349 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:40:54,350 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:40:54,352 - agents.access_scanner - INFO - 📊 Processing batch 11/27 with 50 cities
+2025-08-11 16:41:17,895 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:41:17,896 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:41:17,898 - agents.access_scanner - INFO - 📊 Processing batch 12/27 with 50 cities
+2025-08-11 16:42:21,937 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:42:21,940 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:42:21,940 - agents.access_scanner - INFO - ✅ Batch 12: Generated 12 results
+2025-08-11 16:42:22,329 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Hydesville CDP, California
+2025-08-11 16:42:24,935 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Idyllwild-Pine Cove CDP, California
+2025-08-11 16:42:27,515 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Independence CDP, California
+2025-08-11 16:42:30,066 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Inverness CDP, California
+2025-08-11 16:42:32,465 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Ivanhoe CDP, California
+2025-08-11 16:42:37,528 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Jacumba CDP, California
+2025-08-11 16:42:40,073 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Jamestown CDP, California
+2025-08-11 16:42:42,626 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Joshua Tree CDP, California
+2025-08-11 16:42:45,171 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Julian CDP, California
+2025-08-11 16:42:48,006 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Junction City CDP, California
+2025-08-11 16:42:50,209 - agents.access_scanner - WARNING - Geocoding HTTP 200 for June Lake CDP, California
+2025-08-11 16:42:52,305 - agents.access_scanner - INFO - ✅ Enhanced 12 WatsonX AI results
+2025-08-11 16:42:52,311 - agents.access_scanner - INFO - 📊 Processing batch 13/27 with 50 cities
+2025-08-11 16:43:20,115 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:43:20,116 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:43:20,117 - agents.access_scanner - INFO - 📊 Processing batch 14/27 with 50 cities
+2025-08-11 16:43:32,987 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:43:32,988 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:43:32,989 - agents.access_scanner - INFO - ✅ Batch 14: Generated 9 results
+2025-08-11 16:43:33,484 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Lakeview CDP, California
+2025-08-11 16:43:36,109 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Lamont CDP, California
+2025-08-11 16:43:38,810 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Las Flores CDP (Tehama County), California
+2025-08-11 16:43:44,404 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Lincoln Village CDP, California
+2025-08-11 16:43:49,687 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Lindcove CDP, California
+2025-08-11 16:43:52,360 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Live Oak CDP, California
+2025-08-11 16:43:54,426 - agents.access_scanner - INFO - ✅ Enhanced 9 WatsonX AI results
+2025-08-11 16:43:54,428 - agents.access_scanner - INFO - 📊 Processing batch 15/27 with 50 cities
+2025-08-11 16:45:06,837 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:45:06,838 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:45:06,838 - agents.access_scanner - INFO - 📊 Processing batch 16/27 with 50 cities
+2025-08-11 16:45:20,829 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:45:20,830 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:45:20,833 - agents.access_scanner - INFO - 📊 Processing batch 17/27 with 50 cities
+2025-08-11 16:45:47,863 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:45:47,864 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:45:47,864 - agents.access_scanner - INFO - ✅ Batch 17: Generated 10 results
+2025-08-11 16:45:48,577 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Monte Rio CDP, California
+2025-08-11 16:45:51,036 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Montgomery Creek CDP, California
+2025-08-11 16:45:57,337 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Mountain Gate CDP, California
+2025-08-11 16:45:59,984 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Mountain Meadows CDP, California
+2025-08-11 16:46:02,403 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Mountain View CDP, California
+2025-08-11 16:46:09,266 - agents.access_scanner - WARNING - Geocoding HTTP 200 for New Cuyama CDP, California
+2025-08-11 16:46:11,819 - agents.access_scanner - WARNING - Geocoding HTTP 200 for Nipomo CDP, California
+2025-08-11 16:46:14,005 - agents.access_scanner - INFO - ✅ Enhanced 10 WatsonX AI results
+2025-08-11 16:46:14,005 - agents.access_scanner - INFO - ✅ Generated 53 total accessibility gaps
+2025-08-11 16:46:14,005 - multi_agent_orchestrator - INFO - ✅ AccessScanner completed: 53 accessibility issues identified
+2025-08-11 16:46:14,005 - multi_agent_orchestrator - INFO - 🎯 Step 2: Running EquityAdvisor analysis...
+2025-08-11 16:46:14,005 - agents.equity_advisor - INFO - 🎯 EquityAdvisor: Prioritizing areas for CA
+2025-08-11 16:46:28,207 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:46:28,208 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:46:28,212 - multi_agent_orchestrator - INFO - ✅ EquityAdvisor completed: 20 priority areas identified
+2025-08-11 16:46:28,212 - multi_agent_orchestrator - INFO - 🤖 Step 3: Running PlannerBot analysis...
+2025-08-11 16:46:28,212 - agents.planner_bot - INFO - 🤖 PlannerBot: Generating improvement plans for CA
+2025-08-11 16:47:00,593 - httpx - INFO - HTTP Request: POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16 "HTTP/1.1 200 OK"
+2025-08-11 16:47:00,594 - ibm_watsonx_ai.wml_resource - INFO - Successfully finished generate for url: 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2025-07-16'
+2025-08-11 16:47:00,594 - agents.planner_bot - ERROR - PlannerBot AI failed: Extra data: line 111 column 1 (char 5280)
+2025-08-11 16:47:00,594 - agents.planner_bot - INFO - Using fallback recommendations
+2025-08-11 16:47:00,595 - multi_agent_orchestrator - INFO - ✅ PlannerBot completed: 4 recommendations generated
+2025-08-11 16:47:00,595 - multi_agent_orchestrator - INFO - 🎉 Multi-agent analysis completed successfully in 751.52 seconds
+2025-08-11 16:47:00,595 - multi_agent_orchestrator - INFO - 📈 Summary: 53 issues, 20 priorities, 4 recommendations
+2025-08-11 16:47:00,600 - multi_agent_orchestrator - INFO - 💾 Results saved to:
+2025-08-11 16:47:00,600 - multi_agent_orchestrator - INFO -   - Frontend: ../accessmap-frontend/public/api_results/multi_agent_analysis_CA.json
+2025-08-11 16:47:00,600 - multi_agent_orchestrator - INFO -   - Backend: ../census_results/multi_agent_analysis/multi_agent_analysis_CA.json
+INFO:     127.0.0.1:63475 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63477 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63526 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63527 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63921 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63921 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63921 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63945 - "OPTIONS /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63946 - "OPTIONS /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63945 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63946 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64096 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64098 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64096 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64096 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64100 - "OPTIONS /survey HTTP/1.1" 200 OK
+2025-08-11 17:15:36,009 - api_server - INFO - Survey submitted: survey_1
+INFO:     127.0.0.1:64100 - "POST /survey HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64100 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64100 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64100 - "OPTIONS /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64125 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64100 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64125 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64133 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64133 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64125 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64100 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64125 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64125 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64100 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64100 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64100 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64100 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64125 - "GET /surveys HTTP/1.1" 200 OK

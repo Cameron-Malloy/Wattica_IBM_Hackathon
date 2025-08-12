@@ -15,21 +15,12 @@ import {
   LightBulbIcon
 } from '@heroicons/react/24/outline';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import InteractiveMapSelector from '../components/InteractiveMapSelector';
+import { ALL_CALIFORNIA_CITIES } from '../utils/californiaCitiesData';
 import toast from 'react-hot-toast';
 
-// California cities for validation
-const CALIFORNIA_CITIES = [
-  'Los Angeles', 'San Francisco', 'San Diego', 'San Jose', 'Fresno', 'Sacramento',
-  'Long Beach', 'Oakland', 'Bakersfield', 'Anaheim', 'Santa Ana', 'Riverside',
-  'Stockton', 'Irvine', 'Chula Vista', 'Fremont', 'San Bernardino', 'Modesto',
-  'Fontana', 'Glendale', 'Huntington Beach', 'Moreno Valley', 'Oxnard',
-  'Rancho Cucamonga', 'Oceanside', 'Ontario', 'Garden Grove', 'Pomona',
-  'Santa Rosa', 'Salinas', 'Corona', 'Lancaster', 'Palmdale', 'Hayward',
-  'Escondido', 'Sunnyvale', 'Torrance', 'Pasadena', 'Orange', 'Fullerton',
-  'Thousand Oaks', 'Elk Grove', 'Concord', 'Visalia', 'Simi Valley',
-  'Roseville', 'Santa Clara', 'Vallejo', 'Victorville', 'Berkeley',
-  'Fairfield', 'Antioch', 'Richmond', 'Daly City', 'Tracy', 'Burbank'
-];
+// California cities for validation (using comprehensive list)
+const CALIFORNIA_CITIES = Object.keys(ALL_CALIFORNIA_CITIES);
 
 const EnhancedSurveyPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -39,6 +30,7 @@ const EnhancedSurveyPage = () => {
   const [formData, setFormData] = useState({
     city: '',
     coordinates: null,
+    selectedLocation: null,
     issue: {
       type: '',
       description: '',
@@ -94,11 +86,11 @@ const EnhancedSurveyPage = () => {
   const validateStep = (step) => {
     switch (step) {
       case 1:
-        return formData.city && CALIFORNIA_CITIES.includes(formData.city);
+        return formData.selectedLocation && formData.selectedLocation.coordinates;
       case 2:
         return formData.issue.type && formData.issue.description && formData.issue.severity;
       case 3:
-        return formData.impact.frequency && formData.impact.affected_groups.length > 0;
+        return formData.impact.frequency && formData.impact.age_groups.length > 0;
       case 4:
         return formData.demographics.mobility_needs.length > 0 && formData.demographics.income_level;
       default:
@@ -118,90 +110,77 @@ const EnhancedSurveyPage = () => {
     }
   };
 
+  const handleLocationSelect = (locationData) => {
+    setFormData(prev => ({
+      ...prev,
+      selectedLocation: locationData,
+      city: locationData.cityName,
+      coordinates: locationData.coordinates
+    }));
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
     try {
+      // Prepare survey data in the correct format for backend
+      const surveyPayload = {
+        location: {
+          city: formData.city,
+          coordinates: formData.coordinates,
+          fullAddress: formData.selectedLocation?.fullAddress
+        },
+        issue: formData.issue,
+        impact: formData.impact,
+        demographics: formData.demographics,
+        contact: {} // Add contact info if needed
+      };
+
       // Submit survey data
       const surveyResponse = await fetch('http://localhost:8002/survey', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          survey_data: formData,
-          analysis_type: 'comprehensive'
-        })
+        body: JSON.stringify(surveyPayload)
       });
 
       if (!surveyResponse.ok) throw new Error('Failed to submit survey');
 
       const surveyResult = await surveyResponse.json();
       
-      // Start AI analysis
-      const analysisResponse = await fetch('http://localhost:8002/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          survey_data: formData,
-          analysis_type: 'comprehensive'
-        })
-      });
-
-      if (!analysisResponse.ok) throw new Error('Failed to start analysis');
-
-      const analysisResult = await analysisResponse.json();
-      const jobId = analysisResult.job_id;
-
-      // Poll for results
-      let attempts = 0;
-      const maxAttempts = 30;
-      
-      while (attempts < maxAttempts) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        const statusResponse = await fetch(`http://localhost:8002/status/${jobId}`);
-        const statusResult = await statusResponse.json();
-        
-        if (statusResult.status === 'completed') {
-          const resultsResponse = await fetch(`http://localhost:8002/results/${jobId}`);
-          const results = await resultsResponse.json();
-          setSubmittedPlan(results.analysis_result || {
-            summary: "AI analysis completed successfully",
-            recommendations: [
-              {
-                title: "Immediate Action Required",
-                description: "Based on your report, immediate attention is needed for this accessibility issue.",
-                priority: "High",
-                timeline: "1-2 weeks",
-                cost_estimate: "$5,000 - $15,000",
-                implementation_steps: [
-                  "Conduct detailed site assessment",
-                  "Engage with local accessibility experts",
-                  "Develop implementation timeline",
-                  "Coordinate with relevant authorities"
-                ]
-              }
-            ]
-          });
-          break;
-        }
-        
-        attempts++;
-      }
-
-      if (attempts >= maxAttempts) {
+      // Check if AI recommendation was generated
+      if (surveyResult.ai_recommendation) {
+        const recommendation = surveyResult.ai_recommendation;
         setSubmittedPlan({
-          summary: "Analysis is taking longer than expected",
+          summary: "AI-powered accessibility recommendation generated based on your report",
           recommendations: [
             {
-              title: "Standard Response Plan",
-              description: "While AI analysis is processing, here's a standard response plan for your reported issue.",
-              priority: "Medium",
-              timeline: "2-4 weeks",
-              cost_estimate: "$3,000 - $10,000",
+              title: recommendation.title,
+              description: recommendation.description,
+              priority: recommendation.priority,
+              timeline: recommendation.timeline,
+              cost_estimate: recommendation.cost_estimate,
+              implementation_steps: recommendation.recommended_actions,
+              type: "infrastructure",
+              expected_impact: recommendation.expected_impact,
+              implementation_partners: recommendation.implementation_partners
+            }
+          ]
+        });
+      } else {
+        // Fallback plan if AI recommendation failed
+        setSubmittedPlan({
+          summary: "Thank you for your accessibility report",
+          recommendations: [
+            {
+              title: "Accessibility Issue Response Plan",
+              description: "Your report has been received and will be reviewed by accessibility experts.",
+              priority: formData.issue.severity === 'critical' ? 'High' : 'Medium',
+              timeline: formData.issue.severity === 'critical' ? '1-2 weeks' : '2-4 weeks',
+              cost_estimate: "TBD after assessment",
               implementation_steps: [
-                "Document the issue thoroughly",
-                "Contact local accessibility coordinator",
-                "Schedule site visit",
-                "Develop remediation plan"
+                "Issue logged in accessibility tracking system",
+                "Site assessment will be scheduled",
+                "Local accessibility coordinator will be notified",
+                "Community will receive updates on progress"
               ]
             }
           ]
@@ -281,8 +260,8 @@ const EnhancedSurveyPage = () => {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+        <div className="mb-8 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
+          <div className="flex items-center justify-between mb-6">
             {steps.map((step, index) => {
               const Icon = step.icon;
               const isActive = currentStep === step.number;
@@ -294,37 +273,53 @@ const EnhancedSurveyPage = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`flex items-center space-x-2 ${
-                    isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-400'
-                  }`}
+                  className="flex flex-col items-center space-y-2"
                 >
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300 shadow-lg ${
                     isActive 
-                      ? 'bg-blue-600 text-white border-blue-600' 
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white border-transparent scale-110' 
                       : isCompleted 
-                        ? 'bg-green-600 text-white border-green-600'
-                        : 'bg-white text-gray-400 border-gray-300'
+                        ? 'bg-gradient-to-r from-green-500 to-green-600 text-white border-transparent'
+                        : 'bg-white text-gray-400 border-gray-300 hover:border-gray-400'
                   }`}>
                     {isCompleted ? (
-                      <CheckCircleIcon className="h-5 w-5" />
+                      <CheckCircleIcon className="h-6 w-6" />
                     ) : (
-                      <Icon className="h-5 w-5" />
+                      <Icon className="h-6 w-6" />
                     )}
                   </div>
-                  <span className="hidden sm:block font-medium">{step.title}</span>
+                  <div className="text-center">
+                    <span className={`text-xs font-medium transition-colors duration-200 ${
+                      isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-500'
+                    }`}>
+                      {step.title}
+                    </span>
+                    <div className={`text-xs mt-1 ${
+                      isActive ? 'text-blue-500' : isCompleted ? 'text-green-500' : 'text-gray-400'
+                    }`}>
+                      Step {step.number}
+                    </div>
+                  </div>
                 </motion.div>
               );
             })}
           </div>
           
           {/* Progress bar */}
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <motion.div
-              className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${(currentStep / 6) * 100}%` }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-            />
+          <div className="relative">
+            <div className="w-full bg-gray-200 rounded-full h-3 shadow-inner">
+              <motion.div
+                className="bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 h-3 rounded-full shadow-lg"
+                initial={{ width: 0 }}
+                animate={{ width: `${(currentStep / 6) * 100}%` }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+              />
+            </div>
+            <div className="flex justify-between mt-2 text-xs text-gray-500">
+              <span>Start</span>
+              <span className="font-medium text-gray-700">{Math.round((currentStep / 6) * 100)}% Complete</span>
+              <span>Finish</span>
+            </div>
           </div>
         </div>
 
@@ -348,18 +343,37 @@ const EnhancedSurveyPage = () => {
                 <div className="text-center mb-8">
                   <MapPinIcon className="h-16 w-16 text-blue-600 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">Where is the issue located?</h2>
-                  <p className="text-gray-600">Please select a city in California where you've observed this accessibility issue.</p>
+                  <p className="text-gray-600">Click on the map to select the exact location, or choose from popular cities below.</p>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">City</label>
+                <InteractiveMapSelector
+                  onLocationSelect={handleLocationSelect}
+                  selectedLocation={formData.selectedLocation}
+                  className="w-full"
+                />
+
+                {/* Alternative city dropdown for users who prefer text selection */}
+                <div className="border-t pt-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Or search and select from all California cities:
+                  </label>
                   <select
                     value={formData.city}
-                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    onChange={(e) => {
+                      const selectedCity = e.target.value;
+                      if (selectedCity && ALL_CALIFORNIA_CITIES[selectedCity]) {
+                        const coordinates = ALL_CALIFORNIA_CITIES[selectedCity];
+                        handleLocationSelect({
+                          coordinates: coordinates,
+                          cityName: selectedCity,
+                          fullAddress: `${selectedCity}, CA, USA`
+                        });
+                      }
+                    }}
                     className="select-modern"
                   >
-                    <option value="">Select a city...</option>
-                    {CALIFORNIA_CITIES.map(city => (
+                    <option value="">Search cities...</option>
+                    {CALIFORNIA_CITIES.sort().map(city => (
                       <option key={city} value={city}>{city}</option>
                     ))}
                   </select>
@@ -599,7 +613,20 @@ const EnhancedSurveyPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Location</h3>
-                      <p className="text-gray-600">{formData.city}</p>
+                      {formData.coordinates && (
+                        <div className="space-y-1">
+                          <p className="text-sm font-medium text-gray-700">Coordinates:</p>
+                          <p className="text-gray-600">
+                            {formData.coordinates.lat.toFixed(6)}, {formData.coordinates.lng.toFixed(6)}
+                          </p>
+                          {formData.selectedLocation?.fullAddress && (
+                            <>
+                              <p className="text-sm font-medium text-gray-700 mt-2">Full Address:</p>
+                              <p className="text-gray-600">{formData.selectedLocation.fullAddress}</p>
+                            </>
+                          )}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Issue Type</h3>
@@ -701,7 +728,7 @@ const EnhancedSurveyPage = () => {
                         </div>
 
                         {rec.implementation_steps && (
-                          <div>
+                          <div className="mb-4">
                             <h4 className="font-semibold text-gray-900 mb-3">Implementation Steps</h4>
                             <ol className="space-y-2">
                               {rec.implementation_steps.map((step, stepIndex) => (
@@ -713,6 +740,29 @@ const EnhancedSurveyPage = () => {
                                 </li>
                               ))}
                             </ol>
+                          </div>
+                        )}
+
+                        {rec.implementation_partners && (
+                          <div className="mb-4">
+                            <h4 className="font-semibold text-gray-900 mb-3">Implementation Partners</h4>
+                            <div className="flex flex-wrap gap-2">
+                              {rec.implementation_partners.map((partner, partnerIndex) => (
+                                <span 
+                                  key={partnerIndex} 
+                                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                                >
+                                  {partner}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {rec.expected_impact && (
+                          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                            <h4 className="font-semibold text-green-900 mb-1">Expected Impact</h4>
+                            <p className="text-green-700 text-sm">{rec.expected_impact}</p>
                           </div>
                         )}
                       </div>

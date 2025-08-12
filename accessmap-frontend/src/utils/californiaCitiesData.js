@@ -605,7 +605,8 @@ export const CENSUS_CITIES = {
 // Export all cities combined
 export const ALL_CALIFORNIA_CITIES = {
   ...MAJOR_CITIES,
-  ...ADDITIONAL_CITIES
+  ...ADDITIONAL_CITIES,
+  ...CENSUS_CITIES
 };
 
 export default ALL_CALIFORNIA_CITIES;

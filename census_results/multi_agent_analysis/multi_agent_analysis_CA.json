@@ -1,8 +1,8 @@
 {
   "metadata": {
     "state": "CA",
-    "analysis_date": "2025-08-11T02:24:14.625816",
-    "analysis_duration_seconds": 275.249537,
+    "analysis_date": "2025-08-11T16:47:00.595390",
+    "analysis_duration_seconds": 751.517901,
     "total_locations_analyzed": 1349,
     "agent_workflow": [
       "AccessScanner",
@@ -14,320 +14,6 @@
   "scan_results": [
     {
       "id": "scan_1",
-      "location": "Ahwahnee CDP, CA",
-      "coordinates": {
-        "lat": 37.367705,
-        "lng": -119.725409
-      },
-      "issue_type": "Missing Curb Ramps",
-      "severity": "critical",
-      "description": "High elderly population (56.66%) and moderate disability rate (20.69%) suggest significant need for improved accessibility, including missing curb ramps.",
-      "confidence": 0.96,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "56.7% elderly, 20.7% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_2",
-      "location": "Airport CDP, CA",
-      "coordinates": {
-        "lat": 41.660264,
-        "lng": -124.019834
-      },
-      "issue_type": "Broken Sidewalk",
-      "severity": "moderate",
-      "description": "Low elderly population (6.52%) but moderate disability rate (15.1%) indicates potential for broken sidewalks affecting mobility.",
-      "confidence": 0.9099999999999999,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "6.5% elderly, 15.1% disabled",
-      "risk_factors": [
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_3",
-      "location": "Alhambra Valley CDP, CA",
-      "coordinates": {
-        "lat": 37.967666,
-        "lng": -122.12858
-      },
-      "issue_type": "Inaccessible Transit",
-      "severity": "moderate",
-      "description": "High elderly population (26.57%) and medium disability rate (19%) suggest inaccessible transit options may be a barrier for residents.",
-      "confidence": 0.85,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "26.6% elderly, 19.0% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_4",
-      "location": "Allendale CDP, CA",
-      "coordinates": {
-        "lat": 38.444631,
-        "lng": -121.943022
-      },
-      "issue_type": "Missing Curb Ramps",
-      "severity": "moderate",
-      "description": "High elderly population (25.27%) and medium disability rate (18.22%) indicate a need for improved accessibility, including missing curb ramps.",
-      "confidence": 0.96,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "25.3% elderly, 18.2% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_5",
-      "location": "Alhambra city, CA",
-      "coordinates": {
-        "lat": 34.092509,
-        "lng": -118.127292
-      },
-      "issue_type": "Poor Lighting",
-      "severity": "moderate",
-      "description": "Medium elderly population (19.08%) and low disability rate (9.89%) may benefit from improved lighting for safety and accessibility.",
-      "confidence": 0.9299999999999999,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "19.1% elderly, 9.9% disabled",
-      "risk_factors": [
-        "High elderly population"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_6",
-      "location": "Aliso Viejo city, CA",
-      "coordinates": {
-        "lat": 33.568026,
-        "lng": -117.727609
-      },
-      "issue_type": "Missing Accessible Parking",
-      "severity": "moderate",
-      "description": "Medium elderly population (10.53%) and low disability rate (7.1%) could benefit from more accessible parking spaces.",
-      "confidence": 0.95,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "10.5% elderly, 7.1% disabled",
-      "risk_factors": [
-        "Standard risk profile"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_7",
-      "location": "Allensworth CDP, CA",
-      "coordinates": {
-        "lat": 35.863552,
-        "lng": -119.390525
-      },
-      "issue_type": "Steep Grade",
-      "severity": "moderate",
-      "description": "Low elderly population (6.55%) but medium disability rate (9.71%) may face challenges with steep grades affecting mobility.",
-      "confidence": 0.99,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "6.6% elderly, 9.7% disabled",
-      "risk_factors": [
-        "Standard risk profile"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_8",
-      "location": "Alta CDP, CA",
-      "coordinates": {
-        "lat": 39.20679,
-        "lng": -120.811252
-      },
-      "issue_type": "No Tactile Paving",
-      "severity": "moderate",
-      "description": "Medium elderly population (18.38%) and medium disability rate (15.54%) might benefit from no tactile paving for improved navigation.",
-      "confidence": 0.98,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "18.4% elderly, 15.5% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_1",
-      "location": "Auberry CDP, CA",
-      "coordinates": {
-        "lat": 37.088535,
-        "lng": -119.498026
-      },
-      "issue_type": "Missing Curb Ramps",
-      "severity": "critical",
-      "description": "High elderly population (28.89%) and medium disability rate (26.19%) indicate a critical need for improved accessibility, including missing curb ramps.",
-      "confidence": 0.89,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "28.9% elderly, 26.2% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_2",
-      "location": "Avery CDP, CA",
-      "coordinates": {
-        "lat": 38.195551,
-        "lng": -120.381884
-      },
-      "issue_type": "Steep Grade",
-      "severity": "moderate",
-      "description": "High elderly population (46.23%) and medium disability rate (15.58%) suggest a moderate issue with steep grades affecting mobility.",
-      "confidence": 0.89,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "46.2% elderly, 15.6% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_3",
-      "location": "Banning city, CA",
-      "coordinates": {
-        "lat": 33.793842,
-        "lng": -118.262112
-      },
-      "issue_type": "Poor Lighting",
-      "severity": "moderate",
-      "description": "High elderly population (28.53%) and medium disability rate (23.09%) indicate a moderate need for improved lighting for safety.",
-      "confidence": 0.85,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "28.5% elderly, 23.1% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_4",
-      "location": "Barstow city, CA",
-      "coordinates": {
-        "lat": 34.887825,
-        "lng": -117.048525
-      },
-      "issue_type": "Broken Sidewalk",
-      "severity": "moderate",
-      "description": "Medium elderly population (12.71%) and medium disability rate (17.64%) suggest a moderate issue with broken sidewalks affecting mobility.",
-      "confidence": 0.98,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "12.7% elderly, 17.6% disabled",
-      "risk_factors": [
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_5",
-      "location": "Bell Gardens city, CA",
-      "coordinates": {
-        "lat": 33.967421,
-        "lng": -118.150019
-      },
-      "issue_type": "Missing Accessible Parking",
-      "severity": "moderate",
-      "description": "Low elderly population (9.47%) but medium disability rate (8.48%) indicates a moderate need for accessible parking spaces.",
-      "confidence": 0.88,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "9.5% elderly, 8.5% disabled",
-      "risk_factors": [
-        "Standard risk profile"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_6",
-      "location": "Bell city, CA",
-      "coordinates": {
-        "lat": 33.978565,
-        "lng": -118.189909
-      },
-      "issue_type": "Blocked Walkway",
-      "severity": "moderate",
-      "description": "Medium elderly population (11.17%) and medium disability rate (10.67%) suggest a moderate issue with blocked walkways affecting mobility.",
-      "confidence": 0.99,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "11.2% elderly, 10.7% disabled",
-      "risk_factors": [
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_7",
-      "location": "Belmont city, CA",
-      "coordinates": {
-        "lat": 37.525534,
-        "lng": -122.266289
-      },
-      "issue_type": "Inaccessible Transit",
-      "severity": "moderate",
-      "description": "Medium elderly population (13.87%) and low disability rate (8.47%) indicate a moderate need for accessible public transportation options.",
-      "confidence": 0.9199999999999999,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "13.9% elderly, 8.5% disabled",
-      "risk_factors": [
-        "Standard risk profile"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_8",
-      "location": "Berkeley city, CA",
-      "coordinates": {
-        "lat": 37.869799,
-        "lng": -122.269685
-      },
-      "issue_type": "No Tactile Paving",
-      "severity": "moderate",
-      "description": "Medium elderly population (16.48%) and low disability rate (10.17%) suggest a moderate issue with the lack of tactile paving for visually impaired individuals.",
-      "confidence": 0.85,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "16.5% elderly, 10.2% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_9",
-      "location": "Bieber CDP, CA",
-      "coordinates": {
-        "lat": 41.121277,
-        "lng": -121.14414
-      },
-      "issue_type": "Missing Curb Ramps",
-      "severity": "moderate",
-      "description": "Low elderly population (7.14%) but medium disability rate (11.36%) indicates a moderate need for improved accessibility, including missing curb ramps.",
-      "confidence": 0.94,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "7.1% elderly, 11.4% disabled",
-      "risk_factors": [
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_1",
       "location": "Burney CDP, CA",
       "coordinates": {
         "lat": 40.888415,
@@ -335,7 +21,7 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "High elderly population (29.24%) and medium disability rate (19.96%) necessitate improved accessibility with missing curb ramps.",
+      "description": "High elderly population (29.24%) and medium disability rate (19.96%) suggest a critical need for improved curb ramp accessibility.",
       "confidence": 0.95,
       "detected_date": "2025-08-11",
       "vulnerable_population": "29.2% elderly, 20.0% disabled",
@@ -354,7 +40,7 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "High elderly population (29.63%) and high disability rate (21.07%) require better accessibility with missing curb ramps.",
+      "description": "High elderly population (29.63%) and high disability rate (21.07%) necessitate critical improvements in curb ramp accessibility.",
       "confidence": 0.9199999999999999,
       "detected_date": "2025-08-11",
       "vulnerable_population": "29.6% elderly, 21.1% disabled",
@@ -373,7 +59,7 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "High elderly population (38.28%) and medium disability rate (12.53%) necessitate improved accessibility with missing curb ramps.",
+      "description": "High elderly population (38.28%) and medium disability rate (12.53%) indicate a critical need for enhanced curb ramp accessibility.",
       "confidence": 0.86,
       "detected_date": "2025-08-11",
       "vulnerable_population": "38.3% elderly, 12.5% disabled",
@@ -392,7 +78,7 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "Medium elderly population (16.13%) and medium disability rate (13.14%) require better accessibility with missing curb ramps.",
+      "description": "Medium elderly population (16.13%) and medium disability rate (13.14%) warrant critical attention to curb ramp accessibility.",
       "confidence": 0.94,
       "detected_date": "2025-08-11",
       "vulnerable_population": "16.1% elderly, 13.1% disabled",
@@ -411,7 +97,7 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "Medium elderly population (12.04%) and high disability rate (21.36%) necessitate improved accessibility with missing curb ramps.",
+      "description": "Medium elderly population (12.04%) and high disability rate (21.36%) call for critical improvements in curb ramp accessibility.",
       "confidence": 0.9199999999999999,
       "detected_date": "2025-08-11",
       "vulnerable_population": "12.0% elderly, 21.4% disabled",
@@ -429,7 +115,7 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "High elderly population (23.68%) and high disability rate (27.58%) require better accessibility with missing curb ramps.",
+      "description": "High elderly population (23.68%) and high disability rate (27.58%) underscore the critical need for better curb ramp accessibility.",
       "confidence": 0.9099999999999999,
       "detected_date": "2025-08-11",
       "vulnerable_population": "23.7% elderly, 27.6% disabled",
@@ -441,25 +127,6 @@
     },
     {
       "id": "scan_7",
-      "location": "Calimesa city, CA",
-      "coordinates": {
-        "lat": 34.003514,
-        "lng": -117.058701
-      },
-      "issue_type": "Missing Curb Ramps",
-      "severity": "critical",
-      "description": "High elderly population (22.87%) and medium disability rate (13.56%) necessitate improved accessibility with missing curb ramps.",
-      "confidence": 0.86,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "22.9% elderly, 13.6% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_8",
       "location": "Calistoga city, CA",
       "coordinates": {
         "lat": 38.578115,
@@ -467,7 +134,7 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "High elderly population (24.6%) and medium disability rate (12.04%) require better accessibility with missing curb ramps.",
+      "description": "High elderly population (24.6%) and medium disability rate (12.04%) highlight the critical importance of curb ramp accessibility.",
       "confidence": 0.9,
       "detected_date": "2025-08-11",
       "vulnerable_population": "24.6% elderly, 12.0% disabled",
@@ -478,18 +145,75 @@
       "agent": "AccessScanner"
     },
     {
-      "id": "scan_9",
-      "location": "Calpella CDP, CA",
+      "id": "scan_8",
+      "location": "Cameron Park CDP, CA",
       "coordinates": {
-        "lat": 39.233693,
-        "lng": -123.202672
+        "lat": 38.682002,
+        "lng": -120.985144
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "Medium elderly population (18.02%) and medium disability rate (18.2%) necessitate improved accessibility with missing curb ramps.",
-      "confidence": 0.98,
+      "description": "High elderly population (25.34%) and medium disability rate (13.76%) emphasize the critical need for improved curb ramp accessibility.",
+      "confidence": 0.97,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "18.0% elderly, 18.2% disabled",
+      "vulnerable_population": "25.3% elderly, 13.8% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_9",
+      "location": "Camino CDP, CA",
+      "coordinates": {
+        "lat": 38.738237,
+        "lng": -120.67493
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (35.26%) and medium disability rate (13.26%) stress the critical necessity for enhanced curb ramp accessibility.",
+      "confidence": 0.9199999999999999,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "35.3% elderly, 13.3% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_10",
+      "location": "Canyon Lake city, CA",
+      "coordinates": {
+        "lat": 41.64544,
+        "lng": -120.244114
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (22.37%) and medium disability rate (13.36%) indicate a critical need for better curb ramp accessibility.",
+      "confidence": 0.9099999999999999,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "22.4% elderly, 13.4% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_11",
+      "location": "Carmel-by-the-Sea city, CA",
+      "coordinates": {
+        "lat": 36.555266,
+        "lng": -121.923278
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (58.69%) and medium disability rate (14.03%) underscore the critical importance of curb ramp accessibility.",
+      "confidence": 0.9299999999999999,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "58.7% elderly, 14.0% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -498,53 +222,55 @@
     },
     {
       "id": "scan_1",
-      "location": "Coloma CDP, CA",
+      "location": "Cathedral City, CA",
       "coordinates": {
-        "lat": 38.799901,
-        "lng": -120.890216
+        "lat": 33.781003,
+        "lng": -116.464076
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "High percentage of elderly residents (8.6%) may struggle with inadequate curb ramps for mobility.",
-      "confidence": 0.85,
+      "description": "High elderly population (19.03%) and medium disability rate (12.09%) necessitate improved accessibility, particularly missing curb ramps for wheelchair users.",
+      "confidence": 0.9199999999999999,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "8.6% elderly, 3.5% disabled",
+      "vulnerable_population": "19.0% elderly, 12.1% disabled",
       "risk_factors": [
-        "Standard risk profile"
+        "High elderly population",
+        "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
       "id": "scan_2",
-      "location": "Colton city, CA",
+      "location": "Catheys Valley CDP, CA",
       "coordinates": {
-        "lat": 34.062589,
-        "lng": -117.320942
+        "lat": 37.432439,
+        "lng": -120.097955
       },
-      "issue_type": "Broken Sidewalk",
-      "severity": "moderate",
-      "description": "11.84% of the population has a disability, and broken sidewalks could pose a significant challenge.",
-      "confidence": 0.86,
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (30.31%) and medium disability rate (11.92%) require better accessibility, with missing curb ramps being a critical issue for mobility-impaired residents.",
+      "confidence": 0.97,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "10.9% elderly, 11.8% disabled",
+      "vulnerable_population": "30.3% elderly, 11.9% disabled",
       "risk_factors": [
+        "High elderly population",
         "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
       "id": "scan_3",
-      "location": "Columbia CDP, CA",
+      "location": "Cayucos CDP, CA",
       "coordinates": {
-        "lat": 38.03227,
-        "lng": -120.402419
+        "lat": 35.442751,
+        "lng": -120.892125
       },
-      "issue_type": "Inaccessible Transit",
+      "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "33.35% elderly population may face difficulties due to lack of accessible public transportation options.",
-      "confidence": 0.97,
+      "description": "High elderly population (35.64%) and medium disability rate (15.18%) necessitate improved accessibility, with missing curb ramps being a critical concern for wheelchair users.",
+      "confidence": 0.98,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "33.4% elderly, 27.8% disabled",
+      "vulnerable_population": "35.6% elderly, 15.2% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -553,17 +279,17 @@
     },
     {
       "id": "scan_4",
-      "location": "Colusa city, CA",
+      "location": "Cazadero CDP, CA",
       "coordinates": {
-        "lat": 39.146558,
-        "lng": -122.220956
+        "lat": 38.533439,
+        "lng": -123.08535
       },
-      "issue_type": "Poor Lighting",
+      "issue_type": "Broken Sidewalk",
       "severity": "moderate",
-      "description": "16.38% elderly population might experience safety concerns due to inadequate street lighting.",
-      "confidence": 0.87,
+      "description": "High elderly population (24.37%) and medium disability rate (12.87%) could benefit from repaired sidewalks to ensure safe pedestrian access.",
+      "confidence": 0.85,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "16.4% elderly, 14.1% disabled",
+      "vulnerable_population": "24.4% elderly, 12.9% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -572,17 +298,17 @@
     },
     {
       "id": "scan_5",
-      "location": "Commerce city, CA",
+      "location": "Cedarville CDP, CA",
       "coordinates": {
-        "lat": 34.000847,
-        "lng": -118.155626
+        "lat": 41.529061,
+        "lng": -120.173278
       },
-      "issue_type": "Missing Accessible Parking",
-      "severity": "moderate",
-      "description": "17.62% elderly population could find it difficult to find accessible parking spaces.",
-      "confidence": 0.9199999999999999,
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (26.88%) and medium disability rate (12.81%) require better accessibility, with missing curb ramps being a critical issue for mobility-impaired residents.",
+      "confidence": 0.99,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "17.6% elderly, 13.6% disabled",
+      "vulnerable_population": "26.9% elderly, 12.8% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -591,127 +317,54 @@
     },
     {
       "id": "scan_6",
-      "location": "Compton city, CA",
+      "location": "Centerville CDP (Shasta County), CA",
       "coordinates": {
-        "lat": 33.894732,
-        "lng": -118.224702
+        "lat": 40.51808,
+        "lng": -122.485246
       },
-      "issue_type": "Blocked Walkway",
-      "severity": "moderate",
-      "description": "11.32% of the population with disabilities might encounter obstructed sidewalks.",
-      "confidence": 0.9,
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (22.86%) and medium disability rate (12.98%) necessitate improved accessibility, particularly missing curb ramps for wheelchair users.",
+      "confidence": 0.96,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "10.6% elderly, 11.3% disabled",
+      "vulnerable_population": "22.9% elderly, 13.0% disabled",
       "risk_factors": [
+        "High elderly population",
         "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
       "id": "scan_7",
-      "location": "Concord city, CA",
+      "location": "Cerritos city, CA",
       "coordinates": {
-        "lat": 37.982111,
-        "lng": -122.045628
+        "lat": 33.866308,
+        "lng": -118.065258
       },
-      "issue_type": "Missing Curb Ramps",
-      "severity": "critical",
-      "description": "16.22% elderly population may struggle with inadequate curb ramps for mobility.",
-      "confidence": 0.98,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "16.2% elderly, 12.4% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_8",
-      "location": "Copperopolis CDP, CA",
-      "coordinates": {
-        "lat": 37.941764,
-        "lng": -120.636795
-      },
-      "issue_type": "Steep Grade",
+      "issue_type": "Poor Lighting",
       "severity": "moderate",
-      "description": "24.14% elderly population might find it challenging to navigate steep gradients in the area.",
-      "confidence": 0.95,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "24.1% elderly, 13.6% disabled",
-      "risk_factors": [
-        "High elderly population",
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_9",
-      "location": "Corcoran city, CA",
-      "coordinates": {
-        "lat": 36.099055,
-        "lng": -119.559374
-      },
-      "issue_type": "No Tactile Paving",
-      "severity": "moderate",
-      "description": "9.77% visually impaired residents may face difficulties at unmarked pedestrian crossings.",
-      "confidence": 0.99,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "9.8% elderly, 8.5% disabled",
-      "risk_factors": [
-        "Standard risk profile"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_10",
-      "location": "Corona city, CA",
-      "coordinates": {
-        "lat": 40.746451,
-        "lng": -73.860087
-      },
-      "issue_type": "Missing Curb Ramps",
-      "severity": "critical",
-      "description": "11.74% elderly population may struggle with inadequate curb ramps for mobility.",
-      "confidence": 0.97,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "11.7% elderly, 9.0% disabled",
-      "risk_factors": [
-        "Standard risk profile"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_11",
-      "location": "Coronado city, CA",
-      "coordinates": {
-        "lat": 32.69152,
-        "lng": -117.176695
-      },
-      "issue_type": "Inaccessible Transit",
-      "severity": "critical",
-      "description": "22.7% elderly population may face difficulties due to lack of accessible public transportation options.",
+      "description": "High elderly population (25.29%) and low disability rate (9.73%) could benefit from improved lighting in public areas to ensure safe navigation.",
       "confidence": 0.96,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "22.7% elderly, 9.5% disabled",
+      "vulnerable_population": "25.3% elderly, 9.7% disabled",
       "risk_factors": [
         "High elderly population"
       ],
       "agent": "AccessScanner"
     },
     {
-      "id": "scan_12",
-      "location": "Corralitos CDP, CA",
+      "id": "scan_8",
+      "location": "Cedar Ridge CDP, CA",
       "coordinates": {
-        "lat": 36.995127,
-        "lng": -121.78941
+        "lat": 39.198783,
+        "lng": -121.021058
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "33.26% elderly population may struggle with inadequate curb ramps for mobility.",
+      "description": "High elderly population (25.51%) and medium disability rate (16.85%) require better accessibility, with missing curb ramps being a critical concern for mobility-impaired residents.",
       "confidence": 0.89,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "33.3% elderly, 17.0% disabled",
+      "vulnerable_population": "25.5% elderly, 16.9% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -719,108 +372,130 @@
       "agent": "AccessScanner"
     },
     {
-      "id": "scan_13",
-      "location": "Cotati city, CA",
+      "id": "scan_9",
+      "location": "Cedar Flat CDP, CA",
       "coordinates": {
-        "lat": 38.323606,
-        "lng": -122.7084
+        "lat": 39.209971,
+        "lng": -120.090592
       },
-      "issue_type": "Broken Sidewalk",
-      "severity": "moderate",
-      "description": "10.9% of the population has a disability, and broken sidewalks could pose a significant challenge.",
-      "confidence": 0.9199999999999999,
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (30.35%) and low disability rate (1.4%) necessitate improved accessibility, particularly missing curb ramps for wheelchair users.",
+      "confidence": 0.96,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "14.9% elderly, 10.9% disabled",
+      "vulnerable_population": "30.3% elderly, 1.4% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_10",
+      "location": "Challenge-Brownsville CDP, CA",
+      "coordinates": {
+        "lat": 39.46149,
+        "lng": -121.274325
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (12.25%) and high disability rate (33.84%) require better accessibility, with missing curb ramps being a critical issue for mobility-impaired residents.",
+      "confidence": 0.9299999999999999,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "12.2% elderly, 33.8% disabled",
       "risk_factors": [
         "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
-      "id": "scan_14",
-      "location": "Cottonwood CDP (Kern County), CA",
+      "id": "scan_11",
+      "location": "Cedarville CDP, CA",
       "coordinates": {
-        "lat": 35.411697,
-        "lng": -118.8131
+        "lat": 41.529061,
+        "lng": -120.173278
       },
-      "issue_type": "Poor Lighting",
+      "issue_type": "Inaccessible Transit",
       "severity": "moderate",
-      "description": "16.12% elderly population might experience safety concerns due to inadequate street lighting.",
-      "confidence": 0.97,
+      "description": "High elderly population (26.88%) and medium disability rate (12.81%) could benefit from improved public transportation accessibility for those with mobility challenges.",
+      "confidence": 0.99,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "6.0% elderly, 8.1% disabled",
+      "vulnerable_population": "26.9% elderly, 12.8% disabled",
       "risk_factors": [
-        "Standard risk profile"
+        "High elderly population",
+        "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
       "id": "scan_1",
-      "location": "Fruitdale CDP, CA",
+      "location": "Hydesville CDP, CA",
       "coordinates": {
-        "lat": 37.308276,
-        "lng": -121.917734
+        "lat": 40.561642,
+        "lng": -124.079588
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "The high elderly population (13.72%) and medium income level suggest a need for improved accessibility, particularly missing curb ramps for safe navigation.",
-      "confidence": 0.86,
+      "description": "High percentage of elderly residents (23.78%) and medium disability rate (17.13%) necessitate proper curb ramps for safe mobility.",
+      "confidence": 0.89,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "13.7% elderly, 7.1% disabled",
+      "vulnerable_population": "23.8% elderly, 17.1% disabled",
       "risk_factors": [
-        "Standard risk profile"
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_2",
+      "location": "Idyllwild-Pine Cove CDP, CA",
+      "coordinates": {
+        "lat": 33.74357,
+        "lng": -116.723776
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High percentage of elderly residents (26.53%) and medium disability rate (16.51%) require adequate curb ramps for accessibility.",
+      "confidence": 0.98,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "26.5% elderly, 16.5% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
       "id": "scan_3",
-      "location": "Fuller Acres CDP, CA",
+      "location": "Independence CDP, CA",
       "coordinates": {
-        "lat": 35.29996,
-        "lng": -118.911766
+        "lat": 36.821987,
+        "lng": -118.205129
       },
-      "issue_type": "Inaccessible Transit",
-      "severity": "moderate",
-      "description": "The medium elderly population (14.1%) and low disability rate (14.53%) in this area could benefit from improved, accessible public transportation options.",
-      "confidence": 0.94,
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (26.74%) and high disability rate (23.09%) necessitate proper curb ramps for safe mobility.",
+      "confidence": 0.85,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "14.1% elderly, 14.5% disabled",
+      "vulnerable_population": "26.7% elderly, 23.1% disabled",
       "risk_factors": [
+        "High elderly population",
         "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
       "id": "scan_4",
-      "location": "Garden Grove city, CA",
+      "location": "Inverness CDP, CA",
       "coordinates": {
-        "lat": 33.774276,
-        "lng": -117.891042
+        "lat": 38.080911,
+        "lng": -122.845359
       },
-      "issue_type": "Missing Accessible Parking",
-      "severity": "moderate",
-      "description": "With a medium elderly population (14.74%) and low disability rate (11.12%), ensuring accessible parking spaces is essential for the aging population's mobility.",
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (51.22%) and high disability rate (23.28%) require adequate curb ramps for accessibility.",
       "confidence": 0.86,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "14.7% elderly, 11.1% disabled",
-      "risk_factors": [
-        "High disability rate"
-      ],
-      "agent": "AccessScanner"
-    },
-    {
-      "id": "scan_5",
-      "location": "Gardena city, CA",
-      "coordinates": {
-        "lat": 33.882674,
-        "lng": -118.307095
-      },
-      "issue_type": "Steep Grade",
-      "severity": "moderate",
-      "description": "The medium elderly population (16.99%) and medium income level in Gardena may face challenges with steep grades, requiring improved accessibility solutions.",
-      "confidence": 0.86,
-      "detected_date": "2025-08-11",
-      "vulnerable_population": "17.0% elderly, 12.5% disabled",
+      "vulnerable_population": "51.2% elderly, 23.3% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -828,36 +503,55 @@
       "agent": "AccessScanner"
     },
     {
-      "id": "scan_6",
-      "location": "Garnet CDP, CA",
+      "id": "scan_5",
+      "location": "Ivanhoe CDP, CA",
       "coordinates": {
-        "lat": 33.9177,
-        "lng": -116.475553
+        "lat": 36.385031,
+        "lng": -119.220267
       },
-      "issue_type": "Poor Lighting",
-      "severity": "moderate",
-      "description": "Garnet's medium elderly population (12.71%) and medium income level could benefit from improved lighting in public areas for better visibility and safety.",
-      "confidence": 0.85,
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "Medium elderly population (11.64%) and medium disability rate (17.51%) still require proper curb ramps for safe mobility.",
+      "confidence": 0.9199999999999999,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "12.7% elderly, 12.5% disabled",
+      "vulnerable_population": "11.6% elderly, 17.5% disabled",
       "risk_factors": [
         "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
-      "id": "scan_7",
-      "location": "Gasquet CDP, CA",
+      "id": "scan_6",
+      "location": "Jackson city, CA",
       "coordinates": {
-        "lat": 41.845695,
-        "lng": -123.977095
+        "lat": 38.353615,
+        "lng": -120.774097
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "The high elderly population (36.48%) and high disability rate (55.36%) in Gasquet necessitate immediate attention to missing curb ramps for safe mobility.",
-      "confidence": 0.9199999999999999,
+      "description": "High elderly population (33.83%) and high disability rate (22.84%) necessitate proper curb ramps for safe mobility.",
+      "confidence": 0.99,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "36.5% elderly, 55.4% disabled",
+      "vulnerable_population": "33.8% elderly, 22.8% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_7",
+      "location": "Jacumba CDP, CA",
+      "coordinates": {
+        "lat": 32.630208,
+        "lng": -116.175001
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "Medium elderly population (15.45%) and high disability rate (38.18%) require adequate curb ramps for accessibility.",
+      "confidence": 0.87,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "15.4% elderly, 38.2% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -866,37 +560,36 @@
     },
     {
       "id": "scan_8",
-      "location": "Gazelle CDP, CA",
+      "location": "Jamestown CDP, CA",
       "coordinates": {
-        "lat": 41.520516,
-        "lng": -122.520923
+        "lat": 37.958857,
+        "lng": -120.404431
       },
-      "issue_type": "Steep Grade",
+      "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "Gazelle's high elderly population (40.38%) and low disability rate (16.35%) would greatly benefit from addressing steep grades for improved accessibility.",
-      "confidence": 0.85,
+      "description": "High elderly population (26.29%) and high disability rate (22.4%) necessitate proper curb ramps for safe mobility.",
+      "confidence": 0.94,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "40.4% elderly, 16.4% disabled",
+      "vulnerable_population": "26.3% elderly, 22.4% disabled",
       "risk_factors": [
         "High elderly population",
-        "High disability rate",
-        "Low income area"
+        "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
       "id": "scan_9",
-      "location": "Georgetown CDP, CA",
+      "location": "Joshua Tree CDP, CA",
       "coordinates": {
-        "lat": 38.907286,
-        "lng": -120.830231
+        "lat": 34.12338,
+        "lng": -116.312879
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "Georgetown's high elderly population (44.46%) and high disability rate (23.37%) require urgent attention to missing curb ramps for safe navigation.",
-      "confidence": 0.9199999999999999,
+      "description": "Medium elderly population (18.55%) and high disability rate (20.17%) require adequate curb ramps for accessibility.",
+      "confidence": 0.97,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "44.5% elderly, 23.4% disabled",
+      "vulnerable_population": "18.6% elderly, 20.2% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -905,17 +598,259 @@
     },
     {
       "id": "scan_10",
-      "location": "Gerber CDP, CA",
+      "location": "Julian CDP, CA",
       "coordinates": {
-        "lat": 40.056268,
-        "lng": -122.150268
+        "lat": 33.073963,
+        "lng": -116.587846
       },
-      "issue_type": "Broken Sidewalk",
+      "issue_type": "Missing Curb Ramps",
       "severity": "critical",
-      "description": "Gerber's high elderly population (22.81%) and medium disability rate (15.63%) necessitate immediate repair of broken sidewalks for better accessibility.",
+      "description": "High elderly population (40.85%) and low disability rate (8.65%) still require proper curb ramps for safe mobility.",
+      "confidence": 0.9,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "40.8% elderly, 8.6% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_11",
+      "location": "Junction City CDP, CA",
+      "coordinates": {
+        "lat": 40.733199,
+        "lng": -123.05364
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (21.96%) and medium disability rate (16.7%) necessitate proper curb ramps for safe mobility.",
+      "confidence": 0.97,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "22.0% elderly, 16.7% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_12",
+      "location": "June Lake CDP, CA",
+      "coordinates": {
+        "lat": 37.78861,
+        "lng": -119.074617
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (33.01%) and no disability reported require proper curb ramps for safe mobility.",
       "confidence": 0.87,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "22.8% elderly, 15.6% disabled",
+      "vulnerable_population": "33.0% elderly, 0.0% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_1",
+      "location": "Lakeview CDP, CA",
+      "coordinates": {
+        "lat": 33.826931,
+        "lng": -117.125827
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (16.26%) and medium disability rate (11.02%) necessitate improved accessibility with missing curb ramps, posing significant barriers for mobility-impaired residents.",
+      "confidence": 0.97,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "16.3% elderly, 11.0% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_2",
+      "location": "Lamont CDP, CA",
+      "coordinates": {
+        "lat": 35.264076,
+        "lng": -118.914238
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "Medium elderly population (10.23%) and low disability rate (10.24%) still require better accessibility with missing curb ramps, which can hinder mobility for some seniors and people with disabilities.",
+      "confidence": 0.95,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "10.2% elderly, 10.2% disabled",
+      "risk_factors": [
+        "High disability rate",
+        "Low income area"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_3",
+      "location": "Las Flores CDP (Tehama County), CA",
+      "coordinates": {
+        "lat": 40.071823,
+        "lng": -122.16277
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (50.72%) and high disability rate (28.26%) in this area necessitate critical improvements in accessibility with missing curb ramps, which are a significant barrier for mobility-impaired residents.",
+      "confidence": 0.85,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "50.7% elderly, 28.3% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_4",
+      "location": "Lathrop city, CA",
+      "coordinates": {
+        "lat": 37.804012,
+        "lng": -121.303973
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "Medium elderly population (10.32%) and low disability rate (9.08%) still require better accessibility with missing curb ramps, which can hinder mobility for some seniors and people with disabilities.",
+      "confidence": 0.94,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "10.3% elderly, 9.1% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_5",
+      "location": "Lemoore city, CA",
+      "coordinates": {
+        "lat": 36.29872,
+        "lng": -119.784985
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "Medium elderly population (10.81%) and medium disability rate (11.64%) necessitate improved accessibility with missing curb ramps, posing significant barriers for mobility-impaired residents.",
+      "confidence": 0.85,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "10.8% elderly, 11.6% disabled",
+      "risk_factors": [
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_6",
+      "location": "Lincoln Village CDP, CA",
+      "coordinates": {
+        "lat": 38.005201,
+        "lng": -121.328281
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (21.22%) and medium disability rate (15.5%) in this area necessitate critical improvements in accessibility with missing curb ramps, which are a significant barrier for mobility-impaired residents.",
+      "confidence": 0.86,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "21.2% elderly, 15.5% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_7",
+      "location": "Lincoln city, CA",
+      "coordinates": {
+        "lat": 38.886565,
+        "lng": -121.316064
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (27.17%) and medium disability rate (13.37%) in this area necessitate critical improvements in accessibility with missing curb ramps, which are a significant barrier for mobility-impaired residents.",
+      "confidence": 0.9299999999999999,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "27.2% elderly, 13.4% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_8",
+      "location": "Lindcove CDP, CA",
+      "coordinates": {
+        "lat": 36.357727,
+        "lng": -119.064549
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "Low elderly population (5.83%) and low disability rate (8.07%) still require better accessibility with missing curb ramps, which can hinder mobility for some seniors and people with disabilities.",
+      "confidence": 0.87,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "5.8% elderly, 8.1% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_9",
+      "location": "Live Oak CDP, CA",
+      "coordinates": {
+        "lat": 39.275723,
+        "lng": -121.65997
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (20.16%) and medium disability rate (11.4%) in this area necessitate improved accessibility with missing curb ramps, posing significant barriers for mobility-impaired residents.",
+      "confidence": 0.9299999999999999,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "20.2% elderly, 11.4% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_1",
+      "location": "Monte Rio CDP, CA",
+      "coordinates": {
+        "lat": 38.466285,
+        "lng": -123.019618
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (43.01%) and medium disability rate (23.92%) suggest critical missing curb ramps, posing significant mobility challenges.",
+      "confidence": 0.87,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "43.0% elderly, 23.9% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_2",
+      "location": "Montgomery Creek CDP, CA",
+      "coordinates": {
+        "lat": 40.839431,
+        "lng": -121.923159
+      },
+      "issue_type": "Steep Grade",
+      "severity": "critical",
+      "description": "High elderly population (45.37%) and medium disability rate (13.66%) indicate a critical need for addressing steep grades, making the area difficult to navigate for the elderly and disabled.",
+      "confidence": 0.87,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "45.4% elderly, 13.7% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate",
@@ -924,36 +859,150 @@
       "agent": "AccessScanner"
     },
     {
-      "id": "scan_11",
-      "location": "Gilroy city, CA",
+      "id": "scan_3",
+      "location": "Morro Bay city, CA",
       "coordinates": {
-        "lat": 37.00858,
-        "lng": -121.569076
+        "lat": 35.366281,
+        "lng": -120.844561
       },
-      "issue_type": "No Tactile Paving",
-      "severity": "moderate",
-      "description": "Gilroy's medium elderly population (12.39%) and low disability rate (9.31%) could benefit from the installation of tactile paving for visually impaired individuals.",
-      "confidence": 0.98,
+      "issue_type": "Poor Lighting",
+      "severity": "critical",
+      "description": "High elderly population (30.88%) and medium disability rate (16.78%) call for critical improvements in poor lighting, ensuring safe mobility for the elderly and disabled during nighttime.",
+      "confidence": 0.97,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "12.4% elderly, 9.3% disabled",
+      "vulnerable_population": "30.9% elderly, 16.8% disabled",
       "risk_factors": [
-        "Standard risk profile"
+        "High elderly population",
+        "High disability rate"
       ],
       "agent": "AccessScanner"
     },
     {
-      "id": "scan_12",
-      "location": "Glencoe CDP, CA",
+      "id": "scan_4",
+      "location": "Mountain Gate CDP, CA",
       "coordinates": {
-        "lat": 38.35408,
-        "lng": -120.584928
+        "lat": 40.716261,
+        "lng": -122.331674
       },
-      "issue_type": "Blocked Walkway",
-      "severity": "moderate",
-      "description": "Glencoe's medium elderly population (16.22%) and medium disability rate (19.22%) would benefit from clearing blocked walkways for improved accessibility.",
-      "confidence": 0.86,
+      "issue_type": "Inaccessible Transit",
+      "severity": "critical",
+      "description": "High elderly population (22.94%) and high disability rate (23.07%) suggest critical inaccessible transit options, hindering mobility for the elderly and disabled.",
+      "confidence": 0.85,
       "detected_date": "2025-08-11",
-      "vulnerable_population": "16.2% elderly, 19.2% disabled",
+      "vulnerable_population": "22.9% elderly, 23.1% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate",
+        "Low income area"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_5",
+      "location": "Mountain Meadows CDP, CA",
+      "coordinates": {
+        "lat": 37.561157,
+        "lng": -118.741696
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population (30.09%) and low disability rate (9.73%) still necessitate critical missing curb ramps, posing mobility challenges for the elderly.",
+      "confidence": 0.9099999999999999,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "30.1% elderly, 9.7% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_6",
+      "location": "Mountain View CDP, CA",
+      "coordinates": {
+        "lat": 37.389389,
+        "lng": -122.08321
+      },
+      "issue_type": "Broken Sidewalk",
+      "severity": "critical",
+      "description": "High elderly population (13.8%) and high disability rate (22.01%) indicate critical broken sidewalks, causing mobility issues for the elderly and disabled.",
+      "confidence": 0.9099999999999999,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "13.8% elderly, 22.0% disabled",
+      "risk_factors": [
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_7",
+      "location": "Needles city, CA",
+      "coordinates": {
+        "lat": 34.833909,
+        "lng": -114.597191
+      },
+      "issue_type": "No Tactile Paving",
+      "severity": "critical",
+      "description": "High elderly population (23.04%) and high disability rate (38.53%) require critical implementation of no tactile paving, ensuring safe navigation for visually impaired elderly and disabled residents.",
+      "confidence": 0.89,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "23.0% elderly, 38.5% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate",
+        "Low income area"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_8",
+      "location": "Nevada City city, CA",
+      "coordinates": {
+        "lat": 39.255114,
+        "lng": -121.025533
+      },
+      "issue_type": "Steep Grade",
+      "severity": "moderate",
+      "description": "High elderly population (38.23%) and low disability rate (6.5%) suggest a moderate issue with steep grades, which may cause mobility challenges for some elderly residents.",
+      "confidence": 0.95,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "38.2% elderly, 6.5% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_9",
+      "location": "New Cuyama CDP, CA",
+      "coordinates": {
+        "lat": 34.946584,
+        "lng": -119.686046
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "moderate",
+      "description": "High elderly population (28.04%) and medium disability rate (18.45%) indicate a moderate need for missing curb ramps, causing some mobility issues for the elderly.",
+      "confidence": 0.99,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "28.0% elderly, 18.4% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner"
+    },
+    {
+      "id": "scan_10",
+      "location": "Nipomo CDP, CA",
+      "coordinates": {
+        "lat": 35.035822,
+        "lng": -120.496419
+      },
+      "issue_type": "Poor Lighting",
+      "severity": "moderate",
+      "description": "Medium elderly population (18.42%) and medium disability rate (13.85%) call for moderate improvements in poor lighting, ensuring safer mobility for the elderly and disabled during nighttime.",
+      "confidence": 0.97,
+      "detected_date": "2025-08-11",
+      "vulnerable_population": "18.4% elderly, 13.9% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -1391,17 +1440,17 @@
         "Allendale CDP, California, CA"
       ],
       "impact": "medium",
-      "cost_estimate": "$255,000 - $765,000",
+      "cost_estimate": "$265,000 - $795,000",
       "timeline": "6-18 months",
       "success_metrics": [
-        "Install compliant infrastructure at 51 locations",
+        "Install compliant infrastructure at 53 locations",
         "Achieve 95%+ ADA compliance rate",
         "Reduce accessibility complaints by 60%"
       ],
-      "equity_impact": "Addresses accessibility needs for vulnerable populations across 51 identified locations",
+      "equity_impact": "Addresses accessibility needs for vulnerable populations across 53 identified locations",
       "priority_level": "Immediate",
       "rationale": "Addresses infrastructure needs identified by multi-agent analysis",
-      "locations_affected": 51,
+      "locations_affected": 53,
       "agent": "PlannerBot",
       "generated_date": "2025-08-11"
     },
@@ -1431,10 +1480,10 @@
         "Train 100% of relevant city staff",
         "Achieve policy compliance across all departments"
       ],
-      "equity_impact": "Addresses accessibility needs for vulnerable populations across 51 identified locations",
+      "equity_impact": "Addresses accessibility needs for vulnerable populations across 53 identified locations",
       "priority_level": "Immediate",
       "rationale": "Addresses policy needs identified by multi-agent analysis",
-      "locations_affected": 51,
+      "locations_affected": 53,
       "agent": "PlannerBot",
       "generated_date": "2025-08-11"
     },
@@ -1464,10 +1513,10 @@
         "Achieve 90% citizen app adoption in target areas",
         "Reduce response time to accessibility issues by 50%"
       ],
-      "equity_impact": "Addresses accessibility needs for vulnerable populations across 51 identified locations",
+      "equity_impact": "Addresses accessibility needs for vulnerable populations across 53 identified locations",
       "priority_level": "Immediate",
       "rationale": "Addresses technology needs identified by multi-agent analysis",
-      "locations_affected": 51,
+      "locations_affected": 53,
       "agent": "PlannerBot",
       "generated_date": "2025-08-11"
     },
@@ -1497,18 +1546,18 @@
         "Establish neighborhood reporting network",
         "Increase community engagement by 200%"
       ],
-      "equity_impact": "Addresses accessibility needs for vulnerable populations across 51 identified locations",
+      "equity_impact": "Addresses accessibility needs for vulnerable populations across 53 identified locations",
       "priority_level": "Immediate",
       "rationale": "Addresses community needs identified by multi-agent analysis",
-      "locations_affected": 51,
+      "locations_affected": 53,
       "agent": "PlannerBot",
       "generated_date": "2025-08-11"
     }
   ],
   "summary": {
-    "total_issues_identified": 51,
-    "critical_issues": 22,
-    "moderate_issues": 29,
+    "total_issues_identified": 53,
+    "critical_issues": 47,
+    "moderate_issues": 6,
     "immediate_priority_areas": 0,
     "high_impact_recommendations": 0
   },

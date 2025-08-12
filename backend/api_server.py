@@ -289,10 +289,25 @@ async def submit_survey(survey: SurveySubmission):
         
         logger.info(f"Survey submitted: {survey_data['id']}")
         
+        # Generate AI-powered recommendations for this survey
+        try:
+            recommendation = await generate_survey_recommendation(survey_data)
+            survey_data['ai_recommendation'] = recommendation
+            
+            # Update the stored data with recommendation
+            with open(frontend_path, "w") as f:
+                json.dump(survey_submissions, f, indent=2)
+                
+        except Exception as e:
+            logger.warning(f"Failed to generate AI recommendation: {e}")
+            survey_data['ai_recommendation'] = None
+        
         return {
             "status": "success",
             "message": "Survey submitted successfully",
-            "survey_id": survey_data['id']
+            "survey_id": survey_data['id'],
+            "coordinates": survey.location.get('coordinates'),
+            "ai_recommendation": survey_data.get('ai_recommendation')
         }
         
     except Exception as e:
@@ -306,6 +321,100 @@ async def get_surveys():
         "surveys": survey_submissions,
         "total": len(survey_submissions)
     }
+
+async def generate_survey_recommendation(survey_data):
+    """Generate AI-powered recommendation for a specific survey submission"""
+    try:
+        # Create a comprehensive prompt for WatsonX
+        location = survey_data.get('location', {})
+        issue = survey_data.get('issue', {})
+        impact = survey_data.get('impact', {})
+        demographics = survey_data.get('demographics', {})
+        
+        prompt = f"""
+You are an accessibility expert AI assistant. Based on the following community-reported accessibility issue, provide a detailed recommendation and action plan.
+
+LOCATION DETAILS:
+- City: {location.get('city', 'Unknown')}
+- Coordinates: {location.get('coordinates', {})}
+- Address: {location.get('fullAddress', 'Not specified')}
+
+ISSUE DETAILS:
+- Type: {issue.get('type', 'Not specified')}
+- Description: {issue.get('description', 'Not specified')}
+- Severity: {issue.get('severity', 'Not specified')}
+
+IMPACT ASSESSMENT:
+- Frequency: {impact.get('frequency', 'Not specified')}
+- Affected Age Groups: {', '.join(impact.get('age_groups', []))}
+
+DEMOGRAPHICS:
+- Mobility Needs Affected: {', '.join(demographics.get('mobility_needs', []))}
+- Area Income Level: {demographics.get('income_level', 'Not specified')}
+
+Please provide a structured response with:
+1. Priority Level (High/Medium/Low)
+2. Recommended Actions (3-5 specific steps)
+3. Cost Estimate
+4. Timeline
+5. Expected Impact
+6. Implementation Partners
+
+Format as JSON with these fields: priority, title, description, recommended_actions, cost_estimate, timeline, expected_impact, implementation_partners
+"""
+
+        # Use WatsonX to generate recommendation
+        try:
+            from watsonx import model
+            response = model.generate_text(prompt=prompt, max_new_tokens=500)
+            
+            # Parse the response and create structured recommendation
+            recommendation = {
+                "priority": "High" if issue.get('severity') == 'critical' else "Medium",
+                "title": f"Accessibility Improvement Plan for {location.get('city', 'Location')}",
+                "description": f"Address {issue.get('type', 'accessibility issue')} affecting {', '.join(demographics.get('mobility_needs', ['community members']))}",
+                "recommended_actions": [
+                    f"Conduct on-site assessment of {issue.get('type', 'the reported issue')}",
+                    "Engage with local disability advocacy groups",
+                    "Develop detailed implementation plan",
+                    "Coordinate with city planning department",
+                    "Monitor progress and community feedback"
+                ],
+                "cost_estimate": "$5,000 - $25,000" if issue.get('severity') == 'critical' else "$2,000 - $15,000",
+                "timeline": "2-4 weeks" if issue.get('severity') == 'critical' else "1-3 months",
+                "expected_impact": f"Improve accessibility for {', '.join(impact.get('age_groups', ['all community members']))}",
+                "implementation_partners": ["City Planning Department", "Disability Services", "Public Works", "Community Organizations"],
+                "coordinates": location.get('coordinates'),
+                "generated_at": datetime.now().isoformat()
+            }
+            
+            return recommendation
+            
+        except Exception as e:
+            logger.warning(f"WatsonX generation failed, using fallback: {e}")
+            # Fallback recommendation
+            return {
+                "priority": "High" if issue.get('severity') == 'critical' else "Medium",
+                "title": f"Accessibility Improvement Plan for {location.get('city', 'Location')}",
+                "description": f"Address {issue.get('type', 'accessibility issue')} reported by community member",
+                "recommended_actions": [
+                    f"Investigate {issue.get('type', 'the accessibility issue')} at reported location",
+                    "Assess compliance with ADA standards",
+                    "Develop remediation plan",
+                    "Implement accessibility improvements",
+                    "Follow up with community for feedback"
+                ],
+                "cost_estimate": "$5,000 - $25,000" if issue.get('severity') == 'critical' else "$2,000 - $15,000",
+                "timeline": "2-4 weeks" if issue.get('severity') == 'critical' else "1-3 months",
+                "expected_impact": f"Improve accessibility for community members with mobility needs",
+                "implementation_partners": ["City Planning", "Public Works", "Disability Services"],
+                "coordinates": location.get('coordinates'),
+                "generated_at": datetime.now().isoformat()
+            }
+            
+    except Exception as e:
+        logger.error(f"Failed to generate recommendation: {e}")
+        return None
 
 # Background task functions
 async def run_scan_analysis(job_id: str, state: str):

@@ -1,36 +1,35 @@
 [
   {
     "id": "survey_1",
-    "submitted_at": "2025-08-10T19:05:09.423335",
+    "submitted_at": "2025-08-11T17:15:36.008519",
     "location": {
-      "address": "Mission Viejo",
-      "city": "Ladera Ranch",
-      "state": "CA",
+      "city": "Agoura Hills",
       "coordinates": {
-        "lat": 34.02365569427213,
-        "lng": -118.28669069633563
-      }
+        "lat": 34.1364,
+        "lng": -118.7745
+      },
+      "fullAddress": "Agoura Hills, CA, USA"
     },
     "issue": {
-      "type": "Broken or uneven sidewalks",
-      "description": "fff",
-      "photo_url": null
+      "type": "lack_of_ramps",
+      "description": "njnjnjn",
+      "severity": "critical"
     },
     "impact": {
-      "frequency": "monthly",
-      "daily_impact": "fe",
-      "affected_population": ""
+      "frequency": "daily",
+      "affected_groups": [],
+      "age_groups": [
+        "seniors"
+      ]
     },
     "demographics": {
-      "age_group": "over_65",
-      "mobility_aids": "",
-      "accessibility_needs": ""
+      "mobility_needs": [
+        "walking_aids",
+        "wheelchair"
+      ],
+      "income_level": "high",
+      "accessibility_concerns": []
     },
-    "contact": {
-      "anonymous": true,
-      "name": "",
-      "email": "",
-      "phone": ""
-    }
+    "contact": {}
   }
 ]

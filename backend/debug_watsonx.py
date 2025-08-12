@@ -20,72 +20,26 @@ print("🔍 DEBUG: Testing WatsonX AccessScanner")
 print(f"API Key loaded: {'✅' if watsonx_creds['api_key'] else '❌'}")
 print(f"Project ID: {'✅' if watsonx_creds['project_id'] else '❌'}")
 
-# Create sample census data with more cities
-sample_data = pd.DataFrame([
-    {
-        'place': 'Los Angeles city, CA',
-        'percent_over_65': 0.12,
-        'percent_disabled': 0.09,
-        'median_income': 65000
-    },
-    {
-        'place': 'San Francisco city, CA',
-        'percent_over_65': 0.18,
-        'percent_disabled': 0.11,
-        'median_income': 85000
-    },
-    {
-        'place': 'Oakland city, CA',
-        'percent_over_65': 0.14,
-        'percent_disabled': 0.13,
-        'median_income': 55000
-    },
-    {
-        'place': 'San Diego city, CA',
-        'percent_over_65': 0.15,
-        'percent_disabled': 0.10,
-        'median_income': 70000
-    },
-    {
-        'place': 'Sacramento city, CA',
-        'percent_over_65': 0.13,
-        'percent_disabled': 0.12,
-        'median_income': 60000
-    },
-    {
-        'place': 'Fresno city, CA',
-        'percent_over_65': 0.11,
-        'percent_disabled': 0.14,
-        'median_income': 45000
-    },
-    {
-        'place': 'Long Beach city, CA',
-        'percent_over_65': 0.16,
-        'percent_disabled': 0.11,
-        'median_income': 68000
-    },
-    {
-        'place': 'Bakersfield city, CA',
-        'percent_over_65': 0.10,
-        'percent_disabled': 0.13,
-        'median_income': 52000
-    },
-    {
-        'place': 'Anaheim city, CA',
-        'percent_over_65': 0.14,
-        'percent_disabled': 0.09,
-        'median_income': 72000
-    },
-    {
-        'place': 'Santa Ana city, CA',
-        'percent_over_65': 0.13,
-        'percent_disabled': 0.10,
-        'median_income': 58000
-    }
-])
+# Load real census data instead of sample data
+from cleanVulnerabilityData import clean_data, add_vulnerability_score, prepare_data_for_agents
 
-print(f"\n📊 Sample data: {len(sample_data)} rows")
-print(sample_data.head())
+# Load real census data
+census_file = "census_results/Population_Vulnerability_CA_clean_real.csv"
+if not os.path.exists(census_file):
+    print("❌ Real census data file not found. Please run the Census API first.")
+    exit(1)
+
+print(f"📊 Loading real census data from {census_file}")
+raw_data = pd.read_csv(census_file)
+print(f"✅ Loaded {len(raw_data)} real places from census data")
+
+# Process the data for agents
+processed_data = clean_data(raw_data)
+processed_data = add_vulnerability_score(processed_data)
+processed_data = prepare_data_for_agents(processed_data)
+
+print(f"\n📊 Processed data: {len(processed_data)} rows")
+print(processed_data.head())
 
 try:
     # Create AccessScanner agent
@@ -95,7 +49,7 @@ try:
     
     # Test scan
     print("\n🔍 Running accessibility scan...")
-    results = agent.scan_accessibility_gaps(sample_data, 'CA')
+    results = agent.scan_accessibility_gaps(processed_data, 'CA')
     
     print(f"\n📊 RESULTS:")
     print(f"Total results: {len(results)}")
