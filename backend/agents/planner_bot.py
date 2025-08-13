@@ -166,6 +166,9 @@ class PlannerBotAgent:
                 "name": location_name
             })
         
+        # Create location names array for frontend display
+        location_names = [loc["name"] for loc in target_locations]
+        
         # Enhance each WatsonX-generated recommendation
         for i, ai_rec in enumerate(ai_recommendations):
             # Determine cost based on type and scope
@@ -193,7 +196,8 @@ class PlannerBotAgent:
                 "type": ai_rec.get("type", "infrastructure"),
                 "title": ai_rec.get("title", f"WatsonX-Generated Plan {i+1}"),
                 "description": ai_rec.get("description", "AI-generated accessibility improvement plan"),
-                "target_locations": target_locations,
+                "target_locations": location_names,  # Use location names for frontend display
+                "coordinates": target_locations,  # Keep coordinates for map display
                 "impact": ai_rec.get("impact", "high" if high_priority_count > 5 else "medium"),
                 "cost_estimate": ai_rec.get("cost_estimate", cost_estimates.get(ai_rec.get("type", "infrastructure"), "$50,000 - $150,000")),
                 "timeline": ai_rec.get("timeline", timelines.get(ai_rec.get("type", "infrastructure"), "6-12 months")),

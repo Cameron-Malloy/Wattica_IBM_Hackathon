@@ -4,13 +4,10 @@ import 'leaflet/dist/leaflet.css';
 import { useApi } from '../contexts/ApiContext';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { 
-  MapIcon, 
   MagnifyingGlassIcon, 
   ChartBarIcon, 
-  ClipboardDocumentListIcon,
   ExclamationTriangleIcon,
   CheckCircleIcon,
-  ClockIcon,
   FunnelIcon,
   ArrowPathIcon,
   MapPinIcon,
@@ -102,7 +99,6 @@ const MapPage = () => {
   const {
     results,
     loading,
-    error,
     isConnected,
     getLatestResults
   } = useApi();
@@ -274,8 +270,9 @@ const MapPage = () => {
             ...survey,
             issue_type: survey.issue.type,
             severity: 'user_reported',
-            location: survey.location.city || 'Unknown City',
-            coordinates: survey.location.coordinates || { lat: 36.7783, lng: -119.4179 }
+            location: survey.location.city || survey.location.fullAddress || 'Unknown City',
+            coordinates: survey.location.coordinates || { lat: 36.7783, lng: -119.4179 },
+            id: survey.id || `survey_${Math.random()}`
           }));
           break;
         case 'recommendations':
@@ -293,28 +290,31 @@ const MapPage = () => {
                 severity: 'recommendation',
                 description: selectedRecommendation.description,
                 recommendation: selectedRecommendation,
-                type: selectedRecommendation.type || 'general'
+                type: selectedRecommendation.type || 'general',
+                id: `rec_${selectedRecommendation.id}_${locationName}`
               };
             }) || [];
           } else {
-            // Show all recommendation locations
-            const allRecommendationLocations = results.recommendations?.flatMap(rec => 
-              rec.target_locations?.map(location => {
-                // Handle both coordinate objects and location names
-                const coordinates = location.lat && location.lng ? location : getCityCoordinates(location);
-                const locationName = location.name || location;
-                
-                return {
-                  location: locationName,
-                  coordinates: coordinates,
-                  issue_type: rec.title,
-                  severity: 'recommendation',
-                  description: rec.description,
-                  recommendation: rec,
-                  type: rec.type || 'general'
-                };
-              }) || []
-            ) || [];
+            // Show all recommendation locations (both agent-generated and survey-generated)
+            const allRecommendationLocations = results.recommendations
+              ?.flatMap(rec => 
+                rec.target_locations?.map(location => {
+                  // Handle both coordinate objects and location names
+                  const coordinates = location.lat && location.lng ? location : getCityCoordinates(location);
+                  const locationName = location.name || location;
+                  
+                  return {
+                    location: locationName,
+                    coordinates: coordinates,
+                    issue_type: rec.title,
+                    severity: 'recommendation',
+                    description: rec.description,
+                    recommendation: rec,
+                    type: rec.type || 'general',
+                    id: `rec_${rec.id}_${locationName}`
+                  };
+                }) || []
+              ) || [];
             dataToShow = allRecommendationLocations;
           }
           break;

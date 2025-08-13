@@ -111,6 +111,12 @@ def merge_survey_recommendations_to_main_analysis(state: str = "CA"):
             if 'recommendations' not in main_analysis:
                 main_analysis['recommendations'] = []
             
+            # Remove any existing survey recommendations to prevent duplicates
+            main_analysis['recommendations'] = [
+                rec for rec in main_analysis['recommendations'] 
+                if not (rec.get('agent') == 'SurveyBot' and rec.get('survey_based'))
+            ]
+            
             # Add survey recommendations at the beginning (higher priority)
             main_analysis['recommendations'] = survey_recommendations + main_analysis['recommendations']
             
@@ -314,20 +320,9 @@ async def get_latest_results(state: str):
 async def submit_survey(survey: SurveySubmission):
     """Submit a new accessibility survey"""
     try:
-        # Generate coordinates if not provided
+        # Ensure coordinates are provided
         if not survey.location.get('coordinates'):
-            # Use geocoding service or generate coordinates
-            import hashlib
-            city_hash = int(hashlib.md5(survey.location.get('city', '').encode()).hexdigest()[:8], 16)
-            
-            # California bounds
-            ca_lat_min, ca_lat_max = 32.5343, 42.0095
-            ca_lng_min, ca_lng_max = -124.4096, -114.1318
-            
-            lat = ca_lat_min + (city_hash % 100000 / 100000) * (ca_lat_max - ca_lat_min)
-            lng = ca_lng_min + ((city_hash // 100000) % 100000 / 100000) * (ca_lng_max - ca_lng_min)
-            
-            survey.location['coordinates'] = {"lat": round(lat, 6), "lng": round(lng, 6)}
+            raise HTTPException(status_code=400, detail="Location coordinates are required. Please select a location on the map.")
         
         # Add metadata
         survey_data = {
@@ -576,6 +571,7 @@ IMPORTANT: Return ONLY the JSON object below. Do not include any additional text
                     # Create structured recommendation with parsed data
                     recommendation = {
                         "priority": parsed_recommendation.get("priority", "High" if issue.get('severity') == 'critical' else "Medium"),
+                        "priority_level": parsed_recommendation.get("priority", "High" if issue.get('severity') == 'critical' else "Medium"),  # Add priority_level field
                         "title": parsed_recommendation.get("title", f"Accessibility Improvement Plan for {location.get('city', 'Location')}"),
                         "description": parsed_recommendation.get("description", f"Address {issue.get('type', 'accessibility issue')} affecting {', '.join(demographics.get('mobility_needs', ['community members']))}"),
                         "recommended_actions": parsed_recommendation.get("recommended_actions", [
@@ -593,8 +589,19 @@ IMPORTANT: Return ONLY the JSON object below. Do not include any additional text
                         "type": parsed_recommendation.get("type", "infrastructure"),
                         "coordinates": location.get('coordinates'),
                         "target_locations": [location.get('city', 'Unknown City')],  # Only the reported city
+                        "agent": "SurveyBot",  # Mark as survey-generated
                         "generated_at": datetime.now().isoformat(),
-                        "watsonx_generated": True
+                        "watsonx_generated": True,
+                        # Add missing fields for dashboard compatibility
+                        "impact": "high" if issue.get('severity') == 'critical' else "medium" if issue.get('severity') == 'moderate' else "low",
+                        "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+                        "equity_impact": f"Addresses accessibility needs for {', '.join(demographics.get('mobility_needs', ['vulnerable populations']))} in {location.get('city', 'Location')}",
+                        "plan": parsed_recommendation.get("detailed_plan", "Phase 1: Assessment and planning. Phase 2: Implementation. Phase 3: Verification and monitoring."),
+                        "success_metrics": parsed_recommendation.get("success_metrics", [
+                            "100% ADA compliance verification",
+                            "95% community satisfaction rate",
+                            "90% reduction in accessibility barriers"
+                        ])
                     }
                     
                     logger.info(f"✅ Successfully generated WatsonX recommendation for survey")
