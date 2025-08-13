@@ -30,7 +30,7 @@ const Navigation = () => {
       description: 'Interactive accessibility map'
     },
     {
-      name: 'Survey',
+      name: 'Report Problem',
       href: '/survey',
       icon: ClipboardDocumentListIcon,
       description: 'Report accessibility issues'

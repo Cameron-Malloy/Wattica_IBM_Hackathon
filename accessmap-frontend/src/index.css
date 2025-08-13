@@ -64,7 +64,23 @@ body {
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-blue-200;
+  }
+  
+  .dashboard-card {
+    @apply bg-white rounded-xl shadow-lg border border-white/20 p-6 transition-all duration-300 hover:shadow-xl hover:border-blue-200;
+  }
+  
+  .dashboard-stat {
+    @apply bg-white rounded-xl shadow-lg border border-white/20 p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer;
+  }
+  
+  .tab-active {
+    @apply bg-blue-600 text-white shadow-md;
+  }
+  
+  .tab-inactive {
+    @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
   }
   
   .button-primary {

@@ -97,102 +97,77 @@ class PlannerBotAgent:
         Generate 5-8 diverse recommendations covering different solution types.
         """
         
-        try:
-            response = self.model.generate(
-                prompt=prompt,
-                params={
-                    'max_new_tokens': 2000,
-                    'temperature': 0.3,
-                    'top_k': 50
-                }
-            )
-            ai_response = response['results'][0]['generated_text']
-            
-            # Extract JSON from response
-            json_start = ai_response.find('[')
-            json_end = ai_response.rfind(']') + 1
-            
-            if json_start != -1 and json_end != -1:
-                json_str = ai_response[json_start:json_end]
-                recommendations = json.loads(json_str)
+        # Retry WatsonX generation up to 3 times
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = self.model.generate(
+                    prompt=prompt,
+                    params={
+                        'max_new_tokens': 2000,
+                        'temperature': 0.3,
+                        'top_k': 50
+                    }
+                )
+                ai_response = response['results'][0]['generated_text']
                 
-                # Enhance recommendations
-                return self._enhance_recommendations(recommendations, scan_results, priority_areas, state)
-            else:
-                logger.warning("Could not parse AI response, using fallback")
-                return self._fallback_recommendations(scan_results, priority_areas, state)
+                # Extract JSON from response
+                json_start = ai_response.find('[')
+                json_end = ai_response.rfind(']') + 1
                 
-        except Exception as e:
-            logger.error(f"PlannerBot AI failed: {e}")
-            return self._fallback_recommendations(scan_results, priority_areas, state)
+                if json_start != -1 and json_end != -1:
+                    json_str = ai_response[json_start:json_end]
+                    recommendations = json.loads(json_str)
+                    
+                    # Enhance recommendations with real data
+                    enhanced_recommendations = self._enhance_recommendations(recommendations, scan_results, priority_areas, state)
+                    logger.info(f"✅ PlannerBot: Generated {len(enhanced_recommendations)} WatsonX recommendations")
+                    return enhanced_recommendations
+                else:
+                    logger.warning(f"Attempt {attempt + 1}: Could not parse AI response, retrying...")
+                    if attempt == max_retries - 1:
+                        raise Exception("Failed to parse WatsonX response after all retries")
+                        
+            except Exception as e:
+                logger.error(f"PlannerBot WatsonX attempt {attempt + 1} failed: {e}")
+                if attempt == max_retries - 1:
+                    raise Exception(f"PlannerBot WatsonX generation failed after {max_retries} attempts: {e}")
+        
+        # This should never be reached due to the exception above
+        raise Exception("PlannerBot WatsonX generation failed")
     
     def _enhance_recommendations(self, ai_recommendations: List[Dict], scan_results: List[Dict], 
                                priority_areas: List[Dict], state: str) -> List[Dict[str, Any]]:
         """Enhance AI recommendations with real data"""
         enhanced_recommendations = []
         
-        # Base recommendations template
-        base_recommendations = [
-            {
-                "type": "infrastructure",
-                "title": "Prioritize Curb Ramp Installation Program",
-                "description": "Systematic installation of ADA-compliant curb ramps in high-vulnerability areas",
-                "implementation_steps": [
-                    "Conduct comprehensive accessibility audits",
-                    "Prioritize locations by vulnerability score",
-                    "Secure funding and permits",
-                    "Execute phased installation",
-                    "Monitor and evaluate impact"
-                ],
-                "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems"
-            },
-            {
-                "type": "policy", 
-                "title": "Equity-Centered Accessibility Standards",
-                "description": "Implement comprehensive accessibility compliance program with equity focus",
-                "implementation_steps": [
-                    "Develop equity-centered accessibility standards",
-                    "Create community feedback mechanisms",
-                    "Establish regular auditing schedule",
-                    "Train city staff on accessibility compliance",
-                    "Publish annual accessibility reports"
-                ],
-                "sdg_alignment": "SDG 11.3: Inclusive and sustainable urbanization"
-            },
-            {
-                "type": "technology",
-                "title": "Smart Accessibility Monitoring System", 
-                "description": "Deploy IoT sensors and AI monitoring for real-time accessibility tracking",
-                "implementation_steps": [
-                    "Install smart sensors at key locations",
-                    "Develop AI monitoring dashboard",
-                    "Create citizen reporting mobile app",
-                    "Establish automated alert system",
-                    "Integrate with city management systems"
-                ],
-                "sdg_alignment": "SDG 11.C: Support sustainable and resilient building"
-            },
-            {
-                "type": "community",
-                "title": "Community Accessibility Champions Program",
-                "description": "Engage residents as accessibility advocates and monitors in their neighborhoods",
-                "implementation_steps": [
-                    "Recruit community volunteers",
-                    "Provide accessibility training",
-                    "Create neighborhood reporting network",
-                    "Establish feedback loops with city",
-                    "Recognize and reward participation"
-                ],
-                "sdg_alignment": "SDG 11.3: Enhance inclusive and participatory planning"
-            }
-        ]
+        # Calculate impact based on scan results and priorities
+        total_locations = len(scan_results) if scan_results else 0
+        high_priority_count = len([p for p in priority_areas if p.get('priority_score', 0) >= 7])
         
-        # Enhance each recommendation with real data
-        for i, base_rec in enumerate(base_recommendations):
-            # Calculate impact based on scan results and priorities
-            total_locations = len(scan_results) if scan_results else 0
-            high_priority_count = len([p for p in priority_areas if p.get('priority_score', 0) >= 7])
+        # Generate coordinates for target locations
+        target_locations = []
+        for p in priority_areas[:5]:  # Use up to 5 priority areas
+            location_name = p.get('location', f'Location {len(target_locations)+1}')
+            # Generate coordinates based on location name (simplified approach)
+            import hashlib
+            location_hash = int(hashlib.md5(location_name.encode()).hexdigest()[:8], 16)
             
+            # California bounds
+            ca_lat_min, ca_lat_max = 32.5343, 42.0095
+            ca_lng_min, ca_lng_max = -124.4096, -114.1318
+            
+            lat = ca_lat_min + (location_hash % 100000 / 100000) * (ca_lat_max - ca_lat_min)
+            lng = ca_lng_min + ((location_hash // 100000) % 100000 / 100000) * (ca_lng_max - ca_lng_min)
+            
+            target_locations.append({
+                "lat": round(lat, 6),
+                "lng": round(lng, 6),
+                "name": location_name
+            })
+        
+        # Enhance each WatsonX-generated recommendation
+        for i, ai_rec in enumerate(ai_recommendations):
             # Determine cost based on type and scope
             cost_estimates = {
                 "infrastructure": f"${total_locations * 5000:,} - ${total_locations * 15000:,}",
@@ -215,18 +190,29 @@ class PlannerBotAgent:
             
             enhanced_rec = {
                 "id": f"rec_{i+1}",
-                **base_rec,
-                "target_locations": [p.get('location', f'Location {i+1}') for p in priority_areas[:3]],
-                "impact": "high" if high_priority_count > 5 else "medium",
-                "cost_estimate": cost_estimates.get(base_rec["type"], "$50,000 - $150,000"),
-                "timeline": timelines.get(base_rec["type"], "6-12 months"),
-                "success_metrics": self._generate_success_metrics(base_rec["type"], total_locations),
-                "equity_impact": f"Addresses accessibility needs for vulnerable populations across {total_locations} identified locations",
-                "priority_level": priority_level,
-                "rationale": f"Addresses {base_rec['type']} needs identified by multi-agent analysis",
-                "locations_affected": max(total_locations, high_priority_count),
+                "type": ai_rec.get("type", "infrastructure"),
+                "title": ai_rec.get("title", f"WatsonX-Generated Plan {i+1}"),
+                "description": ai_rec.get("description", "AI-generated accessibility improvement plan"),
+                "target_locations": target_locations,
+                "impact": ai_rec.get("impact", "high" if high_priority_count > 5 else "medium"),
+                "cost_estimate": ai_rec.get("cost_estimate", cost_estimates.get(ai_rec.get("type", "infrastructure"), "$50,000 - $150,000")),
+                "timeline": ai_rec.get("timeline", timelines.get(ai_rec.get("type", "infrastructure"), "6-12 months")),
+                "implementation_steps": ai_rec.get("implementation_steps", [
+                    "Conduct comprehensive assessment",
+                    "Develop detailed implementation plan",
+                    "Secure necessary approvals and funding",
+                    "Execute phased implementation",
+                    "Monitor and evaluate outcomes"
+                ]),
+                "success_metrics": ai_rec.get("success_metrics", self._generate_success_metrics(ai_rec.get("type", "infrastructure"), total_locations)),
+                "sdg_alignment": ai_rec.get("sdg_alignment", "SDG 11.2: Accessible and affordable transport systems"),
+                "equity_impact": ai_rec.get("equity_impact", f"Addresses accessibility needs for vulnerable populations across {total_locations} identified locations"),
+                "priority_level": ai_rec.get("priority_level", priority_level),
+                "rationale": ai_rec.get("rationale", f"WatsonX AI-generated recommendation addressing {ai_rec.get('type', 'accessibility')} needs"),
+                "locations_affected": len(target_locations),
                 "agent": "PlannerBot",
-                "generated_date": datetime.now().strftime('%Y-%m-%d')
+                "generated_date": datetime.now().strftime('%Y-%m-%d'),
+                "watsonx_generated": True
             }
             
             enhanced_recommendations.append(enhanced_rec)
@@ -258,8 +244,3 @@ class PlannerBotAgent:
             ]
         }
         return metrics_map.get(rec_type, ["Improve accessibility outcomes", "Increase user satisfaction"])
-    
-    def _fallback_recommendations(self, scan_results: List[Dict], priority_areas: List[Dict], state: str) -> List[Dict[str, Any]]:
-        """Fallback if AI fails"""
-        logger.info("Using fallback recommendations")
-        return self._enhance_recommendations([], scan_results, priority_areas, state)

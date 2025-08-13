@@ -217,6 +217,13 @@ class ApiService {
   }
 
   /**
+   * Get survey-based recommendations
+   */
+  async getSurveyRecommendations() {
+    return this.makeRequest('/survey-recommendations');
+  }
+
+  /**
    * Get all active jobs
    */
   getActiveJobs() {

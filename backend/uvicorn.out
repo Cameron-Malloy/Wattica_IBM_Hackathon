@@ -388,3 +388,112 @@ INFO:     127.0.0.1:64100 - "GET /health HTTP/1.1" 200 OK
 INFO:     127.0.0.1:64100 - "GET /health HTTP/1.1" 200 OK
 INFO:     127.0.0.1:64100 - "GET /latest/CA HTTP/1.1" 200 OK
 INFO:     127.0.0.1:64125 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64171 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64171 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64173 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64175 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64173 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64175 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64175 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64173 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53638 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53640 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53638 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53638 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53638 - "OPTIONS /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53640 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53642 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53648 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53648 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53642 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53704 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53705 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53707 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53704 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53715 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53715 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53729 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53729 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53729 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53733 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53740 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53741 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53751 - "OPTIONS /survey HTTP/1.1" 200 OK
+2025-08-12 11:31:19,467 - api_server - INFO - Survey submitted: survey_2
+INFO:     127.0.0.1:53751 - "POST /survey HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53751 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53751 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53751 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53753 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53753 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53751 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53763 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53765 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53763 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53765 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53767 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53769 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53767 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53769 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53769 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53767 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53767 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53771 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53773 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53773 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53773 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53775 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53775 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53773 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53777 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53779 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53814 - "OPTIONS /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53814 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53816 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55197 - "OPTIONS /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55198 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55200 - "OPTIONS /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55197 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55200 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55198 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55202 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55208 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55208 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55202 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55202 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55208 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55208 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55210 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55214 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55264 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55264 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55264 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55264 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55264 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55264 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55288 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55288 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55288 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55288 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55288 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55288 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55410 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55415 - "GET /status/all HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55429 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55430 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55429 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55429 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55429 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55429 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55430 - "GET /surveys HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55429 - "GET /latest/CA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55430 - "GET /surveys HTTP/1.1" 200 OK

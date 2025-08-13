@@ -114,6 +114,20 @@ const CommunityPage = () => {
         survey.location.city === city
       );
 
+      // Get AI-generated recommendations for this city
+      let aiRecommendations = [];
+      try {
+        const surveyRecommendationsResponse = await fetch('http://localhost:8002/survey-recommendations');
+        if (surveyRecommendationsResponse.ok) {
+          const surveyRecommendations = await surveyRecommendationsResponse.json();
+          aiRecommendations = surveyRecommendations.recommendations.filter(rec => 
+            rec.survey_location?.city === city
+          );
+        }
+      } catch (error) {
+        console.warn('Failed to fetch AI recommendations:', error);
+      }
+
       if (citySurveys.length === 0) {
         setCityAnalysis({
           city,
@@ -156,45 +170,54 @@ const CommunityPage = () => {
       const criticalIssues = citySurveys.filter(s => s.issue.severity === 'critical').length;
       const moderateIssues = citySurveys.filter(s => s.issue.severity === 'moderate').length;
 
+      // Combine AI recommendations with generated recommendations
+      const allRecommendations = [
+        ...aiRecommendations.map(rec => ({
+          ...rec,
+          priority_level: rec.priority,
+          implementation_steps: rec.recommended_actions,
+          impact: rec.priority === 'High' ? 'high' : rec.priority === 'Medium' ? 'medium' : 'low'
+        })),
+        {
+          title: `Address ${mostCommonIssue} Issues`,
+          type: 'infrastructure',
+          priority_level: criticalIssues > 0 ? 'Immediate' : 'Short-term',
+          description: `Based on ${citySurveys.length} community reports, ${mostCommonIssue} is the most frequently reported issue in ${city}. ${criticalIssues} critical issues need immediate resolution.`,
+          implementation_steps: [
+            'Conduct site assessment of reported locations',
+            'Prioritize critical issues for immediate action',
+            'Develop improvement plan with timeline',
+            'Engage with community for feedback on solutions'
+          ],
+          cost_estimate: criticalIssues > 0 ? '$50,000 - $200,000' : '$20,000 - $100,000',
+          timeline: criticalIssues > 0 ? '1-3 months' : '3-6 months',
+          impact: criticalIssues > 0 ? 'high' : 'medium',
+          locations_affected: citySurveys.length
+        },
+        {
+          title: 'Community Engagement Program',
+          type: 'community',
+          priority_level: 'Short-term',
+          description: `Establish ongoing community feedback mechanisms to ensure accessibility issues are reported and addressed promptly.`,
+          implementation_steps: [
+            'Create dedicated accessibility reporting portal',
+            'Establish regular community meetings',
+            'Train city staff on accessibility standards',
+            'Develop response protocols for reported issues'
+          ],
+          cost_estimate: '$5,000 - $25,000',
+          timeline: '2-4 months',
+          impact: 'medium',
+          locations_affected: 1
+        }
+      ];
+
       setCityAnalysis({
         city,
         surveys: citySurveys,
         analysis: {
-          summary: `${city} has ${citySurveys.length} reported accessibility issues. ${criticalIssues} critical issues require immediate attention.`,
-          recommendations: [
-            {
-              title: `Address ${mostCommonIssue} Issues`,
-              type: 'infrastructure',
-              priority_level: criticalIssues > 0 ? 'Immediate' : 'Short-term',
-              description: `Based on ${citySurveys.length} community reports, ${mostCommonIssue} is the most frequently reported issue in ${city}. ${criticalIssues} critical issues need immediate resolution.`,
-              implementation_steps: [
-                'Conduct site assessment of reported locations',
-                'Prioritize critical issues for immediate action',
-                'Develop improvement plan with timeline',
-                'Engage with community for feedback on solutions'
-              ],
-              cost_estimate: criticalIssues > 0 ? '$50,000 - $200,000' : '$20,000 - $100,000',
-              timeline: criticalIssues > 0 ? '1-3 months' : '3-6 months',
-              impact: criticalIssues > 0 ? 'high' : 'medium',
-              locations_affected: citySurveys.length
-            },
-            {
-              title: 'Community Engagement Program',
-              type: 'community',
-              priority_level: 'Short-term',
-              description: `Establish ongoing community feedback mechanisms to ensure accessibility issues are reported and addressed promptly.`,
-              implementation_steps: [
-                'Create dedicated accessibility reporting portal',
-                'Establish regular community meetings',
-                'Train city staff on accessibility standards',
-                'Develop response protocols for reported issues'
-              ],
-              cost_estimate: '$5,000 - $25,000',
-              timeline: '2-4 months',
-              impact: 'medium',
-              locations_affected: 1
-            }
-          ]
+          summary: `${city} has ${citySurveys.length} reported accessibility issues. ${criticalIssues} critical issues require immediate attention. ${aiRecommendations.length} AI-generated recommendations available.`,
+          recommendations: allRecommendations
         }
       });
 

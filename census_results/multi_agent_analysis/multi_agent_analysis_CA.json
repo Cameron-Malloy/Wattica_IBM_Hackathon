@@ -9,7 +9,10 @@
       "EquityAdvisor",
       "PlannerBot"
     ],
-    "data_source": "Multi-Agent WatsonX Analysis"
+    "data_source": "Multi-Agent WatsonX Analysis",
+    "survey_recommendations_included": true,
+    "total_survey_recommendations": 1,
+    "last_updated": "2025-08-12T18:16:01.679404"
   },
   "scan_results": [
     {
@@ -1421,6 +1424,135 @@
     }
   ],
   "recommendations": [
+    {
+      "priority": "Critical",
+      "title": "Immediate Accessibility Improvement Plan for Fresno - Tree Blockages on Ramps",
+      "description": "An urgent, targeted plan to remove tree-related blockages affecting ramp accessibility for visual_impairment, cognitive_disabilities in Fresno, ensuring immediate safety and usability.",
+      "recommended_actions": [
+        "Emergency assessment of blocked ramps",
+        "Engage with local disability advocacy groups and affected community members for immediate concerns",
+        "Perform rapid cost-benefit analysis and secure emergency funding if needed",
+        "Develop short-term intervention strategy focusing on tree trimming/removal",
+        "Coordinate with city planning, public works, and disability services departments for expedited action",
+        "Implement temporary ADA-compliant solutions where possible until permanent fixes are made",
+        "Establish immediate maintenance and monitoring protocols",
+        "Create community education campaign on the importance of unobstructed ramps",
+        "Conduct preliminary accessibility assessments post-intervention",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$10,000 - $20,000",
+      "timeline": "2-4 weeks",
+      "expected_impact": "Ensure immediate safety and usability of ramps for young_adults with visual_impairment, cognitive_disabilities, reducing risk of injury and enhancing daily mobility.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Tree Service Providers"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 36.7378,
+        "lng": -119.7871
+      },
+      "target_locations": [
+        "Fresno"
+      ],
+      "generated_at": "2025-08-12T18:16:01.676899",
+      "watsonx_generated": true,
+      "id": "survey_rec_survey_1",
+      "survey_id": "survey_1",
+      "survey_location": {
+        "city": "Fresno",
+        "coordinates": {
+          "lat": 36.7378,
+          "lng": -119.7871
+        },
+        "fullAddress": "Fresno, CA, USA"
+      },
+      "survey_issue": {
+        "type": "lack_of_ramps",
+        "description": "All the ramps have been blocked off by trees\n",
+        "severity": "critical"
+      },
+      "submitted_at": "2025-08-12T18:15:52.193447",
+      "survey_based": true,
+      "agent": "SurveyBot",
+      "generated_date": "2025-08-12"
+    },
+    {
+      "priority": "High",
+      "title": "Comprehensive Accessibility Improvement Plan for Fresno - Poor Lighting",
+      "description": "A detailed, community-focused plan to address poor lighting affecting visual_impairment, elderly in Fresno. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$15,000 - $50,000",
+      "timeline": "6-12 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for adults, seniors with visual_impairment, elderly, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 36.7378,
+        "lng": -119.7871
+      },
+      "target_locations": [
+        "Fresno"
+      ],
+      "generated_at": "2025-08-12T18:02:10.433851",
+      "watsonx_generated": true,
+      "id": "survey_rec_survey_1",
+      "survey_id": "survey_1",
+      "survey_location": {
+        "city": "Fresno",
+        "coordinates": {
+          "lat": 36.7378,
+          "lng": -119.7871
+        },
+        "fullAddress": "Fresno, CA, USA"
+      },
+      "survey_issue": {
+        "type": "poor_lighting",
+        "description": "I can see anything past 6pm",
+        "severity": "moderate"
+      },
+      "submitted_at": "2025-08-12T18:02:02.902922",
+      "survey_based": true,
+      "agent": "SurveyBot",
+      "generated_date": "2025-08-12",
+      "detailed_plan": "Phase 1 (Weeks 1-2): Comprehensive assessment and community engagement. Phase 2 (Weeks 3-8): Design and planning with stakeholder input. Phase 3 (Weeks 9-12): Implementation and testing. Phase 4 (Weeks 13-16): Verification, training, and ongoing monitoring.",
+      "success_metrics": [
+        "100% ADA compliance verification",
+        "95% community satisfaction rate",
+        "90% reduction in accessibility barriers",
+        "Increased community participation by 40%",
+        "Zero safety incidents related to accessibility",
+        "Improved independence scores for affected populations"
+      ],
+      "equity_impact": "This plan directly addresses the needs of visual_impairment, elderly in Fresno, promoting social equity, community inclusion, and equal access to public spaces and services. It prioritizes the most affected populations and ensures their voices are central to the implementation process."
+    },
     {
       "id": "rec_1",
       "type": "infrastructure",

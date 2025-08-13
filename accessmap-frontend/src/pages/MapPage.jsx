@@ -282,12 +282,13 @@ const MapPage = () => {
           if (selectedRecommendation) {
             // Show locations for selected recommendation only
             dataToShow = selectedRecommendation.target_locations?.map(location => {
-              const cityData = results.scan_results?.find(item => 
-                item.location && item.location.includes(location)
-              );
+              // Handle both coordinate objects and location names
+              const coordinates = location.lat && location.lng ? location : getCityCoordinates(location);
+              const locationName = location.name || location;
+              
               return {
-                location: location,
-                coordinates: cityData?.coordinates || getCityCoordinates(location),
+                location: locationName,
+                coordinates: coordinates,
                 issue_type: selectedRecommendation.title,
                 severity: 'recommendation',
                 description: selectedRecommendation.description,
@@ -298,15 +299,21 @@ const MapPage = () => {
           } else {
             // Show all recommendation locations
             const allRecommendationLocations = results.recommendations?.flatMap(rec => 
-              rec.target_locations?.map(location => ({
-                location: location,
-                coordinates: getCityCoordinates(location),
-                issue_type: rec.title,
-                severity: 'recommendation',
-                description: rec.description,
-                recommendation: rec,
-                type: rec.type || 'general'
-              })) || []
+              rec.target_locations?.map(location => {
+                // Handle both coordinate objects and location names
+                const coordinates = location.lat && location.lng ? location : getCityCoordinates(location);
+                const locationName = location.name || location;
+                
+                return {
+                  location: locationName,
+                  coordinates: coordinates,
+                  issue_type: rec.title,
+                  severity: 'recommendation',
+                  description: rec.description,
+                  recommendation: rec,
+                  type: rec.type || 'general'
+                };
+              }) || []
             ) || [];
             dataToShow = allRecommendationLocations;
           }
@@ -369,12 +376,14 @@ const MapPage = () => {
                 <h3 class="font-bold text-lg text-purple-700">Recommendation Area</h3>
               </div>
               <div class="space-y-2 text-sm">
-                <p><strong>Location:</strong> ${item.location}</p>
+                <p><strong>Location:</strong> ${item.location?.name || 'Location'}</p>
                 <p><strong>Recommendation:</strong> ${item.issue_type}</p>
                 <p><strong>Description:</strong> ${item.description}</p>
-                <p><strong>Priority:</strong> ${item.recommendation.priority_level}</p>
+                <p><strong>Priority:</strong> ${item.recommendation.priority_level || item.recommendation.priority}</p>
                 <p><strong>Timeline:</strong> ${item.recommendation.timeline}</p>
                 <p><strong>Cost:</strong> ${item.recommendation.cost_estimate}</p>
+                <p><strong>Type:</strong> ${item.recommendation.type || 'infrastructure'}</p>
+                ${item.recommendation.survey_based ? '<p><strong>Source:</strong> <span class="text-blue-600">Survey-Based</span></p>' : ''}
               </div>
             </div>
           `;
@@ -534,7 +543,13 @@ const MapPage = () => {
       case 'surveys':
         return surveyData;
       case 'recommendations':
-        return results.recommendations || [];
+        if (selectedRecommendation) {
+          // Return target locations for the selected recommendation
+          return selectedRecommendation.target_locations || [];
+        } else {
+          // Return all recommendations if none selected
+          return results.recommendations || [];
+        }
       default:
         return [];
     }

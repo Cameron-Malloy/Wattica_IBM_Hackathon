@@ -84,34 +84,44 @@ class EquityAdvisorAgent:
         Focus on equity-driven prioritization that serves the most vulnerable populations first.
         """
         
-        try:
-            response = self.model.generate(
-                prompt=prompt,
-                params={
-                    'max_new_tokens': 1500,
-                    'temperature': 0.3,
-                    'top_k': 50
-                }
-            )
-            ai_response = response['results'][0]['generated_text']
-            
-            # Extract JSON from response
-            json_start = ai_response.find('[')
-            json_end = ai_response.rfind(']') + 1
-            
-            if json_start != -1 and json_end != -1:
-                json_str = ai_response[json_start:json_end]
-                priority_results = json.loads(json_str)
+        # Retry WatsonX generation up to 3 times
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = self.model.generate(
+                    prompt=prompt,
+                    params={
+                        'max_new_tokens': 1500,
+                        'temperature': 0.3,
+                        'top_k': 50
+                    }
+                )
+                ai_response = response['results'][0]['generated_text']
                 
-                # Enhance with real data
-                return self._enhance_priority_results(priority_results, census_data, scan_results, state)
-            else:
-                logger.warning("Could not parse AI response, using fallback")
-                return self._fallback_priority_results(census_data, scan_results, state)
+                # Extract JSON from response
+                json_start = ai_response.find('[')
+                json_end = ai_response.rfind(']') + 1
                 
-        except Exception as e:
-            logger.error(f"EquityAdvisor AI failed: {e}")
-            return self._fallback_priority_results(census_data, scan_results, state)
+                if json_start != -1 and json_end != -1:
+                    json_str = ai_response[json_start:json_end]
+                    priority_results = json.loads(json_str)
+                    
+                    # Enhance with real data
+                    enhanced_results = self._enhance_priority_results(priority_results, census_data, scan_results, state)
+                    logger.info(f"✅ EquityAdvisor: Generated {len(enhanced_results)} WatsonX priority areas")
+                    return enhanced_results
+                else:
+                    logger.warning(f"Attempt {attempt + 1}: Could not parse AI response, retrying...")
+                    if attempt == max_retries - 1:
+                        raise Exception("Failed to parse WatsonX response after all retries")
+                        
+            except Exception as e:
+                logger.error(f"EquityAdvisor WatsonX attempt {attempt + 1} failed: {e}")
+                if attempt == max_retries - 1:
+                    raise Exception(f"EquityAdvisor WatsonX generation failed after {max_retries} attempts: {e}")
+        
+        # This should never be reached due to the exception above
+        raise Exception("EquityAdvisor WatsonX generation failed")
     
     def _enhance_priority_results(self, ai_results: List[Dict], census_data: pd.DataFrame, 
                                 scan_results: List[Dict], state: str) -> List[Dict[str, Any]]:
@@ -189,7 +199,8 @@ class EquityAdvisorAgent:
                 "potential_impact": "high" if priority_score >= 7 else "medium" if priority_score >= 4 else "low",
                 "implementation_cost": "medium",  # Default, could be enhanced with more data
                 "rationale": f"Priority {priority_score:.1f}/10 based on vulnerability analysis and accessibility gaps",
-                "agent": "EquityAdvisor"
+                "agent": "EquityAdvisor",
+                "watsonx_generated": True
             }
             
             enhanced_results.append(priority_result)
@@ -197,8 +208,3 @@ class EquityAdvisorAgent:
         # Sort by priority score (highest first)
         enhanced_results.sort(key=lambda x: x['priority_score'], reverse=True)
         return enhanced_results[:20]  # Top 20 priorities
-    
-    def _fallback_priority_results(self, census_data: pd.DataFrame, scan_results: List[Dict], state: str) -> List[Dict[str, Any]]:
-        """Fallback if AI fails"""
-        logger.info("Using fallback priority results")
-        return self._enhance_priority_results([], census_data, scan_results, state)

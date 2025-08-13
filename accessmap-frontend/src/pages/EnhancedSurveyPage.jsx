@@ -18,6 +18,7 @@ import { LoadingSpinner } from '../components/LoadingSpinner';
 import InteractiveMapSelector from '../components/InteractiveMapSelector';
 import { ALL_CALIFORNIA_CITIES } from '../utils/californiaCitiesData';
 import toast from 'react-hot-toast';
+import { useApi } from '../contexts/ApiContext';
 
 // California cities for validation (using comprehensive list)
 const CALIFORNIA_CITIES = Object.keys(ALL_CALIFORNIA_CITIES);
@@ -26,6 +27,7 @@ const EnhancedSurveyPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [submittedPlan, setSubmittedPlan] = useState(null);
+  const { getLatestResults } = useApi();
   
   const [formData, setFormData] = useState({
     city: '',
@@ -187,7 +189,17 @@ const EnhancedSurveyPage = () => {
         });
       }
 
-      toast.success('Survey submitted successfully!');
+      if (surveyResult.ai_recommendation) {
+        toast.success('Survey submitted and AI recommendation generated! Check the Recommendations tab to see it.');
+        // Refresh recommendations to include the new survey-based recommendation
+        try {
+          await getLatestResults('CA');
+        } catch (error) {
+          console.warn('Failed to refresh recommendations:', error);
+        }
+      } else {
+        toast.success('Survey submitted successfully!');
+      }
     } catch (error) {
       console.error('Error submitting survey:', error);
       toast.error('Failed to submit survey. Please try again.');
@@ -249,7 +261,7 @@ const EnhancedSurveyPage = () => {
             className="text-center"
           >
             <h1 className="text-4xl font-bold gradient-text mb-4">
-              Accessibility Survey
+              Report Accessibility Problem
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Report accessibility issues in your community and receive AI-generated action plans

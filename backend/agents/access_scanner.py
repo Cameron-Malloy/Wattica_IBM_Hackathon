@@ -103,43 +103,57 @@ class AccessScannerAgent:
         
         Focus on areas with high elderly populations (>15%) or disability rates (>10%). Return ONLY the JSON array."""
         
-        try:
-            response = self.model.generate(
-                prompt=prompt, 
-                params={
-                    'max_new_tokens': 1000,
-                    'temperature': 0.3,
-                    'stop_sequences': ['}]']
-                }
-            )
-            ai_response = response['results'][0]['generated_text']
-            
-            # Extract JSON
-            json_start = ai_response.find('[')
-            json_end = ai_response.rfind(']')
-            
-            if json_start != -1 and json_end > json_start:
-                json_str = ai_response[json_start:json_end+1]
-                json_str = json_str.replace('\n', ' ').replace('\t', ' ')
-                while '  ' in json_str:
-                    json_str = json_str.replace('  ', ' ')
+        # Retry WatsonX generation up to 3 times
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = self.model.generate(
+                    prompt=prompt, 
+                    params={
+                        'max_new_tokens': 1000,
+                        'temperature': 0.3,
+                        'stop_sequences': ['}]']
+                    }
+                )
+                ai_response = response['results'][0]['generated_text']
                 
-                try:
-                    ai_results = json.loads(json_str)
-                    logger.info(f"✅ Batch {batch_num + 1}: Generated {len(ai_results)} results")
-                    
-                    # Enhance results with census data
-                    enhanced_results = self._enhance_ai_results(ai_results, batch_data, state)
-                    return enhanced_results
-                    
-                except json.JSONDecodeError as e:
-                    logger.warning(f"JSON parsing failed for batch {batch_num + 1}: {e}")
-                    
-            return []
+                # Extract JSON
+                json_start = ai_response.find('[')
+                json_end = ai_response.rfind(']')
                 
-        except Exception as e:
-            logger.error(f"Batch {batch_num + 1} failed: {e}")
-            return []
+                if json_start != -1 and json_end > json_start:
+                    json_str = ai_response[json_start:json_end+1]
+                    json_str = json_str.replace('\n', ' ').replace('\t', ' ')
+                    while '  ' in json_str:
+                        json_str = json_str.replace('  ', ' ')
+                    
+                    try:
+                        ai_results = json.loads(json_str)
+                        logger.info(f"✅ Batch {batch_num + 1}: Generated {len(ai_results)} WatsonX results")
+                        
+                        # Enhance results with census data
+                        enhanced_results = self._enhance_ai_results(ai_results, batch_data, state)
+                        return enhanced_results
+                        
+                    except json.JSONDecodeError as e:
+                        logger.warning(f"JSON parsing failed for batch {batch_num + 1}, attempt {attempt + 1}: {e}")
+                        if attempt == max_retries - 1:
+                            raise Exception(f"Failed to parse WatsonX response after all retries: {e}")
+                        continue
+                else:
+                    logger.warning(f"Attempt {attempt + 1}: Could not find JSON in response, retrying...")
+                    if attempt == max_retries - 1:
+                        raise Exception("Failed to find JSON in WatsonX response after all retries")
+                    continue
+                        
+            except Exception as e:
+                logger.error(f"Batch {batch_num + 1}, attempt {attempt + 1} failed: {e}")
+                if attempt == max_retries - 1:
+                    raise Exception(f"AccessScanner WatsonX generation failed after {max_retries} attempts: {e}")
+                continue
+        
+        # This should never be reached due to the exception above
+        raise Exception("AccessScanner WatsonX generation failed")
     
     def _enhance_ai_results(self, ai_results: List[Dict], census_data: List[Dict], state: str) -> List[Dict[str, Any]]:
         """Enhance AI results with real census data and coordinates"""
@@ -195,7 +209,8 @@ class AccessScannerAgent:
                     "detected_date": datetime.now().strftime('%Y-%m-%d'),
                     "vulnerable_population": f"{elderly_pct:.1f}% elderly, {disabled_pct:.1f}% disabled",
                     "risk_factors": self._get_risk_factors(matching_census),
-                    "agent": "AccessScanner"
+                    "agent": "AccessScanner",
+                    "watsonx_generated": True
                 }
                 
                 enhanced_results.append(enhanced_result)

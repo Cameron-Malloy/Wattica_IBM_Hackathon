@@ -50,11 +50,11 @@ const RecommendationsSidebar = ({ data }) => {
       {/* Header */}
       <div className="flex items-center space-x-2">
         <CheckCircleIcon className="h-5 w-5 text-green-600" />
-        <h3 className="text-lg font-semibold text-gray-900">PlannerBot Recommendations</h3>
+        <h3 className="text-lg font-semibold text-gray-900">AI Recommendations</h3>
       </div>
       
       <p className="text-sm text-gray-600">
-        AI-generated improvement plans with cost estimates and impact analysis
+        AI-generated improvement plans with cost estimates and impact analysis. Includes both system-generated and survey-based recommendations.
       </p>
 
       {/* Summary Stats */}
@@ -79,20 +79,36 @@ const RecommendationsSidebar = ({ data }) => {
       <div className="space-y-3">
         {data
           .slice()
-          .sort((a, b) => normalizeImpactScore(b) - normalizeImpactScore(a))
+          .sort((a, b) => {
+            // Sort survey-based recommendations first, then by impact score
+            if (a.survey_based && !b.survey_based) return -1;
+            if (!a.survey_based && b.survey_based) return 1;
+            return normalizeImpactScore(b) - normalizeImpactScore(a);
+          })
           .map((recommendation) => (
-            <div key={recommendation.id} className="card border-l-4 border-l-green-400 p-3">
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-gray-900 text-sm">{recommendation.title || recommendation.proposal}</h4>
-                    <div className="flex items-center space-x-1">
-                      <StarIcon className={`h-4 w-4 ${getImpactColor(recommendation)}`} />
-                      <span className={`text-sm font-medium ${getImpactColor(recommendation)}`}>
-                        {normalizeImpactScore(recommendation).toFixed(1)}
-                      </span>
-                    </div>
-                  </div>
+            <div key={recommendation.id} className={`card border-l-4 p-3 ${
+              recommendation.survey_based 
+                ? 'border-l-blue-400 bg-blue-50/50' 
+                : 'border-l-green-400'
+            }`}>
+                                <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-2">
+                          <h4 className="font-medium text-gray-900 text-sm">{recommendation.title || recommendation.proposal}</h4>
+                          {recommendation.survey_based && (
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-300">
+                              Survey-Based
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <StarIcon className={`h-4 w-4 ${getImpactColor(recommendation)}`} />
+                          <span className={`text-sm font-medium ${getImpactColor(recommendation)}`}>
+                            {normalizeImpactScore(recommendation).toFixed(1)}
+                          </span>
+                        </div>
+                      </div>
                   
                   <p className="text-sm text-gray-700 font-medium mb-2">{recommendation.description || recommendation.justification}</p>
                   
@@ -164,10 +180,10 @@ const RecommendationsSidebar = ({ data }) => {
 
       {/* Agent Info */}
       <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-        <h4 className="font-medium text-green-900 mb-2">About PlannerBot</h4>
+        <h4 className="font-medium text-green-900 mb-2">About AI Recommendations</h4>
         <p className="text-sm text-green-800">
-          Generates specific, actionable improvement recommendations with cost-benefit analysis, 
-          timeline estimates, and impact scoring based on accessibility best practices.
+          Our AI system generates specific, actionable improvement recommendations with cost-benefit analysis, 
+          timeline estimates, and impact scoring. Recommendations come from both system analysis and community survey submissions.
         </p>
       </div>
     </div>
