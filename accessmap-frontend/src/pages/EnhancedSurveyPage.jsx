@@ -138,7 +138,7 @@ const EnhancedSurveyPage = () => {
       };
 
       // Submit survey data
-      const surveyResponse = await fetch('http://localhost:8002/survey', {
+      const surveyResponse = await fetch('http://localhost:8003/survey', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(surveyPayload)

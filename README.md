@@ -154,8 +154,8 @@ python -c "from multi_agent_orchestrator import MultiAgentOrchestrator; import p
 ### 6. Access the Application
 
 - **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8002
-- **API Documentation**: http://localhost:8002/docs
+- **Backend API**: http://localhost:8003
+- **API Documentation**: http://localhost:8003/docs
 
 ## 🔧 IBM WatsonX Setup Guide
 
@@ -246,7 +246,7 @@ Wattica_IBM_Hackathon/
 
 **Backend Port Already in Use:**
 ```bash
-lsof -ti:8002 | xargs kill -9
+lsof -ti:8003 | xargs kill -9
 ```
 
 **Frontend Port Already in Use:**
@@ -271,7 +271,7 @@ pip install -r requirements.txt
 ### Logs and Debugging
 - **Backend Logs**: Check `backend/server.log`
 - **Frontend Logs**: Check browser console
-- **API Status**: Visit http://localhost:8002/docs
+- **API Status**: Visit http://localhost:8003/docs
 
 ## 🤝 Contributing
 

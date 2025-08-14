@@ -57,7 +57,7 @@ src/
 ### Prerequisites
 - Node.js 16+ 
 - npm or yarn
-- Backend server running on port 8002
+- Backend server running on port 8003
 
 ### Installation
 ```bash
@@ -74,7 +74,7 @@ npm run build
 ### Environment Variables
 Create a `.env` file in the root directory:
 ```env
-REACT_APP_API_URL=http://localhost:8002
+REACT_APP_API_URL=http://localhost:8003
 ```
 
 ## 📊 Data Flow

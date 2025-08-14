@@ -53,13 +53,13 @@ class EquityAdvisorAgent:
         Census vulnerability data:
         {json.dumps(sample_census, indent=2)}
 
-        Your task: Prioritize these areas for accessibility improvements based on:
+        Your task: Identify the top 3-6 priority areas for accessibility improvements based on:
         1. Severity of accessibility barriers
         2. Vulnerability of population (elderly, disabled, low-income)
         3. Equity impact potential
         4. Implementation feasibility
 
-        Return ONLY a JSON array with this structure:
+        Return ONLY a JSON array with 3-6 priority areas using this structure:
         [
             {{
                 "location": "City Name, {state}",
@@ -82,6 +82,7 @@ class EquityAdvisorAgent:
         Implementation cost: "high", "medium", "low"
 
         Focus on equity-driven prioritization that serves the most vulnerable populations first.
+        Generate only 3-6 priority areas, not more.
         """
         
         # Retry WatsonX generation up to 3 times
@@ -98,22 +99,88 @@ class EquityAdvisorAgent:
                 )
                 ai_response = response['results'][0]['generated_text']
                 
-                # Extract JSON from response
-                json_start = ai_response.find('[')
-                json_end = ai_response.rfind(']') + 1
+                # Enhanced JSON extraction and parsing
+                logger.info(f"Raw AI response: {ai_response[:200]}...")
                 
-                if json_start != -1 and json_end != -1:
-                    json_str = ai_response[json_start:json_end]
-                    priority_results = json.loads(json_str)
+                # Try multiple JSON extraction strategies
+                json_str = None
+                
+                # Strategy 1: Look for JSON array markers
+                json_start = ai_response.find('[')
+                json_end = ai_response.rfind(']')
+                
+                if json_start != -1 and json_end > json_start:
+                    json_str = ai_response[json_start:json_end+1]
+                
+                # Strategy 2: If no array found, try to extract JSON objects
+                if not json_str:
+                    # Look for individual JSON objects
+                    brace_start = ai_response.find('{')
+                    brace_end = ai_response.rfind('}')
+                    if brace_start != -1 and brace_end > brace_start:
+                        # Wrap in array if it's a single object
+                        single_obj = ai_response[brace_start:brace_end+1]
+                        json_str = f"[{single_obj}]"
+                
+                # Strategy 3: Try to fix common JSON issues
+                if json_str:
+                    # Clean up the JSON string
+                    json_str = json_str.replace('\n', ' ').replace('\t', ' ')
+                    json_str = json_str.replace('\\', '\\\\')  # Escape backslashes
                     
-                    # Enhance with real data
-                    enhanced_results = self._enhance_priority_results(priority_results, census_data, scan_results, state)
-                    logger.info(f"✅ EquityAdvisor: Generated {len(enhanced_results)} WatsonX priority areas")
-                    return enhanced_results
+                    # Remove extra whitespace
+                    while '  ' in json_str:
+                        json_str = json_str.replace('  ', ' ')
+                    
+                    # Try to fix common JSON syntax issues
+                    json_str = json_str.replace('",}', '"}')  # Remove trailing commas
+                    json_str = json_str.replace(',]', ']')    # Remove trailing commas in arrays
+                    json_str = json_str.replace(',}', '}')    # Remove trailing commas in objects
+                    
+                    # Try to fix incomplete JSON by finding the last complete object
+                    if json_str.count('{') > json_str.count('}'):
+                        # Find the last complete object
+                        brace_count = 0
+                        last_complete = 0
+                        for i, char in enumerate(json_str):
+                            if char == '{':
+                                brace_count += 1
+                            elif char == '}':
+                                brace_count -= 1
+                                if brace_count == 0:
+                                    last_complete = i + 1
+                        
+                        if last_complete > 0:
+                            json_str = json_str[:last_complete] + ']'
+                            logger.info(f"Fixed incomplete JSON by truncating at position {last_complete}")
+                    
+                    logger.info(f"Cleaned JSON string: {json_str[:200]}...")
+                    
+                    try:
+                        priority_results = json.loads(json_str)
+                        logger.info(f"✅ EquityAdvisor: Generated {len(priority_results)} WatsonX priority areas")
+                        
+                        # Ensure we have a list
+                        if not isinstance(priority_results, list):
+                            priority_results = [priority_results]
+                        
+                        # Enhance with real data
+                        enhanced_results = self._enhance_priority_results(priority_results, census_data, scan_results, state)
+                        return enhanced_results
+                        
+                    except json.JSONDecodeError as e:
+                        logger.warning(f"JSON parsing failed for attempt {attempt + 1}: {e}")
+                        logger.warning(f"Failed JSON string: {json_str}")
+                        
+                        # If JSON parsing fails, retry
+                        if attempt == max_retries - 1:
+                            raise Exception(f"Failed to parse WatsonX response after all retries: {e}")
+                        continue
                 else:
-                    logger.warning(f"Attempt {attempt + 1}: Could not parse AI response, retrying...")
+                    logger.warning(f"Attempt {attempt + 1}: Could not find JSON in response, retrying...")
                     if attempt == max_retries - 1:
-                        raise Exception("Failed to parse WatsonX response after all retries")
+                        raise Exception("Failed to find JSON in WatsonX response after all retries")
+                    continue
                         
             except Exception as e:
                 logger.error(f"EquityAdvisor WatsonX attempt {attempt + 1} failed: {e}")
@@ -207,4 +274,9 @@ class EquityAdvisorAgent:
         
         # Sort by priority score (highest first)
         enhanced_results.sort(key=lambda x: x['priority_score'], reverse=True)
-        return enhanced_results[:20]  # Top 20 priorities
+        
+        # Limit priority areas to be fewer than accessibility gaps
+        max_priorities = min(len(scan_results) // 2, 10)  # Half of scan results, max 10
+        return enhanced_results[:max_priorities]
+    
+

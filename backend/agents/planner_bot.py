@@ -29,12 +29,12 @@ class PlannerBotAgent:
     def generate_improvement_plans(self, scan_results: List[Dict], priority_areas: List[Dict], 
                                  census_data: pd.DataFrame, state: str) -> List[Dict[str, Any]]:
         """
-        Generate comprehensive improvement plans based on AccessScanner and EquityAdvisor outputs
+        Generate comprehensive improvement plans based on AccessScanner accessibility gaps
         
         Args:
-            scan_results: Output from AccessScanner
+            scan_results: Output from AccessScanner (accessibility gaps)
             priority_areas: Output from EquityAdvisor
-            census_data: Raw census data
+            census_data: Raw census data (for context)
             state: State abbreviation
             
         Returns:
@@ -42,20 +42,26 @@ class PlannerBotAgent:
         """
         logger.info(f"🤖 PlannerBot: Generating improvement plans for {state}")
         
-        # Prepare data for AI analysis
-        top_scans = scan_results[:5] if scan_results else []
-        top_priorities = priority_areas[:5] if priority_areas else []
+        # Focus on accessibility gaps from AccessScanner
+        accessibility_gaps = scan_results if scan_results else []
+        all_priorities = priority_areas if priority_areas else []
+        
+        logger.info(f"🤖 PlannerBot: Processing {len(accessibility_gaps)} accessibility gaps and {len(all_priorities)} priority areas")
+        
+        if not accessibility_gaps:
+            logger.warning("No accessibility gaps found to generate recommendations from")
+            return []
         
         prompt = f"""
         You are PlannerBotAgent, an expert urban planning AI that creates actionable improvement plans for accessibility and equity.
 
-        AccessScanner identified these issues:
-        {json.dumps(top_scans, indent=2)}
+        AccessScanner identified these accessibility gaps:
+        {json.dumps(accessibility_gaps, indent=2)}
 
         EquityAdvisor prioritized these areas:
-        {json.dumps(top_priorities, indent=2)}
+        {json.dumps(all_priorities, indent=2)}
 
-        Your task: Create comprehensive improvement recommendations that address the identified issues with specific, actionable plans.
+        Your task: Create comprehensive improvement recommendations that directly address the identified accessibility gaps with specific, actionable plans.
 
         Return ONLY a JSON array with this structure:
         [
@@ -79,7 +85,8 @@ class PlannerBotAgent:
                 "sdg_alignment": "SDG 11.2: Accessible transportation systems",
                 "equity_impact": "Directly serves 15.3% elderly and 8.2% disabled population",
                 "priority_level": "Immediate",
-                "rationale": "Critical accessibility barrier affecting vulnerable populations in high-priority areas"
+                "rationale": "Critical accessibility barrier affecting vulnerable populations in high-priority areas",
+                "addresses_gaps": ["gap_id_1", "gap_id_2"]
             }}
         ]
 
@@ -88,13 +95,17 @@ class PlannerBotAgent:
         Priority levels: "Immediate", "Short-term", "Medium-term", "Long-term"
         
         Focus on:
-        1. Specific, actionable solutions
-        2. Clear implementation pathways
-        3. Measurable outcomes
-        4. Equity-centered approaches
-        5. SDG 11 alignment
+        1. Directly addressing the specific accessibility gaps identified
+        2. Specific, actionable solutions for each gap type
+        3. Clear implementation pathways with realistic timelines
+        4. Measurable outcomes and success metrics
+        5. Equity-centered approaches prioritizing vulnerable populations
+        6. SDG 11 alignment for sustainable urban development
         
-        Generate 5-8 diverse recommendations covering different solution types.
+        IMPORTANT: Generate recommendations that directly correspond to the accessibility gaps identified.
+        Create targeted recommendations for each major accessibility issue found.
+        Ensure each recommendation addresses specific gaps and provides actionable solutions.
+        Aim for comprehensive coverage of all identified accessibility barriers.
         """
         
         # Retry WatsonX generation up to 3 times
@@ -111,22 +122,88 @@ class PlannerBotAgent:
                 )
                 ai_response = response['results'][0]['generated_text']
                 
-                # Extract JSON from response
-                json_start = ai_response.find('[')
-                json_end = ai_response.rfind(']') + 1
+                # Enhanced JSON extraction and parsing
+                logger.info(f"Raw AI response: {ai_response[:200]}...")
                 
-                if json_start != -1 and json_end != -1:
-                    json_str = ai_response[json_start:json_end]
-                    recommendations = json.loads(json_str)
+                # Try multiple JSON extraction strategies
+                json_str = None
+                
+                # Strategy 1: Look for JSON array markers
+                json_start = ai_response.find('[')
+                json_end = ai_response.rfind(']')
+                
+                if json_start != -1 and json_end > json_start:
+                    json_str = ai_response[json_start:json_end+1]
+                
+                # Strategy 2: If no array found, try to extract JSON objects
+                if not json_str:
+                    # Look for individual JSON objects
+                    brace_start = ai_response.find('{')
+                    brace_end = ai_response.rfind('}')
+                    if brace_start != -1 and brace_end > brace_start:
+                        # Wrap in array if it's a single object
+                        single_obj = ai_response[brace_start:brace_end+1]
+                        json_str = f"[{single_obj}]"
+                
+                # Strategy 3: Try to fix common JSON issues
+                if json_str:
+                    # Clean up the JSON string
+                    json_str = json_str.replace('\n', ' ').replace('\t', ' ')
+                    json_str = json_str.replace('\\', '\\\\')  # Escape backslashes
                     
-                    # Enhance recommendations with real data
-                    enhanced_recommendations = self._enhance_recommendations(recommendations, scan_results, priority_areas, state)
-                    logger.info(f"✅ PlannerBot: Generated {len(enhanced_recommendations)} WatsonX recommendations")
-                    return enhanced_recommendations
+                    # Remove extra whitespace
+                    while '  ' in json_str:
+                        json_str = json_str.replace('  ', ' ')
+                    
+                    # Try to fix common JSON syntax issues
+                    json_str = json_str.replace('",}', '"}')  # Remove trailing commas
+                    json_str = json_str.replace(',]', ']')    # Remove trailing commas in arrays
+                    json_str = json_str.replace(',}', '}')    # Remove trailing commas in objects
+                    
+                    # Try to fix incomplete JSON by finding the last complete object
+                    if json_str.count('{') > json_str.count('}'):
+                        # Find the last complete object
+                        brace_count = 0
+                        last_complete = 0
+                        for i, char in enumerate(json_str):
+                            if char == '{':
+                                brace_count += 1
+                            elif char == '}':
+                                brace_count -= 1
+                                if brace_count == 0:
+                                    last_complete = i + 1
+                        
+                        if last_complete > 0:
+                            json_str = json_str[:last_complete] + ']'
+                            logger.info(f"Fixed incomplete JSON by truncating at position {last_complete}")
+                    
+                    logger.info(f"Cleaned JSON string: {json_str[:200]}...")
+                    
+                    try:
+                        recommendations = json.loads(json_str)
+                        logger.info(f"✅ PlannerBot: Generated {len(recommendations)} WatsonX recommendations")
+                        
+                        # Ensure we have a list
+                        if not isinstance(recommendations, list):
+                            recommendations = [recommendations]
+                        
+                        # Enhance recommendations with real data
+                        enhanced_recommendations = self._enhance_recommendations(recommendations, scan_results, priority_areas, state)
+                        return enhanced_recommendations
+                        
+                    except json.JSONDecodeError as e:
+                        logger.warning(f"JSON parsing failed for attempt {attempt + 1}: {e}")
+                        logger.warning(f"Failed JSON string: {json_str}")
+                        
+                        # If JSON parsing fails, retry
+                        if attempt == max_retries - 1:
+                            raise Exception(f"Failed to parse WatsonX response after all retries: {e}")
+                        continue
                 else:
-                    logger.warning(f"Attempt {attempt + 1}: Could not parse AI response, retrying...")
+                    logger.warning(f"Attempt {attempt + 1}: Could not find JSON in response, retrying...")
                     if attempt == max_retries - 1:
-                        raise Exception("Failed to parse WatsonX response after all retries")
+                        raise Exception("Failed to find JSON in WatsonX response after all retries")
+                    continue
                         
             except Exception as e:
                 logger.error(f"PlannerBot WatsonX attempt {attempt + 1} failed: {e}")
@@ -145,35 +222,74 @@ class PlannerBotAgent:
         total_locations = len(scan_results) if scan_results else 0
         high_priority_count = len([p for p in priority_areas if p.get('priority_score', 0) >= 7])
         
-        # Generate coordinates for target locations
-        target_locations = []
-        for p in priority_areas[:5]:  # Use up to 5 priority areas
-            location_name = p.get('location', f'Location {len(target_locations)+1}')
-            # Generate coordinates based on location name (simplified approach)
-            import hashlib
-            location_hash = int(hashlib.md5(location_name.encode()).hexdigest()[:8], 16)
+        # Prepare all accessibility gap locations for distribution
+        all_accessibility_locations = []
+        for scan in scan_results:
+            location_name = scan.get('location', f'Location {len(all_accessibility_locations)+1}')
+            coordinates = scan.get('coordinates', {})
             
-            # California bounds
-            ca_lat_min, ca_lat_max = 32.5343, 42.0095
-            ca_lng_min, ca_lng_max = -124.4096, -114.1318
+            # Use coordinates from scan results if available, otherwise generate them
+            if coordinates and 'lat' in coordinates and 'lng' in coordinates:
+                lat = coordinates['lat']
+                lng = coordinates['lng']
+            else:
+                # Generate coordinates based on location name (fallback)
+                import hashlib
+                location_hash = int(hashlib.md5(location_name.encode()).hexdigest()[:8], 16)
+                
+                # California bounds
+                ca_lat_min, ca_lat_max = 32.5343, 42.0095
+                ca_lng_min, ca_lng_max = -124.4096, -114.1318
+                
+                lat = ca_lat_min + (location_hash % 100000 / 100000) * (ca_lat_max - ca_lat_min)
+                lng = ca_lng_min + ((location_hash // 100000) % 100000 / 100000) * (ca_lng_max - ca_lng_min)
             
-            lat = ca_lat_min + (location_hash % 100000 / 100000) * (ca_lat_max - ca_lat_min)
-            lng = ca_lng_min + ((location_hash // 100000) % 100000 / 100000) * (ca_lng_max - ca_lng_min)
+            # Validate coordinates to ensure they are valid numbers
+            try:
+                lat = float(lat) if lat is not None else 36.7783  # Default to CA center
+                lng = float(lng) if lng is not None else -119.4179
+                
+                # Ensure coordinates are within California bounds
+                lat = max(32.5343, min(42.0095, lat))
+                lng = max(-124.4096, min(-114.1318, lng))
+            except (ValueError, TypeError):
+                # Fallback to default California coordinates
+                lat = 36.7783
+                lng = -119.4179
             
-            target_locations.append({
+            all_accessibility_locations.append({
                 "lat": round(lat, 6),
                 "lng": round(lng, 6),
-                "name": location_name
+                "name": location_name,
+                "issue_type": scan.get('issue_type', 'Unknown'),
+                "severity": scan.get('severity', 'moderate')
             })
-        
-        # Create location names array for frontend display
-        location_names = [loc["name"] for loc in target_locations]
         
         # Enhance each WatsonX-generated recommendation
         for i, ai_rec in enumerate(ai_recommendations):
+            # Assign different locations to each recommendation
+            # Distribute all accessibility locations evenly across recommendations
+            locations_per_rec = max(1, len(all_accessibility_locations) // len(ai_recommendations))
+            start_idx = (i * locations_per_rec) % len(all_accessibility_locations)
+            end_idx = min(start_idx + locations_per_rec, len(all_accessibility_locations))
+            
+            # If we have more recommendations than locations, cycle through locations
+            if end_idx <= start_idx:
+                end_idx = len(all_accessibility_locations)
+            
+            # Get locations for this specific recommendation
+            rec_locations = all_accessibility_locations[start_idx:end_idx]
+            
+            # If we still don't have enough locations, add some from the beginning
+            if len(rec_locations) < 2 and len(all_accessibility_locations) > 1:
+                rec_locations.extend(all_accessibility_locations[:2-len(rec_locations)])
+            
+            # Create location names array for frontend display
+            location_names = [loc["name"] for loc in rec_locations]
+            
             # Determine cost based on type and scope
             cost_estimates = {
-                "infrastructure": f"${total_locations * 5000:,} - ${total_locations * 15000:,}",
+                "infrastructure": f"${len(rec_locations) * 5000:,} - ${len(rec_locations) * 15000:,}",
                 "policy": f"$50,000 - $150,000",
                 "technology": f"$200,000 - $500,000", 
                 "community": f"$25,000 - $75,000"
@@ -197,7 +313,7 @@ class PlannerBotAgent:
                 "title": ai_rec.get("title", f"WatsonX-Generated Plan {i+1}"),
                 "description": ai_rec.get("description", "AI-generated accessibility improvement plan"),
                 "target_locations": location_names,  # Use location names for frontend display
-                "coordinates": target_locations,  # Keep coordinates for map display
+                "coordinates": rec_locations,  # Keep coordinates for map display
                 "impact": ai_rec.get("impact", "high" if high_priority_count > 5 else "medium"),
                 "cost_estimate": ai_rec.get("cost_estimate", cost_estimates.get(ai_rec.get("type", "infrastructure"), "$50,000 - $150,000")),
                 "timeline": ai_rec.get("timeline", timelines.get(ai_rec.get("type", "infrastructure"), "6-12 months")),
@@ -208,12 +324,12 @@ class PlannerBotAgent:
                     "Execute phased implementation",
                     "Monitor and evaluate outcomes"
                 ]),
-                "success_metrics": ai_rec.get("success_metrics", self._generate_success_metrics(ai_rec.get("type", "infrastructure"), total_locations)),
+                "success_metrics": ai_rec.get("success_metrics", self._generate_success_metrics(ai_rec.get("type", "infrastructure"), len(rec_locations))),
                 "sdg_alignment": ai_rec.get("sdg_alignment", "SDG 11.2: Accessible and affordable transport systems"),
-                "equity_impact": ai_rec.get("equity_impact", f"Addresses accessibility needs for vulnerable populations across {total_locations} identified locations"),
+                "equity_impact": ai_rec.get("equity_impact", f"Addresses accessibility needs for vulnerable populations across {len(rec_locations)} identified locations"),
                 "priority_level": ai_rec.get("priority_level", priority_level),
                 "rationale": ai_rec.get("rationale", f"WatsonX AI-generated recommendation addressing {ai_rec.get('type', 'accessibility')} needs"),
-                "locations_affected": len(target_locations),
+                "locations_affected": len(rec_locations),
                 "agent": "PlannerBot",
                 "generated_date": datetime.now().strftime('%Y-%m-%d'),
                 "watsonx_generated": True

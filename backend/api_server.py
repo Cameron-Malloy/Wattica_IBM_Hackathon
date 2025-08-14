@@ -62,7 +62,7 @@ app = FastAPI(
 # Enable CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # React dev server
+    allow_origins=["http://localhost:3000", "http://localhost:3001", "http://localhost:3006"],  # React dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -83,12 +83,23 @@ def merge_survey_recommendations_to_main_analysis(state: str = "CA"):
         # Load existing multi-agent analysis results
         main_analysis_file = f"../accessmap-frontend/public/api_results/multi_agent_analysis_{state}.json"
         
+        # Create main analysis structure if it doesn't exist
         if not os.path.exists(main_analysis_file):
-            logger.warning(f"Main analysis file not found: {main_analysis_file}")
-            return
-        
-        with open(main_analysis_file, 'r') as f:
-            main_analysis = json.load(f)
+            logger.info(f"Creating new main analysis file: {main_analysis_file}")
+            main_analysis = {
+                "metadata": {
+                    "state": state,
+                    "generated_date": datetime.now().strftime('%Y-%m-%d'),
+                    "survey_recommendations_included": True,
+                    "total_survey_recommendations": 0
+                },
+                "recommendations": [],
+                "scan_results": [],
+                "priority_areas": []
+            }
+        else:
+            with open(main_analysis_file, 'r') as f:
+                main_analysis = json.load(f)
         
         # Get survey recommendations
         survey_recommendations = []
@@ -128,20 +139,54 @@ def merge_survey_recommendations_to_main_analysis(state: str = "CA"):
             main_analysis['metadata']['total_survey_recommendations'] = len(survey_recommendations)
             main_analysis['metadata']['last_updated'] = datetime.now().isoformat()
             
+            # Ensure directory exists
+            os.makedirs(os.path.dirname(main_analysis_file), exist_ok=True)
+            
             # Save updated analysis
             with open(main_analysis_file, 'w') as f:
                 json.dump(main_analysis, f, indent=2)
             
             # Also update the backend copy
             backend_file = f"../census_results/multi_agent_analysis/multi_agent_analysis_{state}.json"
-            if os.path.exists(backend_file):
-                with open(backend_file, 'w') as f:
-                    json.dump(main_analysis, f, indent=2)
+            os.makedirs(os.path.dirname(backend_file), exist_ok=True)
+            with open(backend_file, 'w') as f:
+                json.dump(main_analysis, f, indent=2)
             
             logger.info(f"✅ Merged {len(survey_recommendations)} survey recommendations into main analysis")
             
     except Exception as e:
         logger.error(f"Failed to merge survey recommendations: {e}")
+        # Create a minimal analysis file with just survey recommendations if merge fails
+        try:
+            survey_only_analysis = {
+                "metadata": {
+                    "state": state,
+                    "generated_date": datetime.now().strftime('%Y-%m-%d'),
+                    "survey_recommendations_included": True,
+                    "total_survey_recommendations": len([s for s in survey_submissions if s.get('ai_recommendation')])
+                },
+                "recommendations": [
+                    {
+                        **survey['ai_recommendation'],
+                        'id': f"survey_rec_{survey['id']}",
+                        'survey_id': survey['id'],
+                        'survey_based': True,
+                        'agent': "SurveyBot"
+                    }
+                    for survey in survey_submissions if survey.get('ai_recommendation')
+                ],
+                "scan_results": [],
+                "priority_areas": []
+            }
+            
+            os.makedirs(os.path.dirname(main_analysis_file), exist_ok=True)
+            with open(main_analysis_file, 'w') as f:
+                json.dump(survey_only_analysis, f, indent=2)
+            
+            logger.info(f"✅ Created survey-only analysis file with {len(survey_only_analysis['recommendations'])} recommendations")
+            
+        except Exception as fallback_error:
+            logger.error(f"Failed to create fallback analysis file: {fallback_error}")
 
 class AnalysisRequest(BaseModel):
     state: str
@@ -571,7 +616,7 @@ IMPORTANT: Return ONLY the JSON object below. Do not include any additional text
                     # Create structured recommendation with parsed data
                     recommendation = {
                         "priority": parsed_recommendation.get("priority", "High" if issue.get('severity') == 'critical' else "Medium"),
-                        "priority_level": parsed_recommendation.get("priority", "High" if issue.get('severity') == 'critical' else "Medium"),  # Add priority_level field
+                        "priority_level": parsed_recommendation.get("priority", "High" if issue.get('severity') == 'critical' else "Medium"),
                         "title": parsed_recommendation.get("title", f"Accessibility Improvement Plan for {location.get('city', 'Location')}"),
                         "description": parsed_recommendation.get("description", f"Address {issue.get('type', 'accessibility issue')} affecting {', '.join(demographics.get('mobility_needs', ['community members']))}"),
                         "recommended_actions": parsed_recommendation.get("recommended_actions", [
@@ -585,11 +630,11 @@ IMPORTANT: Return ONLY the JSON object below. Do not include any additional text
                         "timeline": parsed_recommendation.get("timeline", "2-4 weeks" if issue.get('severity') == 'critical' else "1-3 months"),
                         "expected_impact": parsed_recommendation.get("expected_impact", f"Improve accessibility for {', '.join(impact.get('age_groups', ['all community members']))}"),
                         "implementation_partners": parsed_recommendation.get("implementation_partners", ["City Planning Department", "Disability Services", "Public Works", "Community Organizations"]),
-                        "locations_affected": "1",  # Survey-based recommendations only affect the reported location
+                        "locations_affected": "1",
                         "type": parsed_recommendation.get("type", "infrastructure"),
                         "coordinates": location.get('coordinates'),
-                        "target_locations": [location.get('city', 'Unknown City')],  # Only the reported city
-                        "agent": "SurveyBot",  # Mark as survey-generated
+                        "target_locations": [location.get('city', 'Unknown City')],
+                        "agent": "SurveyBot",
                         "generated_at": datetime.now().isoformat(),
                         "watsonx_generated": True,
                         # Add missing fields for dashboard compatibility
@@ -601,7 +646,12 @@ IMPORTANT: Return ONLY the JSON object below. Do not include any additional text
                             "100% ADA compliance verification",
                             "95% community satisfaction rate",
                             "90% reduction in accessibility barriers"
-                        ])
+                        ]),
+                        # Add additional fields that might be missing
+                        "generated_date": datetime.now().strftime('%Y-%m-%d'),
+                        "status": "active",
+                        "category": "survey_based",
+                        "urgency": "high" if issue.get('severity') == 'critical' else "medium" if issue.get('severity') == 'moderate' else "low"
                     }
                     
                     logger.info(f"✅ Successfully generated WatsonX recommendation for survey")
@@ -743,4 +793,4 @@ def clean_data_from_df(df):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8002)
+    uvicorn.run(app, host="0.0.0.0", port=8003)

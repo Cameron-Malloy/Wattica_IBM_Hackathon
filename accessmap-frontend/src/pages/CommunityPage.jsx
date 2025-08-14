@@ -65,7 +65,7 @@ const CommunityPage = () => {
 
   const fetchSurveyData = async () => {
     try {
-      const response = await fetch('http://localhost:8002/surveys');
+      const response = await fetch('http://localhost:8003/surveys');
       if (response.ok) {
         const data = await response.json();
         setSurveyData(data.surveys || []);
@@ -117,7 +117,7 @@ const CommunityPage = () => {
       // Get AI-generated recommendations for this city
       let aiRecommendations = [];
       try {
-        const surveyRecommendationsResponse = await fetch('http://localhost:8002/survey-recommendations');
+        const surveyRecommendationsResponse = await fetch('http://localhost:8003/survey-recommendations');
         if (surveyRecommendationsResponse.ok) {
           const surveyRecommendations = await surveyRecommendationsResponse.json();
           aiRecommendations = surveyRecommendations.recommendations.filter(rec => 

@@ -67,7 +67,7 @@ const EnhancedChatLogPage = () => {
   const fetchChatLogs = async () => {
     try {
       // Fetch active jobs and their logs
-      const jobsResponse = await fetch('http://localhost:8002/status/all');
+      const jobsResponse = await fetch('http://localhost:8003/status/all');
       if (jobsResponse.ok) {
         const jobsData = await jobsResponse.json();
         

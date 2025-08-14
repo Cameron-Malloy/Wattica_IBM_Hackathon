@@ -93,6 +93,41 @@ const CALIFORNIA_CITIES_DATA = {
 
 const CALIFORNIA_CITIES = Object.keys(CALIFORNIA_CITIES_DATA);
 
+// Global function for popup tab switching
+if (typeof window !== 'undefined') {
+  window.switchPopupTab = function(btn, tabName) {
+    const popup = btn.closest('.leaflet-popup-content');
+    if (!popup) return;
+    
+    const isOrange = btn.classList.contains('text-orange-600');
+    
+    // Update tab buttons in this popup only
+    popup.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.classList.add('text-gray-500');
+      if (isOrange) {
+        b.classList.remove('text-orange-600', 'border-orange-600', 'bg-orange-50');
+      } else {
+        b.classList.remove('text-blue-600', 'border-blue-600', 'bg-blue-50');
+      }
+    });
+    
+    btn.classList.add('active');
+    if (isOrange) {
+      btn.classList.add('text-orange-600', 'border-orange-600', 'bg-orange-50');
+    } else {
+      btn.classList.add('text-blue-600', 'border-blue-600', 'bg-blue-50');
+    }
+    btn.classList.remove('text-gray-500');
+    
+    // Update tab content in this popup only
+    popup.querySelectorAll('.tab-content').forEach(content => {
+      content.classList.add('hidden');
+    });
+    popup.querySelector('#' + tabName + '-tab').classList.remove('hidden');
+  };
+}
+
 const MapPage = () => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -117,7 +152,7 @@ const MapPage = () => {
     priority: 'all'
   });
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
-  const [selectedRecommendation, setSelectedRecommendation] = useState(null);
+
 
   // California bounds
   const CALIFORNIA_BOUNDS = [
@@ -154,15 +189,19 @@ const MapPage = () => {
   };
 
   useEffect(() => {
+    console.log('MapPage useEffect - isConnected:', isConnected);
     if (isConnected) {
+      console.log('API is connected, fetching latest results...');
       getLatestResults('CA');
       fetchSurveyData();
+    } else {
+      console.log('API is not connected');
     }
   }, [isConnected, getLatestResults]);
 
   const fetchSurveyData = async () => {
     try {
-      const response = await fetch('http://localhost:8002/surveys');
+      const response = await fetch('http://localhost:8003/surveys');
       if (response.ok) {
         const data = await response.json();
         setSurveyData(data.surveys || []);
@@ -194,10 +233,19 @@ const MapPage = () => {
   }, []);
 
   useEffect(() => {
+    console.log('Results useEffect triggered:', {
+      hasResults: !!results,
+      hasMapInstance: !!mapInstanceRef.current,
+      mapInitialized,
+      selectedDataType,
+      filters
+    });
+    
     if (results && mapInstanceRef.current && mapInitialized) {
+      console.log('Calling updateMapMarkers...');
       updateMapMarkers();
     }
-  }, [results, selectedDataType, filters, mapInitialized, surveyData, selectedRecommendation]);
+  }, [results, selectedDataType, filters, mapInitialized, surveyData]);
 
   const initializeMap = () => {
     if (mapInstanceRef.current || !mapRef.current) {
@@ -250,6 +298,10 @@ const MapPage = () => {
       console.log('No results yet, showing base map');
       return;
     }
+    
+    console.log('Raw results:', results);
+    console.log('scan_results length:', results.scan_results?.length);
+    console.log('recommendations length:', results.recommendations?.length);
 
     try {
       // Clear existing markers
@@ -259,88 +311,31 @@ const MapPage = () => {
         }
       });
 
-      let dataToShow = [];
-      
-      switch (selectedDataType) {
-        case 'gaps':
-          dataToShow = results.scan_results || [];
-          break;
-        case 'surveys':
-          dataToShow = surveyData.map(survey => ({
-            ...survey,
-            issue_type: survey.issue.type,
-            severity: 'user_reported',
-            location: survey.location.city || survey.location.fullAddress || 'Unknown City',
-            coordinates: survey.location.coordinates || { lat: 36.7783, lng: -119.4179 },
-            id: survey.id || `survey_${Math.random()}`
-          }));
-          break;
-        case 'recommendations':
-          if (selectedRecommendation) {
-            // Show locations for selected recommendation only
-            dataToShow = selectedRecommendation.target_locations?.map(location => {
-              // Handle both coordinate objects and location names
-              const coordinates = location.lat && location.lng ? location : getCityCoordinates(location);
-              const locationName = location.name || location;
-              
-              return {
-                location: locationName,
-                coordinates: coordinates,
-                issue_type: selectedRecommendation.title,
-                severity: 'recommendation',
-                description: selectedRecommendation.description,
-                recommendation: selectedRecommendation,
-                type: selectedRecommendation.type || 'general',
-                id: `rec_${selectedRecommendation.id}_${locationName}`
-              };
-            }) || [];
-          } else {
-            // Show all recommendation locations (both agent-generated and survey-generated)
-            const allRecommendationLocations = results.recommendations
-              ?.flatMap(rec => 
-                rec.target_locations?.map(location => {
-                  // Handle both coordinate objects and location names
-                  const coordinates = location.lat && location.lng ? location : getCityCoordinates(location);
-                  const locationName = location.name || location;
-                  
-                  return {
-                    location: locationName,
-                    coordinates: coordinates,
-                    issue_type: rec.title,
-                    severity: 'recommendation',
-                    description: rec.description,
-                    recommendation: rec,
-                    type: rec.type || 'general',
-                    id: `rec_${rec.id}_${locationName}`
-                  };
-                }) || []
-              ) || [];
-            dataToShow = allRecommendationLocations;
+      // Use getFilteredData to get data with recommendations
+      let dataToShow = getFilteredData();
+      console.log('getFilteredData result:', dataToShow);
+      console.log('dataToShow length:', dataToShow.length);
+
+
+
+              dataToShow.forEach((item) => {
+          // Get coordinates with proper fallback
+          let coordinates = item.coordinates || { lat: item.lat, lng: item.lng };
+          
+          // If coordinates are still null/undefined, try to get them from the location name
+          if (!coordinates || !coordinates.lat || !coordinates.lng) {
+            if (item.location) {
+              coordinates = getCityCoordinates(item.location);
+            }
           }
-          break;
-        default:
-          dataToShow = [];
-      }
+          
+          // Final validation - if still no valid coordinates, skip this item
+          if (!coordinates || typeof coordinates.lat !== 'number' || typeof coordinates.lng !== 'number') {
+            console.warn(`Skipping item with invalid coordinates:`, item);
+            return;
+          }
 
-      // Apply filters
-      dataToShow = dataToShow.filter(item => {
-        if (filters.severity !== 'all' && item.severity !== filters.severity) {
-          return false;
-        }
-        if (filters.region !== 'all') {
-          const lat = item.lat || item.coordinates?.lat;
-          if (filters.region === 'northern' && lat < 37) return false;
-          if (filters.region === 'southern' && lat > 37) return false;
-          if (filters.region === 'central' && (lat < 35 || lat > 39)) return false;
-        }
-        return true;
-      });
-
-      dataToShow.forEach((item) => {
-        const coordinates = item.coordinates || { lat: item.lat, lng: item.lng };
-        if (!coordinates || !coordinates.lat || !coordinates.lng) return;
-
-        const { lat, lng } = coordinates;
+          const { lat, lng } = coordinates;
         
         // Determine marker color and size
         let color = '#3b82f6';
@@ -349,105 +344,483 @@ const MapPage = () => {
 
         if (item.severity === 'user_reported') {
           color = '#f59e0b'; // Orange for user reports
-          radius = 10;
+          radius = item.hasRecommendations ? 12 : 10; // Larger radius if has recommendations
+          
+          // Get the primary recommendation for this user report
+          const primaryRecommendation = item.associatedRecommendations && item.associatedRecommendations.length > 0 
+            ? item.associatedRecommendations[0] 
+            : null;
+          
+          // Create a beautiful recommendation section for user reports
+          let recommendationSection = '';
+          if (primaryRecommendation) {
+            recommendationSection = `
+              <div class="mt-3 bg-gradient-to-br from-orange-50 to-red-50 rounded p-3 border border-orange-200">
+                <div class="flex items-center mb-2">
+                  <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-2">
+                    <span class="text-orange-600 text-sm">💡</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-orange-800 text-xs">Community Solution</h4>
+                    <p class="text-xs text-orange-600">${primaryRecommendation.type || 'Community'} • ${primaryRecommendation.priority_level || 'High'} Priority</p>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <h5 class="font-medium text-orange-800 text-xs mb-1">${primaryRecommendation.title}</h5>
+                  <p class="text-xs text-gray-600 leading-relaxed">${primaryRecommendation.description ? primaryRecommendation.description.substring(0, 80) + '...' : 'Community-driven solution to address this accessibility issue.'}</p>
+                </div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center space-x-2">
+                    ${primaryRecommendation.cost_estimate ? `
+                      <div class="flex items-center">
+                        <span class="text-xs text-gray-500">💰</span>
+                        <span class="text-xs font-medium text-gray-700 ml-1">${primaryRecommendation.cost_estimate}</span>
+                      </div>
+                    ` : ''}
+                    ${primaryRecommendation.timeline ? `
+                      <div class="flex items-center">
+                        <span class="text-xs text-gray-500">⏱️</span>
+                        <span class="text-xs font-medium text-gray-700 ml-1">${primaryRecommendation.timeline}</span>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+                <a 
+                  href="/dashboard?rec=${primaryRecommendation.id}" 
+                  target="_blank"
+                  class="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white text-xs font-semibold py-2 px-3 rounded transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
+                >
+                  📊 View Full Solution
+                </a>
+              </div>
+            `;
+          } else {
+            // Fallback for user reports without solutions
+            recommendationSection = `
+              <div class="mt-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+                <div class="flex items-center mb-3">
+                  <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                    <span class="text-blue-600 text-lg">🔍</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-blue-800 text-sm">Analysis Available</h4>
+                    <p class="text-xs text-blue-600">Community feedback analysis</p>
+                  </div>
+                </div>
+                <p class="text-xs text-gray-600 mb-3">This community report has been analyzed and solutions are available on the dashboard.</p>
+                <a 
+                  href="/dashboard" 
+                  target="_blank"
+                  class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
+                >
+                  📊 View Full Analysis
+                </a>
+              </div>
+            `;
+          }
+          
           popupContent = `
-            <div class="p-4 max-w-sm">
-              <div class="flex items-center mb-3">
-                <div class="w-3 h-3 rounded-full bg-orange-500 mr-2"></div>
-                <h3 class="font-bold text-lg text-orange-700">User Report</h3>
+            <div class="bg-white rounded-lg shadow-lg border border-gray-200" style="width: 320px;">
+              <!-- Header -->
+              <div class="p-3 border-b border-gray-200">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center flex-1">
+                    <div class="w-3 h-3 rounded-full bg-orange-500 mr-2"></div>
+                    <div class="min-w-0 flex-1">
+                      <h3 class="font-semibold text-gray-900 text-sm truncate">Community Report</h3>
+                      <p class="text-xs text-gray-500 truncate">${item.location}</p>
+                    </div>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ml-2 bg-orange-100 text-orange-800">
+                    User Reported
+                  </span>
+                </div>
               </div>
-              <div class="space-y-2 text-sm">
-                <p><strong>Location:</strong> ${item.location}</p>
-                <p><strong>Issue:</strong> ${item.issue_type}</p>
-                <p><strong>Description:</strong> ${item.issue.description || 'No description available'}</p>
-                <p><strong>Impact:</strong> ${item.impact.daily_impact || 'Not specified'}</p>
-                <p><strong>Submitted:</strong> ${new Date(item.submitted_at).toLocaleDateString()}</p>
-                ${item.contact.name && !item.contact.anonymous ? `<p><strong>Reporter:</strong> ${item.contact.name}</p>` : ''}
+              
+              <!-- Tabs -->
+              <div class="flex border-b border-gray-200">
+                <button class="tab-btn active flex-1 py-2 px-3 text-xs font-medium text-orange-600 border-b-2 border-orange-600 bg-orange-50" onclick="window.switchPopupTab(this, 'report')">
+                  Report
+                </button>
+                <button class="tab-btn flex-1 py-2 px-3 text-xs font-medium text-gray-500 hover:text-gray-700" onclick="window.switchPopupTab(this, 'solution')">
+                  Solution
+                </button>
               </div>
+              
+              <!-- Tab Content -->
+              <div class="p-3">
+                <!-- Report Tab -->
+                <div id="report-tab" class="tab-content">
+                  <div class="space-y-2">
+                    <div class="bg-orange-50 rounded p-2">
+                      <h4 class="font-medium text-orange-800 text-xs mb-1">${item.issue_type}</h4>
+                      <p class="text-xs text-gray-700 leading-relaxed">${item.issue.description ? item.issue.description.substring(0, 120) + '...' : 'Community-reported accessibility issue in this location.'}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                      <div class="bg-blue-50 rounded p-2">
+                        <p class="text-blue-600 font-medium">Daily Impact</p>
+                        <p class="text-blue-800 font-bold">${item.impact.daily_impact || 'High'}</p>
+                      </div>
+                      <div class="bg-green-50 rounded p-2">
+                        <p class="text-green-600 font-medium">Submitted</p>
+                        <p class="text-green-800 font-bold">${new Date(item.submitted_at).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                    
+                    ${item.contact.name && !item.contact.anonymous ? `
+                      <div class="bg-gray-50 rounded p-2">
+                        <p class="text-xs text-gray-600">Reported by: <span class="font-medium text-gray-800">${item.contact.name}</span></p>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+                
+                <!-- Solution Tab -->
+                <div id="solution-tab" class="tab-content hidden">
+                  ${recommendationSection}
+                </div>
+              </div>
+              
+              <style>
+                .tab-btn.active {
+                  color: #ea580c;
+                  border-bottom-color: #ea580c;
+                  background-color: #fff7ed;
+                }
+                .tab-content.hidden {
+                  display: none;
+                }
+              </style>
+              
+              <script>
+                // Add event listeners when popup opens
+                setTimeout(() => {
+                  const tabBtns = document.querySelectorAll('.tab-btn');
+                  tabBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                      const tabName = this.getAttribute('data-tab');
+                      const isOrange = this.classList.contains('text-orange-600');
+                      
+                      // Update tab buttons
+                      document.querySelectorAll('.tab-btn').forEach(b => {
+                        b.classList.remove('active');
+                        b.classList.add('text-gray-500');
+                        if (isOrange) {
+                          b.classList.remove('text-orange-600', 'border-orange-600', 'bg-orange-50');
+                        } else {
+                          b.classList.remove('text-blue-600', 'border-blue-600', 'bg-blue-50');
+                        }
+                      });
+                      
+                      this.classList.add('active');
+                      if (isOrange) {
+                        this.classList.add('text-orange-600', 'border-orange-600', 'bg-orange-50');
+                      } else {
+                        this.classList.add('text-blue-600', 'border-blue-600', 'bg-blue-50');
+                      }
+                      this.classList.remove('text-gray-500');
+                      
+                      // Update tab content
+                      document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.add('hidden');
+                      });
+                      document.getElementById(tabName + '-tab').classList.remove('hidden');
+                    });
+                  });
+                }, 100);
+              </script>
             </div>
           `;
         } else if (item.severity === 'recommendation') {
           color = '#8b5cf6'; // Purple for recommendations
           radius = 12;
+          
+          // Get accessibility gaps this recommendation addresses
+          const addressedGaps = item.addresses_gaps && item.addresses_gaps.length > 0 
+            ? `Addresses ${item.addresses_gaps.length} accessibility gap(s)`
+            : 'Addresses accessibility barriers';
+          
           popupContent = `
             <div class="p-4 max-w-sm">
               <div class="flex items-center mb-3">
                 <div class="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
-                <h3 class="font-bold text-lg text-purple-700">Recommendation Area</h3>
+                <h3 class="font-bold text-lg text-purple-700">Accessibility Improvement</h3>
               </div>
               <div class="space-y-2 text-sm">
-                <p><strong>Location:</strong> ${item.location?.name || 'Location'}</p>
-                <p><strong>Recommendation:</strong> ${item.issue_type}</p>
+                <p><strong>Location:</strong> ${item.location || 'Unknown Location'}</p>
+                <p><strong>Recommendation:</strong> ${item.recommendation.title}</p>
                 <p><strong>Description:</strong> ${item.description}</p>
                 <p><strong>Priority:</strong> ${item.recommendation.priority_level || item.recommendation.priority}</p>
                 <p><strong>Timeline:</strong> ${item.recommendation.timeline}</p>
                 <p><strong>Cost:</strong> ${item.recommendation.cost_estimate}</p>
                 <p><strong>Type:</strong> ${item.recommendation.type || 'infrastructure'}</p>
-                ${item.recommendation.survey_based ? '<p><strong>Source:</strong> <span class="text-blue-600">Survey-Based</span></p>' : ''}
+                <p><strong>Scope:</strong> ${addressedGaps}</p>
+                ${item.recommendation.survey_based ? '<p><strong>Source:</strong> <span class="text-blue-600">Survey-Based</span></p>' : '<p><strong>Source:</strong> <span class="text-green-600">AI Analysis</span></p>'}
+                ${item.recommendation.implementation_steps ? '<p><strong>Implementation Steps:</strong> Available</p>' : ''}
+                ${item.recommendation.success_metrics ? '<p><strong>Success Metrics:</strong> Available</p>' : ''}
+                ${item.recommendation.sdg_alignment ? '<p><strong>SDG Alignment:</strong> Available</p>' : ''}
               </div>
             </div>
           `;
         } else {
           // Accessibility gaps
+          let baseColor, baseRadius;
           switch (item.severity) {
             case 'critical':
-              color = '#dc2626'; // Red
-              radius = 12;
+              baseColor = '#dc2626'; // Red
+              baseRadius = 12;
               break;
             case 'moderate':
-              color = '#f59e0b'; // Orange
-              radius = 10;
+              baseColor = '#f59e0b'; // Orange
+              baseRadius = 10;
               break;
             case 'good':
-              color = '#10b981'; // Green
-              radius = 8;
+              baseColor = '#10b981'; // Green
+              baseRadius = 8;
               break;
             default:
-              color = '#3b82f6'; // Blue
-              radius = 8;
+              baseColor = '#3b82f6'; // Blue
+              baseRadius = 8;
+          }
+          
+          // If the gap has recommendations, add a purple border/ring effect
+          if (item.hasRecommendations) {
+            color = baseColor;
+            radius = baseRadius + 2; // Slightly larger to accommodate border
+          } else {
+            color = baseColor;
+            radius = baseRadius;
           }
           
           const severityColor = item.severity === 'critical' ? 'text-red-600' : 
                                item.severity === 'moderate' ? 'text-orange-600' : 'text-green-600';
           
+          // Get the primary recommendation for this city
+          const primaryRecommendation = item.associatedRecommendations && item.associatedRecommendations.length > 0 
+            ? item.associatedRecommendations[0] 
+            : null;
+          
+          // Debug logging
+          console.log('Popup Debug:', {
+            location: item.location,
+            hasRecommendations: item.hasRecommendations,
+            associatedRecommendations: item.associatedRecommendations,
+            primaryRecommendation: primaryRecommendation,
+            recommendationSection: primaryRecommendation ? 'Will show recommendation' : 'Will show fallback'
+          });
+          
+
+          
+          // Create a beautiful recommendation section
+          let recommendationSection = '';
+          
+          // Force recommendation section to always show for debugging
+          if (primaryRecommendation) {
+            recommendationSection = `
+              <div class="mt-3 bg-gradient-to-br from-purple-50 to-indigo-50 rounded p-3 border border-purple-200">
+                <div class="flex items-center mb-2">
+                  <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-2">
+                    <span class="text-purple-600 text-sm">💡</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-purple-800 text-xs">Recommended Solution</h4>
+                    <p class="text-xs text-purple-600">${primaryRecommendation.type || 'Infrastructure'} • ${primaryRecommendation.priority_level || 'Medium'} Priority</p>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <h5 class="font-medium text-purple-800 text-xs mb-1">${primaryRecommendation.title}</h5>
+                  <p class="text-xs text-gray-600 leading-relaxed">${primaryRecommendation.description ? primaryRecommendation.description.substring(0, 80) + '...' : 'Comprehensive accessibility improvements for this location.'}</p>
+                </div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center space-x-2">
+                    ${primaryRecommendation.cost_estimate ? `
+                      <div class="flex items-center">
+                        <span class="text-xs text-gray-500">💰</span>
+                        <span class="text-xs font-medium text-gray-700 ml-1">${primaryRecommendation.cost_estimate}</span>
+                      </div>
+                    ` : ''}
+                    ${primaryRecommendation.timeline ? `
+                      <div class="flex items-center">
+                        <span class="text-xs text-gray-500">⏱️</span>
+                        <span class="text-xs font-medium text-gray-700 ml-1">${primaryRecommendation.timeline}</span>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+                <a 
+                  href="/dashboard?rec=${primaryRecommendation.id}" 
+                  target="_blank"
+                  class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white text-xs font-semibold py-2 px-3 rounded transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
+                >
+                  📊 View Full Recommendation
+                </a>
+              </div>
+            `;
+          } else {
+            // Fallback for cities without recommendations
+            recommendationSection = `
+              <div class="mt-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded p-3 border border-blue-200">
+                <div class="flex items-center mb-2">
+                  <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-2">
+                    <span class="text-blue-600 text-sm">🔍</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-blue-800 text-xs">Analysis Available</h4>
+                    <p class="text-xs text-blue-600">Comprehensive accessibility analysis</p>
+                  </div>
+                </div>
+                <p class="text-xs text-gray-600 mb-2">Detailed accessibility analysis and recommendations are available on the dashboard for ${item.location}.</p>
+                <a 
+                  href="/dashboard" 
+                  target="_blank"
+                  class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold py-2 px-3 rounded transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
+                >
+                  📊 View Full Analysis
+                </a>
+              </div>
+            `;
+          }
+          
+          // Always show a recommendation section for debugging
+          if (!recommendationSection) {
+            recommendationSection = `
+              <div class="mt-3 bg-gradient-to-br from-red-50 to-pink-50 rounded p-3 border border-red-200">
+                <div class="flex items-center mb-2">
+                  <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mr-2">
+                    <span class="text-red-600 text-sm">⚠️</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-red-800 text-xs">Debug: No Recommendation Found</h4>
+                    <p class="text-xs text-red-600">This should not happen</p>
+                  </div>
+                </div>
+                <p class="text-xs text-gray-600 mb-2">hasRecommendations: ${item.hasRecommendations}, recommendationsCount: ${item.associatedRecommendations?.length || 0}</p>
+                <a 
+                  href="/dashboard" 
+                  target="_blank"
+                  class="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white text-xs font-semibold py-2 px-3 rounded transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
+                >
+                  📊 View Dashboard
+                </a>
+              </div>
+            `;
+          }
+          
           popupContent = `
-            <div class="p-4 max-w-sm">
-              <div class="flex items-center mb-3">
-                <div class="w-3 h-3 rounded-full ${item.severity === 'critical' ? 'bg-red-500' : item.severity === 'moderate' ? 'bg-orange-500' : 'bg-green-500'} mr-2"></div>
-                <h3 class="font-bold text-lg">${item.issue_type || 'Accessibility Issue'}</h3>
+            <div class="bg-white rounded-lg shadow-lg border border-gray-200" style="width: 320px;">
+              <!-- Header -->
+              <div class="p-3 border-b border-gray-200">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center flex-1">
+                    <div class="w-3 h-3 rounded-full ${item.severity === 'critical' ? 'bg-red-500' : item.severity === 'moderate' ? 'bg-orange-500' : 'bg-green-500'} mr-2"></div>
+                    <div class="min-w-0 flex-1">
+                      <h3 class="font-semibold text-gray-900 text-sm truncate">${item.issue_type || 'Accessibility Issue'}</h3>
+                      <p class="text-xs text-gray-500 truncate">${item.location}</p>
+                    </div>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ml-2 ${
+                    item.severity === 'critical' ? 'bg-red-100 text-red-800' : 
+                    item.severity === 'moderate' ? 'bg-orange-100 text-orange-800' : 
+                    'bg-green-100 text-green-800'
+                  }">
+                    ${item.severity}
+                  </span>
+                </div>
               </div>
-              <div class="space-y-2 text-sm">
-                <p><strong>Location:</strong> ${item.location}</p>
-                <p><strong>Severity:</strong> <span class="font-semibold ${severityColor}">${item.severity}</span></p>
-                <p><strong>Description:</strong> ${item.description || 'No description available'}</p>
-                ${item.confidence ? `<p><strong>Confidence:</strong> ${Math.round(item.confidence * 100)}%</p>` : ''}
-                ${item.detected_date ? `<p><strong>Detected:</strong> ${new Date(item.detected_date).toLocaleDateString()}</p>` : ''}
-                ${item.vulnerable_population ? `<p><strong>Affected Population:</strong> ${item.vulnerable_population}</p>` : ''}
-                ${item.priority_score ? `<p><strong>Priority Score:</strong> ${item.priority_score}/10</p>` : ''}
-                ${item.priority_level ? `<p><strong>Priority Level:</strong> ${item.priority_level}</p>` : ''}
+              
+              <!-- Tabs -->
+              <div class="flex border-b border-gray-200">
+                <button class="tab-btn active flex-1 py-2 px-3 text-xs font-medium text-blue-600 border-b-2 border-blue-600 bg-blue-50" onclick="window.switchPopupTab(this, 'details')">
+                  Details
+                </button>
+                <button class="tab-btn flex-1 py-2 px-3 text-xs font-medium text-gray-500 hover:text-gray-700" onclick="window.switchPopupTab(this, 'solution')">
+                  Solution
+                </button>
               </div>
+              
+              <!-- Tab Content -->
+              <div class="p-3">
+                <!-- Details Tab -->
+                <div id="details-tab" class="tab-content">
+                  <div class="space-y-2">
+                    <div class="bg-gray-50 rounded p-2">
+                      <p class="text-xs text-gray-700 leading-relaxed">${item.description ? item.description.substring(0, 120) + '...' : 'Accessibility issue identified in this location.'}</p>
+                    </div>
+                    
+                    ${item.vulnerable_population ? `
+                      <div class="bg-orange-50 rounded p-2">
+                        <p class="text-xs text-orange-600 font-medium">Affected Population</p>
+                        <p class="text-xs text-orange-800 font-semibold">${item.vulnerable_population}</p>
+                      </div>
+                    ` : ''}
+                    
+                    ${item.priority_score ? `
+                      <div class="bg-blue-50 rounded p-2">
+                        <p class="text-xs text-blue-600 font-medium">Priority Score</p>
+                        <p class="text-xs text-blue-800 font-semibold">${item.priority_score}/10</p>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+                
+                <!-- Solution Tab -->
+                <div id="solution-tab" class="tab-content hidden">
+                  ${recommendationSection}
+                </div>
+              </div>
+              
+              <style>
+                .tab-btn {
+                  cursor: pointer;
+                  transition: all 0.2s ease;
+                }
+                .tab-btn:hover {
+                  background-color: #f3f4f6;
+                }
+                .tab-btn.active {
+                  color: #2563eb;
+                  border-bottom-color: #2563eb;
+                  background-color: #eff6ff;
+                }
+                .tab-content.hidden {
+                  display: none;
+                }
+              </style>
             </div>
           `;
         }
 
+
+
         const marker = L.circleMarker([lat, lng], {
           radius: radius,
           fillColor: color,
-          color: '#ffffff',
-          weight: 2,
+          color: item.hasRecommendations ? '#8b5cf6' : '#ffffff', // Purple border for items with recommendations
+          weight: item.hasRecommendations ? 3 : 2, // Thicker border for items with recommendations
           opacity: 1,
           fillOpacity: 0.8
         }).addTo(mapInstanceRef.current);
 
+
+
         if (popupContent) {
           marker.bindPopup(popupContent, {
-            maxWidth: 400,
-            className: 'custom-popup'
+            className: 'custom-popup',
+            closeButton: true,
+            autoClose: false,
+            closeOnClick: false,
+            offset: [0, -10] // Offset to center better on the marker
           });
         }
 
         marker.on('click', () => {
           setSelectedItem(item);
+          // Smooth zoom to the marker location with a more reasonable zoom level
+          mapInstanceRef.current.flyTo([lat, lng], 8.25, {
+            duration: 1.5,
+            easeLinearity: 0.25
+          });
         });
       });
 
@@ -483,7 +856,10 @@ const MapPage = () => {
 
     if (cityData && mapInstanceRef.current) {
       const coords = cityData.coordinates;
-      mapInstanceRef.current.setView([coords.lat, coords.lng], 12);
+      mapInstanceRef.current.flyTo([coords.lat, coords.lng], 10, {
+        duration: 2,
+        easeLinearity: 0.25
+      });
     }
   };
 
@@ -494,13 +870,15 @@ const MapPage = () => {
     setShowSearchResults(false);
     
     if (mapInstanceRef.current) {
-      mapInstanceRef.current.setView([36.7783, -119.4179], 6);
+      mapInstanceRef.current.flyTo([36.7783, -119.4179], 6, {
+        duration: 2,
+        easeLinearity: 0.25
+      });
     }
   };
 
   const handleDataTypeChange = (type) => {
     setSelectedDataType(type);
-    setSelectedRecommendation(null);
     setSelectedItem(null);
   };
 
@@ -518,8 +896,7 @@ const MapPage = () => {
         return results.scan_results?.length || 0;
       case 'surveys':
         return surveyData.length || 0;
-      case 'recommendations':
-        return results.recommendations?.length || 0;
+
       default:
         return 0;
     }
@@ -528,9 +905,69 @@ const MapPage = () => {
   const getFilteredData = () => {
     if (!results) return [];
     
+    console.log('getFilteredData called with selectedDataType:', selectedDataType);
+    console.log('results.scan_results:', results.scan_results);
+    console.log('results.recommendations:', results.recommendations);
+    
     switch (selectedDataType) {
       case 'gaps':
-        return (results.scan_results || []).filter(item => {
+        // Combine accessibility gaps with their associated recommendations
+        const gapsData = results.scan_results || [];
+        const recommendationsData = results.recommendations || [];
+        
+        // Create a map of location to recommendations for quick lookup
+        const locationToRecommendations = {};
+        recommendationsData.forEach(rec => {
+          if (rec.target_locations && Array.isArray(rec.target_locations)) {
+            rec.target_locations.forEach(location => {
+              const locationName = typeof location === 'string' ? location : (location.name || location);
+              if (!locationToRecommendations[locationName]) {
+                locationToRecommendations[locationName] = [];
+              }
+              locationToRecommendations[locationName].push(rec);
+            });
+          }
+        });
+        
+        // Ensure every city has recommendations by creating default ones if needed
+        const allCities = new Set();
+        gapsData.forEach(gap => {
+          const locationName = gap.location || gap.name || 'Unknown Location';
+          allCities.add(locationName);
+        });
+        
+        // Create default recommendations for cities that don't have them
+        allCities.forEach(cityName => {
+          if (!locationToRecommendations[cityName] || locationToRecommendations[cityName].length === 0) {
+            // Create a default recommendation for this city
+            const defaultRecommendation = {
+              id: `default_${cityName.replace(/\s+/g, '_').toLowerCase()}`,
+              title: `General Accessibility Improvements for ${cityName}`,
+              description: `Comprehensive accessibility improvements and infrastructure upgrades for ${cityName}`,
+              type: 'infrastructure',
+              priority_level: 'Medium',
+              cost_estimate: '$50,000 - $150,000',
+              timeline: '6-12 months',
+              target_locations: [cityName],
+              isDefault: true
+            };
+            locationToRecommendations[cityName] = [defaultRecommendation];
+          }
+        });
+        
+        // Enhance gaps data with recommendations and apply filters
+        return gapsData.map(gap => {
+          const locationName = gap.location || gap.name || 'Unknown Location';
+          const associatedRecommendations = locationToRecommendations[locationName] || [];
+          
+
+          
+          return {
+            ...gap,
+            associatedRecommendations,
+            hasRecommendations: associatedRecommendations.length > 0
+          };
+        }).filter(item => {
           if (filters.severity !== 'all' && item.severity !== filters.severity) return false;
           if (filters.region !== 'all') {
             const lat = item.coordinates?.lat;
@@ -541,15 +978,65 @@ const MapPage = () => {
           return true;
         });
       case 'surveys':
-        return surveyData;
-      case 'recommendations':
-        if (selectedRecommendation) {
-          // Return target locations for the selected recommendation
-          return selectedRecommendation.target_locations || [];
-        } else {
-          // Return all recommendations if none selected
-          return results.recommendations || [];
-        }
+        // Get recommendations data for survey locations
+        const surveyRecommendationsData = results.recommendations || [];
+        
+        // Create a map of location to recommendations for surveys
+        const surveyLocationToRecommendations = {};
+        surveyRecommendationsData.forEach(rec => {
+          if (rec.target_locations && Array.isArray(rec.target_locations)) {
+            rec.target_locations.forEach(location => {
+              const locationName = typeof location === 'string' ? location : (location.name || location);
+              if (!surveyLocationToRecommendations[locationName]) {
+                surveyLocationToRecommendations[locationName] = [];
+              }
+              surveyLocationToRecommendations[locationName].push(rec);
+            });
+          }
+        });
+        
+        // Ensure every survey location has recommendations
+        const surveyCities = new Set();
+        surveyData.forEach(survey => {
+          const cityName = survey.location.city || survey.location.fullAddress || 'Unknown City';
+          surveyCities.add(cityName);
+        });
+        
+        // Create default recommendations for survey cities that don't have them
+        surveyCities.forEach(cityName => {
+          if (!surveyLocationToRecommendations[cityName] || surveyLocationToRecommendations[cityName].length === 0) {
+            // Create a default recommendation for this survey city
+            const defaultSurveyRecommendation = {
+              id: `survey_default_${cityName.replace(/\s+/g, '_').toLowerCase()}`,
+              title: `Community-Reported Accessibility Solutions for ${cityName}`,
+              description: `Addressing community-reported accessibility issues in ${cityName} with targeted improvements`,
+              type: 'community',
+              priority_level: 'High',
+              cost_estimate: '$25,000 - $75,000',
+              timeline: '3-6 months',
+              target_locations: [cityName],
+              isDefault: true,
+              surveyBased: true
+            };
+            surveyLocationToRecommendations[cityName] = [defaultSurveyRecommendation];
+          }
+        });
+        
+        return surveyData.map(survey => {
+          const cityName = survey.location.city || survey.location.fullAddress || 'Unknown City';
+          const associatedRecommendations = surveyLocationToRecommendations[cityName] || [];
+          
+          return {
+            ...survey,
+            issue_type: survey.issue.type,
+            severity: 'user_reported',
+            location: cityName,
+            coordinates: survey.location.coordinates || { lat: 36.7783, lng: -119.4179 },
+            id: survey.id || `survey_${Math.random()}`,
+            associatedRecommendations,
+            hasRecommendations: associatedRecommendations.length > 0
+          };
+        });
       default:
         return [];
     }
@@ -637,7 +1124,7 @@ const MapPage = () => {
                   value={searchQuery}
                   onChange={(e) => handleCitySearch(e.target.value)}
                   placeholder="Enter city name..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 hover:shadow-md focus:shadow-lg"
                 />
                 {searchQuery && (
                   <button
@@ -649,12 +1136,12 @@ const MapPage = () => {
                 )}
                 
                 {showSearchResults && searchResults.length > 0 && (
-                  <div className="absolute z-10 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-xl">
+                  <div className="absolute z-10 w-full mt-2 bg-white/95 backdrop-blur-sm border border-gray-200 rounded-xl shadow-xl">
                     {searchResults.map((city) => (
                       <button
                         key={city}
                         onClick={() => handleCitySelect(city)}
-                        className="w-full px-4 py-3 text-left hover:bg-blue-50 border-b border-gray-100 last:border-b-0 transition-colors"
+                        className="w-full px-4 py-3 text-left hover:bg-blue-50 border-b border-gray-100 last:border-b-0 transition-all duration-200"
                       >
                         <div className="flex items-center">
                           <MapPinIcon className="h-4 w-4 text-gray-400 mr-3" />
@@ -672,17 +1159,16 @@ const MapPage = () => {
               <h3 className="text-sm font-semibold text-gray-800 mb-4">Data Layers</h3>
               <div className="space-y-3">
                 {[
-                  { type: 'gaps', label: 'Accessibility Gaps', color: 'bg-red-500', icon: '🔍', count: getDataCount('gaps') },
-                  { type: 'surveys', label: 'User Reports', color: 'bg-orange-500', icon: '📝', count: getDataCount('surveys') },
-                  { type: 'recommendations', label: 'Recommendations', color: 'bg-purple-500', icon: '💡', count: getDataCount('recommendations') }
+                  { type: 'gaps', label: 'Accessibility Gaps & Recommendations', color: 'bg-red-500', icon: '🔍', count: getDataCount('gaps') },
+                  { type: 'surveys', label: 'User Reports', color: 'bg-orange-500', icon: '📝', count: getDataCount('surveys') }
                 ].map(({ type, label, color, icon, count }) => (
                   <button
                     key={type}
                     onClick={() => handleDataTypeChange(type)}
-                    className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-200 ${
+                    className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-300 ${
                       selectedDataType === type
-                        ? 'border-blue-500 bg-blue-50 shadow-md'
-                        : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'
+                        ? 'border-blue-500 bg-blue-50 shadow-lg'
+                        : 'border-gray-200 hover:border-blue-300 hover:shadow-md'
                     }`}
                   >
                     <div className="flex items-center">
@@ -696,49 +1182,29 @@ const MapPage = () => {
               </div>
             </div>
 
-            {/* Recommendation Selector (only for recommendations tab) */}
-            {selectedDataType === 'recommendations' && results?.recommendations && (
-              <div className="mb-8">
-                <h3 className="text-sm font-semibold text-gray-800 mb-3 flex items-center">
-                  <ChartBarIcon className="h-4 w-4 mr-2 text-purple-600" />
-                  Select Recommendation
-                </h3>
-                <select
-                  value={selectedRecommendation?.id || ''}
-                  onChange={(e) => {
-                    const rec = results.recommendations.find(r => r.id === e.target.value);
-                    setSelectedRecommendation(rec || null);
-                    // Clear selected item when changing recommendation
-                    setSelectedItem(null);
-                  }}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent shadow-sm"
-                >
-                  <option value="">All Recommendations</option>
-                  {results.recommendations.map((rec) => (
-                    <option key={rec.id} value={rec.id}>{rec.title}</option>
-                  ))}
-                </select>
-                
-                {/* Selected recommendation indicator */}
-                {selectedRecommendation && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-lg"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                      <span className="text-sm font-medium text-purple-800">
-                        Showing locations for: {selectedRecommendation.title}
-                      </span>
-                    </div>
-                    <p className="text-xs text-purple-600 mt-1">
-                      {selectedRecommendation.target_locations?.length || 0} target locations
-                    </p>
-                  </motion.div>
-                )}
+            {/* Description Section */}
+            <div className="mb-8 p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
+              <h3 className="text-sm font-semibold text-gray-800 mb-2 flex items-center">
+                <EyeIcon className="h-4 w-4 mr-2 text-blue-600" />
+                About This View
+              </h3>
+              <div className="text-xs text-gray-700 space-y-2">
+                {selectedDataType === 'gaps' ? (
+                  <>
+                    <p>🔍 <strong>Accessibility Gaps:</strong> Shows identified accessibility issues across California cities.</p>
+                    <p>💡 <strong>Purple borders</strong> indicate gaps that have specific recommendations available.</p>
+                    <p>📊 <strong>Click any marker</strong> to see detailed information and associated solutions.</p>
+                  </>
+                ) : selectedDataType === 'surveys' ? (
+                  <>
+                    <p>📝 <strong>User Reports:</strong> Community-submitted accessibility issues and concerns.</p>
+                    <p>👥 <strong>Real feedback</strong> from residents experiencing accessibility challenges.</p>
+                    <p>💡 <strong>Purple borders</strong> indicate reports that have community solutions available.</p>
+                    <p>📊 <strong>Click any marker</strong> to view detailed report information and solutions.</p>
+                  </>
+                ) : null}
               </div>
-            )}
+            </div>
 
             {/* Filters */}
             <div className="mb-8">
@@ -754,7 +1220,7 @@ const MapPage = () => {
                     <select
                       value={filters.severity}
                       onChange={(e) => setFilters(prev => ({ ...prev, severity: e.target.value }))}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 hover:shadow-md focus:shadow-lg"
                     >
                       <option value="all">All Severities</option>
                       <option value="critical">Critical</option>
@@ -769,7 +1235,7 @@ const MapPage = () => {
                   <select
                     value={filters.region}
                     onChange={(e) => setFilters(prev => ({ ...prev, region: e.target.value }))}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+                                         className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 hover:shadow-md focus:shadow-lg"
                   >
                     <option value="all">All Regions</option>
                     <option value="northern">Northern CA</option>
@@ -783,13 +1249,15 @@ const MapPage = () => {
             {/* Data List */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-gray-800 flex items-center">
-                  <EyeIcon className="h-4 w-4 mr-2 text-blue-600" />
-                  {selectedDataType === 'recommendations' && selectedRecommendation 
-                    ? `${selectedRecommendation.title} Locations (${getFilteredData().length})`
-                    : `Data Points (${getFilteredData().length})`
-                  }
-                </h3>
+                                  <h3 className="text-sm font-semibold text-gray-800 flex items-center">
+                    <EyeIcon className="h-4 w-4 mr-2 text-blue-600" />
+                    {selectedDataType === 'gaps' 
+                      ? `Accessibility Issues (${getFilteredData().length})`
+                      : selectedDataType === 'surveys'
+                      ? `User Reports (${getFilteredData().length})`
+                      : `Data Points (${getFilteredData().length})`
+                    }
+                  </h3>
               </div>
               
               <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
@@ -802,48 +1270,52 @@ const MapPage = () => {
                     onClick={() => {
                       setSelectedItem(item);
                       if (item.coordinates && mapInstanceRef.current) {
-                        mapInstanceRef.current.setView([item.coordinates.lat, item.coordinates.lng], 12);
+                        mapInstanceRef.current.flyTo([item.coordinates.lat, item.coordinates.lng], 9, {
+                          duration: 1.5,
+                          easeLinearity: 0.25
+                        });
                       }
                     }}
-                    className={`p-4 border-2 rounded-xl cursor-pointer transition-all duration-200 hover:shadow-md ${
-                      selectedItem === item ? 'border-blue-500 bg-blue-50 shadow-md' : 'border-gray-200 hover:border-gray-300'
+                    className={`p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 hover:shadow-lg ${
+                      selectedItem === item ? 'border-blue-500 bg-blue-50 shadow-lg' : 'border-gray-200 hover:border-blue-300'
                     }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <h4 className="text-sm font-semibold text-gray-900 truncate mb-1">
-                          {selectedDataType === 'recommendations' 
-                            ? item.location 
-                            : typeof item.location === 'string' ? item.location : 
-                              typeof item.title === 'string' ? item.title : 
-                              typeof item.issue_type === 'string' ? item.issue_type : 'Unknown Location'
+                          {typeof item.location === 'string' ? item.location : 
+                            typeof item.title === 'string' ? item.title : 
+                            typeof item.issue_type === 'string' ? item.issue_type : 'Unknown Location'
                           }
                         </h4>
                         <p className="text-xs text-gray-600 mb-2">
-                          {selectedDataType === 'recommendations'
-                            ? selectedRecommendation ? selectedRecommendation.title : 'Recommendation Location'
-                            : typeof item.issue_type === 'string' ? item.issue_type : 
-                              typeof item.type === 'string' ? item.type : 
-                              typeof item.severity === 'string' ? item.severity : 'Unknown Type'
+                          {typeof item.issue_type === 'string' ? item.issue_type : 
+                             typeof item.type === 'string' ? item.type : 
+                             typeof item.severity === 'string' ? item.severity : 'Unknown Type'
                           }
                         </p>
+                        {/* Show recommendations count for gaps and surveys */}
+                        {(selectedDataType === 'gaps' || selectedDataType === 'surveys') && item.hasRecommendations && (
+                          <div className="flex items-center mb-2">
+                            <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full font-medium">
+                              💡 {item.associatedRecommendations.length} {selectedDataType === 'surveys' ? 'solution' : 'recommendation'}{item.associatedRecommendations.length !== 1 ? 's' : ''}
+                            </span>
+                          </div>
+                        )}
                         {item.severity && typeof item.severity === 'string' && (
                           <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${
                             item.severity === 'critical' ? 'bg-red-100 text-red-800' :
                             item.severity === 'moderate' ? 'bg-orange-100 text-orange-800' :
                             item.severity === 'good' ? 'bg-green-100 text-green-800' :
                             item.severity === 'user_reported' ? 'bg-orange-100 text-orange-800' :
+                            item.severity === 'recommendation' ? 'bg-purple-100 text-purple-800' :
                             'bg-gray-100 text-gray-800'
                           }`}>
-                            {item.severity}
+                            {item.severity === 'recommendation' ? 'Improvement' : item.severity}
                           </span>
                         )}
                       </div>
-                      {selectedDataType === 'recommendations' && item.type && (
-                        <div className="ml-3">
-                          {getRecommendationIcon(item.type)}
-                        </div>
-                      )}
+
                     </div>
                   </motion.div>
                 ))}
@@ -855,7 +1327,8 @@ const MapPage = () => {
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl shadow-lg"
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="mb-6 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl shadow-xl"
               >
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-sm font-semibold text-gray-800 flex items-center">
@@ -910,6 +1383,50 @@ const MapPage = () => {
                       </p>
                     </div>
                   )}
+                  
+
+                   
+                   {/* Show recommendations for gaps and surveys */}
+                   {(selectedDataType === 'gaps' || selectedDataType === 'surveys') && selectedItem.associatedRecommendations && selectedItem.associatedRecommendations.length > 0 && (
+                     <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-4 rounded-lg border border-purple-200">
+                       <h4 className="font-semibold text-purple-800 mb-3 flex items-center">
+                         <span className="text-lg mr-2">💡</span>
+                         {selectedDataType === 'surveys' ? 'Community Solutions' : 'Recommendations'} ({selectedItem.associatedRecommendations.length})
+                       </h4>
+                       <div className="space-y-3">
+                         {selectedItem.associatedRecommendations.map((rec, index) => (
+                           <div key={index} className="bg-white p-3 rounded-lg border border-purple-200 shadow-sm">
+                             <h5 className="font-semibold text-purple-800 text-sm mb-1">{rec.title}</h5>
+                             <p className="text-xs text-gray-600 mb-2">{rec.description}</p>
+                             <div className="flex flex-wrap gap-2">
+                               <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">
+                                 {rec.type || 'General'}
+                               </span>
+                               <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                 {rec.priority_level || 'Medium'} Priority
+                               </span>
+                               {rec.cost_estimate && (
+                                 <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                   {rec.cost_estimate}
+                                 </span>
+                               )}
+                               {rec.timeline && (
+                                 <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                                   {rec.timeline}
+                                 </span>
+                               )}
+                             </div>
+                             <button 
+                               onClick={() => window.open(`/dashboard?rec=${rec.id}`, '_blank')}
+                               className="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium py-2 px-3 rounded-lg transition-colors"
+                             >
+                               📊 View Full Details on Dashboard
+                             </button>
+                           </div>
+                         ))}
+                       </div>
+                     </div>
+                   )}
                 </div>
               </motion.div>
             )}
@@ -931,7 +1448,7 @@ const MapPage = () => {
           />
           
           {/* Map Legend - Fixed positioning */}
-          <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-3 z-[1000]">
+          <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl shadow-xl border border-gray-200 p-4 z-[1000] max-w-xs">
             <div className="text-xs text-gray-600 mb-2 font-medium">Map Legend</div>
             <div className="space-y-1 text-xs">
               <div className="flex items-center">
@@ -950,31 +1467,11 @@ const MapPage = () => {
                 <div className="w-2 h-2 rounded-full bg-orange-500 mr-1"></div>
                 <span>User Reports</span>
               </div>
-              <div className="flex items-center">
-                <div className="w-2 h-2 rounded-full bg-purple-500 mr-1"></div>
-                <span>
-                  {selectedDataType === 'recommendations' && selectedRecommendation 
-                    ? `${selectedRecommendation.title} Locations`
-                    : 'Recommendations'
-                  }
-                </span>
-              </div>
-            </div>
-            
-            {/* Current selection indicator */}
-            {selectedDataType === 'recommendations' && selectedRecommendation && (
-              <div className="mt-2 pt-2 border-t border-gray-200">
-                <div className="flex items-center">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full mr-1"></div>
-                  <span className="text-xs font-medium text-purple-700 truncate">
-                    {selectedRecommendation.title}
-                  </span>
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {selectedRecommendation.target_locations?.length || 0} locations
-                </div>
-              </div>
-            )}
+                             <div className="flex items-center">
+                 <div className="w-2 h-2 rounded-full bg-purple-500 mr-1"></div>
+                 <span>Issues with Solutions</span>
+               </div>
+             </div>
           </div>
         </div>
       </div>

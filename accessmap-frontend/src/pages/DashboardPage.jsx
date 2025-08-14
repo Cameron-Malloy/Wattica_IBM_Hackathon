@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApi } from '../contexts/ApiContext';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import { useLocation } from 'react-router-dom';
 import { 
   ExclamationTriangleIcon,
   MapPinIcon,
@@ -25,6 +26,7 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
 const DashboardPage = () => {
+  const location = useLocation();
   const {
     results,
     loading,
@@ -51,9 +53,30 @@ const DashboardPage = () => {
     }
   }, [isConnected, getLatestResults]);
 
+  // Handle URL parameter for recommendation selection
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const recId = urlParams.get('rec');
+    
+    if (recId && results?.recommendations) {
+      const recommendation = results.recommendations.find(rec => rec.id === recId);
+      if (recommendation) {
+        setSelectedRecommendation(recommendation);
+        setActiveTab('recommendations');
+        // Scroll to recommendations section
+        setTimeout(() => {
+          const recommendationsSection = document.getElementById('recommendations-section');
+          if (recommendationsSection) {
+            recommendationsSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 500);
+      }
+    }
+  }, [location.search, results?.recommendations]);
+
   const fetchSurveyData = async () => {
     try {
-      const response = await fetch('http://localhost:8002/surveys');
+      const response = await fetch('http://localhost:8003/surveys');
       if (response.ok) {
         const data = await response.json();
         setSurveyData(data.surveys || []);
@@ -728,9 +751,27 @@ const DashboardPage = () => {
                         AI Generated
                       </span>
                     </div>
-                    <p className="text-sm text-gray-700">
+                    <p className="text-sm text-gray-700 mb-2">
                       {survey.ai_recommendation.title}
                     </p>
+                    
+                    {/* Show implementation steps preview if available */}
+                    {(survey.ai_recommendation.implementation_steps || survey.ai_recommendation.recommended_actions || survey.ai_recommendation.plan) && (
+                      <div>
+                        <p className="text-xs font-medium text-gray-600 mb-1">Implementation Steps:</p>
+                        <div className="text-xs text-gray-700">
+                          {survey.ai_recommendation.implementation_steps && survey.ai_recommendation.implementation_steps.length > 0 && (
+                            <span>{survey.ai_recommendation.implementation_steps[0]}...</span>
+                          )}
+                          {survey.ai_recommendation.recommended_actions && survey.ai_recommendation.recommended_actions.length > 0 && !survey.ai_recommendation.implementation_steps && (
+                            <span>{survey.ai_recommendation.recommended_actions[0]}...</span>
+                          )}
+                          {survey.ai_recommendation.plan && !survey.ai_recommendation.implementation_steps && !survey.ai_recommendation.recommended_actions && (
+                            <span>{typeof survey.ai_recommendation.plan === 'string' ? survey.ai_recommendation.plan.substring(0, 100) + '...' : 'Detailed plan available'}</span>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <EyeIcon className="h-5 w-5 text-gray-400" />
                 </div>
@@ -834,14 +875,46 @@ const DashboardPage = () => {
                       </div>
                     )}
                     
-                    {selectedSurvey.ai_recommendation.recommended_actions && (
+                    {/* Implementation Steps - Check multiple possible fields */}
+                    {(selectedSurvey.ai_recommendation.implementation_steps || selectedSurvey.ai_recommendation.recommended_actions || selectedSurvey.ai_recommendation.plan) && (
                       <div>
-                        <p className="text-sm font-medium text-green-800 mb-2">Recommended Actions</p>
-                        <ol className="text-sm text-green-900 list-decimal list-inside space-y-1">
-                          {selectedSurvey.ai_recommendation.recommended_actions.map((action, index) => (
-                            <li key={index}>{action}</li>
-                          ))}
-                        </ol>
+                        <p className="text-sm font-medium text-green-800 mb-2">Implementation Steps</p>
+                        {selectedSurvey.ai_recommendation.implementation_steps && (
+                          <ol className="text-sm text-green-900 list-decimal list-inside space-y-1">
+                            {selectedSurvey.ai_recommendation.implementation_steps.map((step, index) => (
+                              <li key={index}>{step}</li>
+                            ))}
+                          </ol>
+                        )}
+                        {selectedSurvey.ai_recommendation.recommended_actions && !selectedSurvey.ai_recommendation.implementation_steps && (
+                          <ol className="text-sm text-green-900 list-decimal list-inside space-y-1">
+                            {selectedSurvey.ai_recommendation.recommended_actions.map((action, index) => (
+                              <li key={index}>{action}</li>
+                            ))}
+                          </ol>
+                        )}
+                        {selectedSurvey.ai_recommendation.plan && !selectedSurvey.ai_recommendation.implementation_steps && !selectedSurvey.ai_recommendation.recommended_actions && (
+                          <div className="text-sm text-green-900">
+                            {typeof selectedSurvey.ai_recommendation.plan === 'string' ? (
+                              <p>{selectedSurvey.ai_recommendation.plan}</p>
+                            ) : (
+                              <div className="space-y-2">
+                                {Object.entries(selectedSurvey.ai_recommendation.plan).map(([phase, data], index) => (
+                                  <div key={index} className="border-l-2 border-green-300 pl-3">
+                                    <h6 className="font-medium capitalize">{phase.replace('_', ' ')}</h6>
+                                    {data.activities && (
+                                      <ul className="list-disc list-inside space-y-1 mt-1">
+                                        {data.activities.map((activity, actIndex) => (
+                                          <li key={actIndex} className="text-xs">{activity}</li>
+                                        ))}
+                                      </ul>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     )}
                     
@@ -910,6 +983,7 @@ const DashboardPage = () => {
 
   const renderRecommendations = () => (
     <motion.div
+      id="recommendations-section"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
@@ -984,6 +1058,24 @@ const DashboardPage = () => {
                 
                 <p className="text-sm text-gray-700 mb-3">{rec.description}</p>
                 
+                {/* Show implementation steps preview if available */}
+                {(rec.implementation_steps || rec.recommended_actions || rec.plan) && (
+                  <div className="mb-3">
+                    <p className="text-xs font-medium text-gray-600 mb-1">Implementation Steps:</p>
+                    <div className="text-xs text-gray-700">
+                      {rec.implementation_steps && rec.implementation_steps.length > 0 && (
+                        <span>{rec.implementation_steps[0]}...</span>
+                      )}
+                      {rec.recommended_actions && rec.recommended_actions.length > 0 && !rec.implementation_steps && (
+                        <span>{rec.recommended_actions[0]}...</span>
+                      )}
+                      {rec.plan && !rec.implementation_steps && !rec.recommended_actions && (
+                        <span>{typeof rec.plan === 'string' ? rec.plan.substring(0, 100) + '...' : 'Detailed plan available'}</span>
+                      )}
+                    </div>
+                  </div>
+                )}
+                
                 <div className="flex items-center justify-between text-xs text-gray-500">
                   <div className="flex items-center space-x-4">
                     <span className="flex items-center">
@@ -1054,14 +1146,46 @@ const DashboardPage = () => {
                   <p className="text-sm text-green-800">{selectedRecommendation.equity_impact}</p>
                 </div>
                 
-                {selectedRecommendation.implementation_steps && (
+                {/* Implementation Steps - Check multiple possible fields */}
+                {(selectedRecommendation.implementation_steps || selectedRecommendation.recommended_actions || selectedRecommendation.plan) && (
                   <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
                     <h5 className="font-semibold text-orange-900 mb-3">Implementation Steps</h5>
-                    <ol className="text-sm text-orange-800 list-decimal list-inside space-y-2">
-                      {selectedRecommendation.implementation_steps.map((step, index) => (
-                        <li key={index}>{step}</li>
-                      ))}
-                    </ol>
+                    {selectedRecommendation.implementation_steps && (
+                      <ol className="text-sm text-orange-800 list-decimal list-inside space-y-2">
+                        {selectedRecommendation.implementation_steps.map((step, index) => (
+                          <li key={index}>{step}</li>
+                        ))}
+                      </ol>
+                    )}
+                    {selectedRecommendation.recommended_actions && !selectedRecommendation.implementation_steps && (
+                      <ol className="text-sm text-orange-800 list-decimal list-inside space-y-2">
+                        {selectedRecommendation.recommended_actions.map((action, index) => (
+                          <li key={index}>{action}</li>
+                        ))}
+                      </ol>
+                    )}
+                    {selectedRecommendation.plan && !selectedRecommendation.implementation_steps && !selectedRecommendation.recommended_actions && (
+                      <div className="text-sm text-orange-800">
+                        {typeof selectedRecommendation.plan === 'string' ? (
+                          <p>{selectedRecommendation.plan}</p>
+                        ) : (
+                          <div className="space-y-2">
+                            {Object.entries(selectedRecommendation.plan).map(([phase, data], index) => (
+                              <div key={index} className="border-l-2 border-orange-300 pl-3">
+                                <h6 className="font-medium capitalize">{phase.replace('_', ' ')}</h6>
+                                {data.activities && (
+                                  <ul className="list-disc list-inside space-y-1 mt-1">
+                                    {data.activities.map((activity, actIndex) => (
+                                      <li key={actIndex} className="text-xs">{activity}</li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
                 

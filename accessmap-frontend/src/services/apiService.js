@@ -3,7 +3,7 @@
  * Handles all backend communication with proper error handling and real-time updates
  */
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8002';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8003';
 
 class ApiService {
   constructor() {

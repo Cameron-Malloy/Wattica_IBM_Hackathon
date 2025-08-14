@@ -88,7 +88,8 @@ class AccessScannerAgent:
         Census Data for {state} (Batch {batch_num + 1}):
         {json.dumps(batch_data, indent=2)}
 
-        Generate 10-15 accessibility barriers for these cities. Return ONLY a JSON array using this EXACT format:
+        Generate 20-30 accessibility barriers for these cities. You MUST return ONLY a valid JSON array with this EXACT format:
+
         [
             {{
                 "location": "City Name, {state}",
@@ -101,7 +102,9 @@ class AccessScannerAgent:
         Issue types: Missing Curb Ramps, Broken Sidewalk, Inaccessible Transit, No Tactile Paving, Steep Grade, Poor Lighting, Missing Accessible Parking, Blocked Walkway
         Severity: critical, moderate, good
         
-        Focus on areas with high elderly populations (>15%) or disability rates (>10%). Return ONLY the JSON array."""
+        Focus on areas with high elderly populations (>15%) or disability rates (>10%). 
+        
+        IMPORTANT: Return ONLY the JSON array. Do not include any other text, explanations, or formatting."""
         
         # Retry WatsonX generation up to 3 times
         max_retries = 3
@@ -117,19 +120,53 @@ class AccessScannerAgent:
                 )
                 ai_response = response['results'][0]['generated_text']
                 
-                # Extract JSON
+                # Enhanced JSON extraction and parsing
+                logger.info(f"Raw AI response: {ai_response[:200]}...")
+                
+                # Try multiple JSON extraction strategies
+                json_str = None
+                
+                # Strategy 1: Look for JSON array markers
                 json_start = ai_response.find('[')
                 json_end = ai_response.rfind(']')
                 
                 if json_start != -1 and json_end > json_start:
                     json_str = ai_response[json_start:json_end+1]
+                
+                # Strategy 2: If no array found, try to extract JSON objects
+                if not json_str:
+                    # Look for individual JSON objects
+                    brace_start = ai_response.find('{')
+                    brace_end = ai_response.rfind('}')
+                    if brace_start != -1 and brace_end > brace_start:
+                        # Wrap in array if it's a single object
+                        single_obj = ai_response[brace_start:brace_end+1]
+                        json_str = f"[{single_obj}]"
+                
+                # Strategy 3: Try to fix common JSON issues
+                if json_str:
+                    # Clean up the JSON string
                     json_str = json_str.replace('\n', ' ').replace('\t', ' ')
+                    json_str = json_str.replace('\\', '\\\\')  # Escape backslashes
+                    
+                    # Remove extra whitespace
                     while '  ' in json_str:
                         json_str = json_str.replace('  ', ' ')
+                    
+                    # Try to fix common JSON syntax issues
+                    json_str = json_str.replace('",}', '"}')  # Remove trailing commas
+                    json_str = json_str.replace(',]', ']')    # Remove trailing commas in arrays
+                    json_str = json_str.replace(',}', '}')    # Remove trailing commas in objects
+                    
+                    logger.info(f"Cleaned JSON string: {json_str[:200]}...")
                     
                     try:
                         ai_results = json.loads(json_str)
                         logger.info(f"✅ Batch {batch_num + 1}: Generated {len(ai_results)} WatsonX results")
+                        
+                        # Ensure we have a list
+                        if not isinstance(ai_results, list):
+                            ai_results = [ai_results]
                         
                         # Enhance results with census data
                         enhanced_results = self._enhance_ai_results(ai_results, batch_data, state)
@@ -137,6 +174,9 @@ class AccessScannerAgent:
                         
                     except json.JSONDecodeError as e:
                         logger.warning(f"JSON parsing failed for batch {batch_num + 1}, attempt {attempt + 1}: {e}")
+                        logger.warning(f"Failed JSON string: {json_str}")
+                        
+                        # If JSON parsing fails, retry
                         if attempt == max_retries - 1:
                             raise Exception(f"Failed to parse WatsonX response after all retries: {e}")
                         continue
@@ -262,3 +302,5 @@ class AccessScannerAgent:
         except Exception as e:
             logger.warning(f"Geocoding failed for {query}: {e}")
         return None
+    
+
