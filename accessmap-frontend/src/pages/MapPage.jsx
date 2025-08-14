@@ -204,6 +204,7 @@ const MapPage = () => {
       const response = await fetch('http://localhost:8003/surveys');
       if (response.ok) {
         const data = await response.json();
+        console.log('Fetched survey data:', data);
         setSurveyData(data.surveys || []);
       }
     } catch (error) {
@@ -343,6 +344,7 @@ const MapPage = () => {
         let popupContent = '';
 
         if (item.severity === 'user_reported') {
+          console.log('Creating user_reported marker for:', item);
           color = '#f59e0b'; // Orange for user reports
           radius = item.hasRecommendations ? 12 : 10; // Larger radius if has recommendations
           
@@ -454,13 +456,13 @@ const MapPage = () => {
                   <div class="space-y-2">
                     <div class="bg-orange-50 rounded p-2">
                       <h4 class="font-medium text-orange-800 text-xs mb-1">${item.issue_type}</h4>
-                      <p class="text-xs text-gray-700 leading-relaxed">${item.issue.description ? item.issue.description.substring(0, 120) + '...' : 'Community-reported accessibility issue in this location.'}</p>
+                      <p class="text-xs text-gray-700 leading-relaxed">${(item.issue?.description || item.survey_issue?.description) ? (item.issue?.description || item.survey_issue?.description).substring(0, 120) + '...' : 'Community-reported accessibility issue in this location.'}</p>
                     </div>
                     
                     <div class="grid grid-cols-2 gap-2 text-xs">
                       <div class="bg-blue-50 rounded p-2">
                         <p class="text-blue-600 font-medium">Daily Impact</p>
-                        <p class="text-blue-800 font-bold">${item.impact.daily_impact || 'High'}</p>
+                        <p class="text-blue-800 font-bold">${item.impact?.daily_impact || 'High'}</p>
                       </div>
                       <div class="bg-green-50 rounded p-2">
                         <p class="text-green-600 font-medium">Submitted</p>
@@ -468,7 +470,7 @@ const MapPage = () => {
                       </div>
                     </div>
                     
-                    ${item.contact.name && !item.contact.anonymous ? `
+                    ${item.contact?.name && !item.contact?.anonymous ? `
                       <div class="bg-gray-50 rounded p-2">
                         <p class="text-xs text-gray-600">Reported by: <span class="font-medium text-gray-800">${item.contact.name}</span></p>
                       </div>
@@ -801,6 +803,10 @@ const MapPage = () => {
           opacity: 1,
           fillOpacity: 0.8
         }).addTo(mapInstanceRef.current);
+        
+        if (item.severity === 'user_reported') {
+          console.log('Created user_reported marker at:', lat, lng, 'with color:', color, 'radius:', radius);
+        }
 
 
 
@@ -893,7 +899,8 @@ const MapPage = () => {
     if (!results) return 0;
     switch (type) {
       case 'gaps':
-        return results.scan_results?.length || 0;
+        const surveyRecommendationsCount = results.recommendations?.filter(rec => rec.survey_based)?.length || 0;
+        return (results.scan_results?.length || 0) + surveyRecommendationsCount;
       case 'surveys':
         return surveyData.length || 0;
 
@@ -905,15 +912,40 @@ const MapPage = () => {
   const getFilteredData = () => {
     if (!results) return [];
     
-    console.log('getFilteredData called with selectedDataType:', selectedDataType);
-    console.log('results.scan_results:', results.scan_results);
-    console.log('results.recommendations:', results.recommendations);
+
     
     switch (selectedDataType) {
       case 'gaps':
         // Combine accessibility gaps with their associated recommendations
         const gapsData = results.scan_results || [];
         const recommendationsData = results.recommendations || [];
+        
+        // Convert survey-based recommendations to gap format so they show up as markers
+        const surveyRecommendationsAsGaps = recommendationsData
+          .filter(rec => rec.survey_based)
+          .map(rec => ({
+            id: rec.id,
+            location: rec.survey_location?.city || rec.target_locations?.[0] || 'Survey Location',
+            coordinates: rec.coordinates || rec.survey_location?.coordinates,
+            issue_type: rec.survey_issue?.type || 'Community Reported Issue',
+            severity: 'user_reported',
+            description: rec.survey_issue?.description || rec.description,
+            submitted_at: rec.submitted_at,
+            agent: 'SurveyBot',
+            survey_based: true,
+            associatedRecommendations: [rec],
+            hasRecommendations: true,
+            // Add these fields to ensure proper marker display
+            vulnerable_population: 'Community reported',
+            confidence: 1.0,
+            detected_date: rec.submitted_at?.split('T')[0] || new Date().toISOString().split('T')[0]
+          }));
+        
+        console.log('Survey recommendations as gaps:', surveyRecommendationsAsGaps);
+        
+        // Combine regular gaps with survey-based gaps
+        const allGapsData = [...gapsData, ...surveyRecommendationsAsGaps];
+        console.log('All gaps data:', allGapsData);
         
         // Create a map of location to recommendations for quick lookup
         const locationToRecommendations = {};
@@ -931,7 +963,7 @@ const MapPage = () => {
         
         // Ensure every city has recommendations by creating default ones if needed
         const allCities = new Set();
-        gapsData.forEach(gap => {
+        allGapsData.forEach(gap => {
           const locationName = gap.location || gap.name || 'Unknown Location';
           allCities.add(locationName);
         });
@@ -956,7 +988,7 @@ const MapPage = () => {
         });
         
         // Enhance gaps data with recommendations and apply filters
-        return gapsData.map(gap => {
+        return allGapsData.map(gap => {
           const locationName = gap.location || gap.name || 'Unknown Location';
           const associatedRecommendations = locationToRecommendations[locationName] || [];
           
@@ -977,65 +1009,90 @@ const MapPage = () => {
           }
           return true;
         });
+        
+        console.log('Filtered gaps data:', allGapsData);
       case 'surveys':
-        // Get recommendations data for survey locations
-        const surveyRecommendationsData = results.recommendations || [];
-        
-        // Create a map of location to recommendations for surveys
-        const surveyLocationToRecommendations = {};
-        surveyRecommendationsData.forEach(rec => {
-          if (rec.target_locations && Array.isArray(rec.target_locations)) {
-            rec.target_locations.forEach(location => {
-              const locationName = typeof location === 'string' ? location : (location.name || location);
-              if (!surveyLocationToRecommendations[locationName]) {
-                surveyLocationToRecommendations[locationName] = [];
-              }
-              surveyLocationToRecommendations[locationName].push(rec);
-            });
-          }
-        });
-        
-        // Ensure every survey location has recommendations
-        const surveyCities = new Set();
-        surveyData.forEach(survey => {
-          const cityName = survey.location.city || survey.location.fullAddress || 'Unknown City';
-          surveyCities.add(cityName);
-        });
-        
-        // Create default recommendations for survey cities that don't have them
-        surveyCities.forEach(cityName => {
-          if (!surveyLocationToRecommendations[cityName] || surveyLocationToRecommendations[cityName].length === 0) {
-            // Create a default recommendation for this survey city
-            const defaultSurveyRecommendation = {
-              id: `survey_default_${cityName.replace(/\s+/g, '_').toLowerCase()}`,
-              title: `Community-Reported Accessibility Solutions for ${cityName}`,
-              description: `Addressing community-reported accessibility issues in ${cityName} with targeted improvements`,
-              type: 'community',
-              priority_level: 'High',
-              cost_estimate: '$25,000 - $75,000',
-              timeline: '3-6 months',
-              target_locations: [cityName],
-              isDefault: true,
-              surveyBased: true
-            };
-            surveyLocationToRecommendations[cityName] = [defaultSurveyRecommendation];
-          }
-        });
-        
+        // Convert survey data to map-compatible format
         return surveyData.map(survey => {
-          const cityName = survey.location.city || survey.location.fullAddress || 'Unknown City';
-          const associatedRecommendations = surveyLocationToRecommendations[cityName] || [];
+          const locationName = survey.location.fullAddress || survey.location.city || 'Unknown Location';
+          
+          // Create associated recommendations from survey AI recommendations
+          const associatedRecommendations = survey.ai_recommendation ? [{
+            id: `survey_rec_${survey.id}`,
+            title: survey.ai_recommendation.title || 'Community-Reported Solution',
+            description: survey.ai_recommendation.description || 'AI-generated recommendation based on community feedback',
+            type: survey.ai_recommendation.type || 'community',
+            priority_level: survey.ai_recommendation.priority_level || 'High',
+            cost_estimate: survey.ai_recommendation.cost_estimate || 'TBD',
+            timeline: survey.ai_recommendation.timeline || '3-6 months',
+            survey_based: true,
+            agent: 'SurveyBot'
+          }] : [];
           
           return {
-            ...survey,
+            id: survey.id,
+            location: locationName,
+            coordinates: survey.location.coordinates,
             issue_type: survey.issue.type,
             severity: 'user_reported',
-            location: cityName,
-            coordinates: survey.location.coordinates || { lat: 36.7783, lng: -119.4179 },
-            id: survey.id || `survey_${Math.random()}`,
+            description: survey.issue.description,
+            submitted_at: survey.submitted_at,
+            impact: survey.impact,
+            demographics: survey.demographics,
+            contact: survey.contact,
             associatedRecommendations,
             hasRecommendations: associatedRecommendations.length > 0
           };
+        }).filter(item => {
+          if (filters.severity !== 'all' && item.severity !== filters.severity) return false;
+          if (filters.region !== 'all') {
+            const lat = item.coordinates?.lat;
+            if (filters.region === 'northern' && lat < 37) return false;
+            if (filters.region === 'southern' && lat > 37) return false;
+            if (filters.region === 'central' && (lat < 35 || lat > 39)) return false;
+          }
+          return true;
+        });
+        
+        return surveyData.map(survey => {
+          const locationName = survey.location.fullAddress || survey.location.city || 'Unknown Location';
+          
+          // Create associated recommendations from survey AI recommendations
+          const associatedRecommendations = survey.ai_recommendation ? [{
+            id: `survey_rec_${survey.id}`,
+            title: survey.ai_recommendation.title || 'Community-Reported Solution',
+            description: survey.ai_recommendation.description || 'AI-generated recommendation based on community feedback',
+            type: survey.ai_recommendation.type || 'community',
+            priority_level: survey.ai_recommendation.priority_level || 'High',
+            cost_estimate: survey.ai_recommendation.cost_estimate || 'TBD',
+            timeline: survey.ai_recommendation.timeline || '3-6 months',
+            survey_based: true,
+            agent: 'SurveyBot'
+          }] : [];
+          
+          return {
+            id: survey.id,
+            location: locationName,
+            coordinates: survey.location.coordinates,
+            issue_type: survey.issue.type,
+            severity: 'user_reported',
+            description: survey.issue.description,
+            submitted_at: survey.submitted_at,
+            impact: survey.impact,
+            demographics: survey.demographics,
+            contact: survey.contact,
+            associatedRecommendations,
+            hasRecommendations: associatedRecommendations.length > 0
+          };
+        }).filter(item => {
+          if (filters.severity !== 'all' && item.severity !== filters.severity) return false;
+          if (filters.region !== 'all') {
+            const lat = item.coordinates?.lat;
+            if (filters.region === 'northern' && lat < 37) return false;
+            if (filters.region === 'southern' && lat > 37) return false;
+            if (filters.region === 'central' && (lat < 35 || lat > 39)) return false;
+          }
+          return true;
         });
       default:
         return [];

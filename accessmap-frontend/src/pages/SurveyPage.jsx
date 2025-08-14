@@ -9,60 +9,91 @@ import {
 } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
-// Survey questions for accessibility assessment
+// Enhanced survey questions for better WatsonX recommendations
 const surveyQuestions = [
   {
     id: 1,
-    type: 'slider',
-    question: 'How would you rate the overall accessibility of sidewalks in your area?',
-    min: 1,
-    max: 5,
-    labels: ['Very Poor', 'Poor', 'Average', 'Good', 'Excellent']
+    type: 'location',
+    question: 'Where is this accessibility issue located?',
+    placeholder: 'Please provide the specific location (e.g., "Corner of Main St and Oak Ave")'
   },
   {
     id: 2,
-    type: 'multiple-choice',
-    question: 'What accessibility barriers do you encounter most often?',
+    type: 'issue_type',
+    question: 'What type of accessibility issue are you reporting?',
     options: [
-      'Broken or missing curb ramps',
-      'Uneven sidewalk surfaces',
-      'Obstacles blocking pathways',
-      'Lack of audio signals at crossings',
-      'Poor lighting',
+      'Missing or broken curb ramps',
+      'Uneven or damaged sidewalk surfaces',
+      'Obstacles blocking pedestrian pathways',
+      'Lack of audio signals at crosswalks',
+      'Poor lighting in pedestrian areas',
+      'Inaccessible public transportation stops',
+      'Missing or unclear signage',
       'Other'
     ]
   },
   {
     id: 3,
-    type: 'slider',
-    question: 'How safe do you feel navigating your neighborhood?',
-    min: 1,
-    max: 5,
-    labels: ['Very Unsafe', 'Unsafe', 'Neutral', 'Safe', 'Very Safe']
+    type: 'severity',
+    question: 'How severe is this accessibility issue?',
+    options: [
+      'Critical - Completely blocks access',
+      'High - Significantly difficult to navigate',
+      'Moderate - Somewhat challenging',
+      'Low - Minor inconvenience'
+    ]
   },
   {
     id: 4,
-    type: 'multiple-choice',
-    question: 'Do you or someone in your household use mobility assistance?',
+    type: 'frequency',
+    question: 'How often do you encounter this issue?',
     options: [
-      'Wheelchair',
-      'Walker or cane',
-      'Visual assistance (guide dog/cane)',
-      'None',
-      'Prefer not to answer'
+      'Daily',
+      'Weekly',
+      'Monthly',
+      'Occasionally',
+      'First time'
     ]
+  },
+  {
+    id: 5,
+    type: 'impact',
+    question: 'How does this issue impact your daily life?',
+    placeholder: 'Describe how this accessibility barrier affects you or others (e.g., "Makes it difficult to walk to the bus stop", "Prevents wheelchair access to the library")'
+  },
+  {
+    id: 6,
+    type: 'demographics',
+    question: 'What accessibility needs do you or your household have? (Optional)',
+    options: [
+      'Mobility assistance (wheelchair, walker, cane)',
+      'Visual impairment',
+      'Hearing impairment',
+      'Cognitive or developmental disabilities',
+      'Aging-related accessibility needs',
+      'Temporary mobility limitations',
+      'None - reporting for others',
+      'Prefer not to specify'
+    ]
+  },
+  {
+    id: 7,
+    type: 'suggestions',
+    question: 'What improvements would help resolve this issue? (Optional)',
+    placeholder: 'Share any ideas you have for improving this location (e.g., "Install curb ramps", "Add better lighting", "Repair sidewalk")'
   }
 ];
 
 const SurveyPage = () => {
   const [responses, setResponses] = useState({});
-  const [sentiment, setSentiment] = useState(3); // 1-5 scale
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSliderChange = (questionId, value) => {
+  const handleLocationSelect = (location) => {
+    setSelectedLocation(location);
     setResponses(prev => ({
       ...prev,
-      [questionId]: value
+      location: location
     }));
   };
 
@@ -82,29 +113,85 @@ const SurveyPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!selectedLocation) {
+      toast.error('Please select a location on the map');
+      return;
+    }
+
+    // Validate required fields
+    const requiredFields = ['issue_type', 'severity', 'frequency', 'impact'];
+    const missingFields = requiredFields.filter(field => !responses[field]);
+    
+    if (missingFields.length > 0) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    toast.success('Survey submitted successfully! Thank you for your feedback.');
-    setIsSubmitting(false);
-    
-    // Reset form
-    setResponses({});
-    setSentiment(3);
-  };
 
-  const getSentimentIcon = (value) => {
-    if (value <= 2) return '😡';
-    if (value === 3) return '😐';
-    return '😊';
-  };
+    try {
+      // Prepare survey data in the format expected by the backend
+      const surveyData = {
+        location: {
+          fullAddress: selectedLocation.fullAddress,
+          city: selectedLocation.city,
+          state: selectedLocation.state,
+          coordinates: {
+            lat: selectedLocation.coordinates.lat,
+            lng: selectedLocation.coordinates.lng
+          }
+        },
+        issue: {
+          type: responses.issue_type,
+          severity: responses.severity,
+          frequency: responses.frequency,
+          description: responses.impact,
+          suggestions: responses.suggestions || ''
+        },
+        impact: {
+          daily_impact: responses.frequency,
+          description: responses.impact,
+          affected_population: responses.demographics || 'General public'
+        },
+        demographics: {
+          accessibility_needs: responses.demographics || 'Not specified',
+          household_size: 'Not specified'
+        },
+        contact: {
+          name: 'Anonymous',
+          email: 'anonymous@accessmap.com',
+          anonymous: true
+        }
+      };
 
-  const getSentimentLabel = (value) => {
-    if (value <= 2) return 'Frustrated';
-    if (value === 3) return 'Neutral';
-    return 'Satisfied';
+      // Submit to backend
+      const response = await fetch('http://localhost:8003/survey', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(surveyData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit survey');
+      }
+
+      const result = await response.json();
+      
+      toast.success('Survey submitted successfully! Your feedback will help improve accessibility.');
+      
+      // Reset form
+      setResponses({});
+      setSelectedLocation(null);
+      
+    } catch (error) {
+      console.error('Survey submission error:', error);
+      toast.error('Failed to submit survey. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -114,11 +201,11 @@ const SurveyPage = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <ClipboardDocumentListIcon className="h-8 w-8 text-primary-600" />
-            <h1 className="text-3xl font-bold text-gray-900">AI-Generated Accessibility Survey</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Accessibility Issue Report</h1>
           </div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Help us understand accessibility challenges in your community. 
-            This survey was generated by our AI system based on current urban accessibility research.
+            Help us identify and improve accessibility barriers in your community. 
+            Your report will be analyzed by AI to generate specific recommendations.
           </p>
         </div>
 
@@ -131,46 +218,50 @@ const SurveyPage = () => {
                 <div className="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center">
                   <span className="text-white text-xs font-bold">AI</span>
                 </div>
-                <span className="text-blue-800 text-sm font-medium">Generated by Watsonx</span>
+                <span className="text-blue-800 text-sm font-medium">Powered by WatsonX</span>
+              </div>
+            </div>
+
+            {/* Location Selection */}
+            <div className="border-b border-gray-200 pb-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                1. Where is this accessibility issue located?
+              </h3>
+              <div className="bg-gray-50 rounded-lg p-4">
+                <p className="text-sm text-gray-600 mb-4">
+                  Please select a location on the map to report an accessibility issue.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => window.open('/map', '_blank')}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  <MapPinIcon className="h-4 w-4 mr-2" />
+                  Open Map to Select Location
+                </button>
+                {selectedLocation && (
+                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
+                    <p className="text-sm text-green-800">
+                      <strong>Selected:</strong> {selectedLocation.fullAddress}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Questions */}
             <div className="space-y-8">
-              {surveyQuestions.map((question, index) => (
+              {surveyQuestions.slice(1).map((question, index) => (
                 <div key={question.id} className="border-b border-gray-200 pb-6 last:border-b-0">
                   <h3 className="text-lg font-medium text-gray-900 mb-4">
-                    {index + 1}. {question.question}
+                    {index + 2}. {question.question}
+                    {['issue_type', 'severity', 'frequency', 'impact'].includes(question.id) && (
+                      <span className="text-red-500 ml-1">*</span>
+                    )}
                   </h3>
 
-                  {/* Slider Question */}
-                  {question.type === 'slider' && (
-                    <div className="space-y-4">
-                      <div className="px-4">
-                        <input
-                          type="range"
-                          min={question.scale.min}
-                          max={question.scale.max}
-                          value={responses[question.id] || 3}
-                          onChange={(e) => handleSliderChange(question.id, parseInt(e.target.value))}
-                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                        />
-                        <div className="flex justify-between text-sm text-gray-500 mt-2">
-                          {question.scale.labels.map((label, idx) => (
-                            <span key={idx} className="text-center flex-1">{label}</span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="text-center">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
-                          Selected: {question.scale.labels[(responses[question.id] || 3) - 1]}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
                   {/* Multiple Choice Question */}
-                  {question.type === 'multiple_choice' && (
+                  {question.type === 'issue_type' || question.type === 'severity' || question.type === 'frequency' || question.type === 'demographics' && (
                     <div className="space-y-3">
                       {question.options.map((option, idx) => (
                         <label key={idx} className="flex items-center space-x-3 cursor-pointer">
@@ -180,7 +271,7 @@ const SurveyPage = () => {
                             value={option}
                             checked={responses[question.id] === option}
                             onChange={() => handleMultipleChoice(question.id, option)}
-                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                           />
                           <span className="text-gray-700">{option}</span>
                         </label>
@@ -189,14 +280,14 @@ const SurveyPage = () => {
                   )}
 
                   {/* Text Question */}
-                  {question.type === 'text' && (
+                  {(question.type === 'impact' || question.type === 'suggestions') && (
                     <div>
                       <textarea
                         rows={4}
                         placeholder={question.placeholder}
                         value={responses[question.id] || ''}
                         onChange={(e) => handleTextChange(question.id, e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   )}
@@ -204,71 +295,28 @@ const SurveyPage = () => {
               ))}
             </div>
 
-            {/* Sentiment Slider */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                Overall, how do you feel about accessibility in your area?
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-center space-x-4">
-                  <FaceFrownIcon className="h-6 w-6 text-red-500" />
-                  <input
-                    type="range"
-                    min="1"
-                    max="5"
-                    value={sentiment}
-                    onChange={(e) => setSentiment(parseInt(e.target.value))}
-                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                  />
-                  <FaceSmileIcon className="h-6 w-6 text-green-500" />
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl mb-2">{getSentimentIcon(sentiment)}</div>
-                  <span className="text-lg font-medium text-gray-700">
-                    {getSentimentLabel(sentiment)}
-                  </span>
-                </div>
-              </div>
-            </div>
-
             {/* Submit Button */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
+            <div className="pt-6">
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                disabled={isSubmitting || !selectedLocation}
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
+                    <CheckCircleIcon className="h-5 w-5 mr-2 animate-spin" />
                     Submitting...
                   </>
                 ) : (
                   <>
-                    <CheckCircleIcon className="h-5 w-5 mr-2" />
-                    Submit Survey
+                    <ClipboardDocumentListIcon className="h-5 w-5 mr-2" />
+                    Submit Accessibility Report
                   </>
                 )}
               </button>
             </div>
           </div>
         </form>
-
-        {/* SDG Callout */}
-        <div className="mt-8 bg-green-50 border border-green-200 rounded-lg p-6">
-          <div className="flex items-center space-x-3 mb-3">
-            <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">11</span>
-            </div>
-            <h4 className="font-medium text-green-900">Supporting UN SDG 11.3 - Inclusive Planning</h4>
-          </div>
-          <p className="text-sm text-green-800">
-            Your responses help enhance inclusive and sustainable urbanization through participatory planning and community engagement.
-          </p>
-        </div>
       </div>
     </div>
   );

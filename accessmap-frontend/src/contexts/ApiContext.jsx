@@ -161,23 +161,6 @@ export function ApiProvider({ children }) {
 
       const results = await apiService.getLatestResults(state);
       
-      // Also fetch survey-based recommendations
-      try {
-        const surveyRecommendations = await apiService.getSurveyRecommendations();
-        if (surveyRecommendations.recommendations && surveyRecommendations.recommendations.length > 0) {
-          // Merge survey recommendations with existing recommendations
-          if (!results.recommendations) {
-            results.recommendations = [];
-          }
-          results.recommendations = [
-            ...surveyRecommendations.recommendations,
-            ...results.recommendations
-          ];
-        }
-      } catch (surveyError) {
-        console.warn('Failed to fetch survey recommendations:', surveyError);
-      }
-      
       dispatch({ type: API_ACTIONS.SET_RESULTS, payload: results });
       
       return results;

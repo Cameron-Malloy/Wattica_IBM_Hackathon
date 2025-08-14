@@ -74,6 +74,164 @@ analysis_jobs = {}
 # Global storage for survey submissions
 survey_submissions = []
 
+def get_sdg_alignment_for_issue(issue_type):
+    """Generate appropriate SDG alignment based on issue type"""
+    sdg_mappings = {
+        'missing_curb_ramps': "SDG 11.2: Accessible and affordable transport systems",
+        'inaccessible_transit': "SDG 11.2: Accessible and affordable transport systems", 
+        'poor_lighting': "SDG 11.7: Safe and inclusive public spaces",
+        'steep_grade': "SDG 11.2: Accessible and affordable transport systems",
+        'missing_accessible_parking': "SDG 11.2: Accessible and affordable transport systems",
+        'lack_of_signage': "SDG 11.7: Safe and inclusive public spaces",
+        'broken_sidewalk': "SDG 11.2: Accessible and affordable transport systems",
+        'narrow_pathways': "SDG 11.2: Accessible and affordable transport systems",
+        'missing_ramps': "SDG 11.2: Accessible and affordable transport systems",
+        'inaccessible_buildings': "SDG 11.3: Inclusive and sustainable urbanization",
+        'poor_visibility': "SDG 11.7: Safe and inclusive public spaces",
+        'hazardous_conditions': "SDG 11.7: Safe and inclusive public spaces"
+    }
+    return sdg_mappings.get(issue_type, "SDG 11.2: Accessible and affordable transport systems")
+
+def get_recommendation_type_for_issue(issue_type):
+    """Generate diverse recommendation types based on issue type"""
+    type_mappings = {
+        'missing_curb_ramps': "infrastructure",
+        'inaccessible_transit': "infrastructure", 
+        'poor_lighting': "infrastructure",
+        'steep_grade': "infrastructure",
+        'missing_accessible_parking': "infrastructure",
+        'lack_of_signage': "tech",  # Digital signage systems, apps, etc.
+        'broken_sidewalk': "infrastructure",
+        'narrow_pathways': "infrastructure",
+        'missing_ramps': "infrastructure",
+        'inaccessible_buildings': "infrastructure",
+        'poor_visibility': "tech",  # Smart lighting, sensors, etc.
+        'hazardous_conditions': "infrastructure"
+    }
+    
+    # Add some randomization for variety
+    import random
+    base_type = type_mappings.get(issue_type, "infrastructure")
+    
+    # For certain issues, add variety by sometimes suggesting different approaches
+    if issue_type == 'lack_of_signage':
+        return random.choice(["tech", "policy"])  # Tech solutions or policy for signage standards
+    elif issue_type == 'poor_lighting':
+        return random.choice(["infrastructure", "tech"])  # Physical lighting or smart lighting
+    elif issue_type == 'inaccessible_transit':
+        return random.choice(["infrastructure", "policy"])  # Physical improvements or policy changes
+    elif issue_type == 'missing_accessible_parking':
+        return random.choice(["infrastructure", "policy"])  # Physical spaces or policy enforcement
+    elif issue_type == 'inaccessible_buildings':
+        return random.choice(["infrastructure", "policy"])  # Physical modifications or accessibility laws
+    elif issue_type == 'hazardous_conditions':
+        return random.choice(["infrastructure", "community"])  # Physical fixes or community monitoring
+    
+    return base_type
+
+def get_success_metrics_for_issue(issue_type, city_name):
+    """Generate unique success metrics based on issue type and city"""
+    base_metrics = {
+        'missing_curb_ramps': [
+            f"100% ADA-compliant curb ramps installed in {city_name}",
+            "95% reduction in mobility barriers for wheelchair users",
+            "90% improvement in pedestrian safety scores",
+            "Increased accessibility compliance from 60% to 95%"
+        ],
+        'inaccessible_transit': [
+            f"All public transit stops in {city_name} meet ADA standards",
+            "80% increase in transit usage by disabled residents",
+            "100% of bus routes now have accessible stops",
+            "Reduced transit-related accessibility complaints by 85%"
+        ],
+        'poor_lighting': [
+            f"Enhanced lighting coverage in {city_name} by 90%",
+            "75% reduction in safety incidents in poorly lit areas",
+            "Improved visibility ratings from 3/10 to 8/10",
+            "Increased evening pedestrian activity by 60%"
+        ],
+        'steep_grade': [
+            f"All steep pathways in {city_name} now have accessible alternatives",
+            "100% of grade-separated crossings meet accessibility standards",
+            "Reduced mobility barriers for elderly residents by 90%",
+            "Improved pathway accessibility scores from 4/10 to 9/10"
+        ],
+        'missing_accessible_parking': [
+            f"ADA-compliant parking spaces increased by 200% in {city_name}",
+            "95% of public facilities now have accessible parking",
+            "Reduced parking-related accessibility complaints by 80%",
+            "Improved parking accessibility ratings from 5/10 to 9/10"
+        ],
+        'lack_of_signage': [
+            f"Comprehensive signage system installed across {city_name}",
+            "90% improvement in navigation for visually impaired users",
+            "100% of key locations now have accessible signage",
+            "Reduced navigation-related incidents by 70%"
+        ],
+        'broken_sidewalk': [
+            f"All sidewalks in {city_name} now meet safety standards",
+            "95% reduction in sidewalk-related mobility issues",
+            "Improved sidewalk condition ratings from 3/10 to 8/10",
+            "Increased pedestrian safety scores by 85%"
+        ],
+        'narrow_pathways': [
+            f"All pathways in {city_name} now meet minimum width requirements",
+            "100% of pathways accommodate mobility devices",
+            "Improved pathway accessibility from 40% to 95%",
+            "Reduced pathway-related mobility barriers by 90%"
+        ],
+        'missing_ramps': [
+            f"All buildings in {city_name} now have accessible ramps",
+            "100% ADA compliance for ramp installations",
+            "Improved building accessibility from 50% to 95%",
+            "Reduced ramp-related accessibility complaints by 85%"
+        ],
+        'inaccessible_buildings': [
+            f"All public buildings in {city_name} now meet accessibility standards",
+            "100% of buildings have accessible entrances and facilities",
+            "Improved building accessibility ratings from 3/10 to 9/10",
+            "Increased building accessibility compliance by 90%"
+        ],
+        'poor_visibility': [
+            f"Enhanced visibility measures implemented across {city_name}",
+            "80% improvement in visibility for all users",
+            "Reduced visibility-related incidents by 75%",
+            "Improved safety ratings from 4/10 to 8/10"
+        ],
+        'hazardous_conditions': [
+            f"All hazardous conditions in {city_name} have been addressed",
+            "100% of identified hazards have been remediated",
+            "Improved safety scores from 2/10 to 9/10",
+            "Reduced safety-related incidents by 90%"
+        ]
+    }
+    
+    return base_metrics.get(issue_type, [
+        f"Improved accessibility in {city_name} by 85%",
+        "95% community satisfaction with accessibility improvements",
+        "90% reduction in accessibility barriers",
+        "Enhanced quality of life for all residents"
+    ])
+
+def load_survey_submissions():
+    """Load survey submissions from file"""
+    global survey_submissions
+    try:
+        surveys_file = f"../accessmap-frontend/public/api_results/survey_submissions_CA.json"
+        if os.path.exists(surveys_file):
+            with open(surveys_file, 'r') as f:
+                survey_submissions = json.load(f)
+            logger.info(f"Loaded {len(survey_submissions)} survey submissions from file")
+        else:
+            survey_submissions = []
+            logger.info("No survey submissions file found, starting with empty list")
+    except Exception as e:
+        logger.error(f"Failed to load survey submissions: {e}")
+        survey_submissions = []
+
+# Load survey submissions on startup
+load_survey_submissions()
+
 def merge_survey_recommendations_to_main_analysis(state: str = "CA"):
     """
     Merge survey-based recommendations into the main multi-agent analysis results
@@ -486,7 +644,7 @@ async def generate_survey_recommendation(survey_data):
         impact = survey_data.get('impact', {})
         demographics = survey_data.get('demographics', {})
         
-        prompt = f"""You are an expert accessibility consultant and urban planner specializing in creating comprehensive, actionable improvement plans for accessibility issues. You have deep knowledge of ADA compliance, universal design principles, and community engagement strategies.
+        prompt = f"""You are an expert accessibility consultant and urban planner specializing in creating comprehensive, actionable improvement plans for accessibility issues. You have deep knowledge of ADA compliance, universal design principles, community engagement strategies, technology solutions, and policy development.
 
 CONTEXT:
 Location: {location.get('city', 'Location')}, California
@@ -497,7 +655,20 @@ Affected Groups: {', '.join(demographics.get('mobility_needs', ['community membe
 Impact Frequency: {impact.get('frequency', 'Not specified')}
 Age Groups Affected: {', '.join(impact.get('age_groups', ['all ages']))}
 
-Create a comprehensive, detailed accessibility improvement plan that addresses the specific issue while considering the unique needs of the affected population and the local context.
+Create a comprehensive, detailed accessibility improvement plan that addresses the specific issue while considering the unique needs of the affected population and the local context. 
+
+RECOMMENDATION TYPE GUIDELINES:
+- Choose the most appropriate type from: "infrastructure", "tech", "policy", or "community"
+- "infrastructure": Physical improvements (ramps, lighting, sidewalks, etc.)
+- "tech": Technology solutions (apps, sensors, digital signage, smart systems)
+- "policy": Policy changes, regulations, enforcement, standards
+- "community": Community programs, education, awareness, volunteer initiatives
+
+Make your recommendation SPECIFIC and DETAILED to the issue type. For example:
+- For signage issues: Consider tech solutions (digital signage, mobile apps) or policy (signage standards)
+- For lighting issues: Consider infrastructure (physical lighting) or tech (smart lighting systems)
+- For transit issues: Consider infrastructure (physical improvements) or policy (accessibility requirements)
+- For building access: Consider infrastructure (ramps, elevators) or policy (accessibility laws)
 
 IMPORTANT: Return ONLY the JSON object below. Do not include any additional text, explanations, or disclaimers.
 
@@ -531,7 +702,7 @@ IMPORTANT: Return ONLY the JSON object below. Do not include any additional text
     "Health and Human Services"
   ],
   "locations_affected": "1",
-  "type": "infrastructure",
+  "type": "Choose the most appropriate type: infrastructure, tech, policy, or community",
   "detailed_plan": "Phase 1 (Weeks 1-2): Comprehensive assessment and community engagement. Phase 2 (Weeks 3-8): Design and planning with stakeholder input. Phase 3 (Weeks 9-12): Implementation and testing. Phase 4 (Weeks 13-16): Verification, training, and ongoing monitoring.",
   "success_metrics": [
     "100% ADA compliance verification",
@@ -631,7 +802,7 @@ IMPORTANT: Return ONLY the JSON object below. Do not include any additional text
                         "expected_impact": parsed_recommendation.get("expected_impact", f"Improve accessibility for {', '.join(impact.get('age_groups', ['all community members']))}"),
                         "implementation_partners": parsed_recommendation.get("implementation_partners", ["City Planning Department", "Disability Services", "Public Works", "Community Organizations"]),
                         "locations_affected": "1",
-                        "type": parsed_recommendation.get("type", "infrastructure"),
+                        "type": get_recommendation_type_for_issue(issue.get('type', 'accessibility')),
                         "coordinates": location.get('coordinates'),
                         "target_locations": [location.get('city', 'Unknown City')],
                         "agent": "SurveyBot",
@@ -639,14 +810,10 @@ IMPORTANT: Return ONLY the JSON object below. Do not include any additional text
                         "watsonx_generated": True,
                         # Add missing fields for dashboard compatibility
                         "impact": "high" if issue.get('severity') == 'critical' else "medium" if issue.get('severity') == 'moderate' else "low",
-                        "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+                        "sdg_alignment": get_sdg_alignment_for_issue(issue.get('type', 'accessibility')),
                         "equity_impact": f"Addresses accessibility needs for {', '.join(demographics.get('mobility_needs', ['vulnerable populations']))} in {location.get('city', 'Location')}",
                         "plan": parsed_recommendation.get("detailed_plan", "Phase 1: Assessment and planning. Phase 2: Implementation. Phase 3: Verification and monitoring."),
-                        "success_metrics": parsed_recommendation.get("success_metrics", [
-                            "100% ADA compliance verification",
-                            "95% community satisfaction rate",
-                            "90% reduction in accessibility barriers"
-                        ]),
+                        "success_metrics": get_success_metrics_for_issue(issue.get('type', 'accessibility'), location.get('city', 'Location')),
                         # Add additional fields that might be missing
                         "generated_date": datetime.now().strftime('%Y-%m-%d'),
                         "status": "active",

@@ -1,15 +1,18 @@
 {
   "metadata": {
     "state": "CA",
-    "analysis_date": "2025-08-13T15:40:06.691433",
-    "analysis_duration_seconds": 70.714004,
-    "total_locations_analyzed": 50,
+    "analysis_date": "2025-08-14T12:11:02.696381",
+    "analysis_duration_seconds": 97.964543,
+    "total_locations_analyzed": 75,
     "agent_workflow": [
       "AccessScanner",
       "EquityAdvisor",
       "PlannerBot"
     ],
-    "data_source": "Multi-Agent WatsonX Analysis"
+    "data_source": "Multi-Agent WatsonX Analysis",
+    "survey_recommendations_included": true,
+    "total_survey_recommendations": 3,
+    "last_updated": "2025-08-14T12:57:23.135994"
   },
   "scan_results": [
     {
@@ -21,9 +24,9 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "moderate",
-      "description": "The city's moderate elderly population (22.64%) and low disability rate (10.16%) suggest a need for improved curb ramp accessibility to accommodate aging residents.",
-      "confidence": 0.94,
-      "detected_date": "2025-08-13",
+      "description": "Insufficient curb ramps at local businesses, posing a challenge for elderly residents and those with mobility impairments.",
+      "confidence": 0.9299999999999999,
+      "detected_date": "2025-08-14",
       "vulnerable_population": "22.6% elderly, 10.2% disabled",
       "risk_factors": [
         "High elderly population",
@@ -34,17 +37,17 @@
     },
     {
       "id": "scan_2",
-      "location": "Roseville city, CA",
+      "location": "Dana Point city, CA",
       "coordinates": {
-        "lat": 38.74834,
-        "lng": -121.283938
+        "lat": 37.540552,
+        "lng": -122.246609
       },
-      "issue_type": "Inaccessible Transit",
+      "issue_type": "Poor Lighting",
       "severity": "moderate",
-      "description": "With a medium elderly population (17.15%) and medium disability rate (11.24%), Roseville could benefit from more accessible public transportation options.",
-      "confidence": 0.87,
-      "detected_date": "2025-08-13",
-      "vulnerable_population": "17.2% elderly, 11.2% disabled",
+      "description": "Inadequate street lighting in residential areas, increasing safety risks for the elderly population.",
+      "confidence": 0.9299999999999999,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "22.6% elderly, 10.2% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -54,6 +57,46 @@
     },
     {
       "id": "scan_3",
+      "location": "Roseville city, CA",
+      "coordinates": {
+        "lat": 38.74834,
+        "lng": -121.283938
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "moderate",
+      "description": "Limited curb ramp availability at commercial centers, affecting accessibility for the elderly and disabled.",
+      "confidence": 0.97,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "17.2% elderly, 11.2% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_4",
+      "location": "Roseville city, CA",
+      "coordinates": {
+        "lat": 38.74834,
+        "lng": -121.283938
+      },
+      "issue_type": "Inaccessible Transit",
+      "severity": "moderate",
+      "description": "Public transportation stops lacking wheelchair accessibility, impacting mobility for disabled residents.",
+      "confidence": 0.97,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "17.2% elderly, 11.2% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_5",
       "location": "Hollister city, CA",
       "coordinates": {
         "lat": 36.851175,
@@ -61,9 +104,9 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "moderate",
-      "description": "The city's medium elderly population (10.66%) and medium disability rate (10.1%) indicate a need for better curb ramp accessibility for aging and disabled residents.",
-      "confidence": 0.89,
-      "detected_date": "2025-08-13",
+      "description": "Sparse curb ramp distribution in downtown area, causing difficulties for elderly pedestrians and those with disabilities.",
+      "confidence": 0.94,
+      "detected_date": "2025-08-14",
       "vulnerable_population": "10.7% elderly, 10.1% disabled",
       "risk_factors": [
         "High disability rate"
@@ -72,17 +115,17 @@
       "watsonx_generated": true
     },
     {
-      "id": "scan_4",
+      "id": "scan_6",
       "location": "East Hemet CDP, CA",
       "coordinates": {
         "lat": 33.738631,
         "lng": -116.939017
       },
-      "issue_type": "Broken Sidewalk",
-      "severity": "moderate",
-      "description": "East Hemet's medium elderly population (12.09%) and medium disability rate (14.74%) would benefit from improved sidewalk conditions to ensure safe pedestrian access.",
-      "confidence": 0.9,
-      "detected_date": "2025-08-13",
+      "issue_type": "Steep Grade",
+      "severity": "critical",
+      "description": "Steep inclines in residential streets, posing significant challenges for elderly residents and people with mobility impairments.",
+      "confidence": 0.99,
+      "detected_date": "2025-08-14",
       "vulnerable_population": "12.1% elderly, 14.7% disabled",
       "risk_factors": [
         "High disability rate"
@@ -91,7 +134,26 @@
       "watsonx_generated": true
     },
     {
-      "id": "scan_5",
+      "id": "scan_7",
+      "location": "East Hemet CDP, CA",
+      "coordinates": {
+        "lat": 33.738631,
+        "lng": -116.939017
+      },
+      "issue_type": "Poor Lighting",
+      "severity": "moderate",
+      "description": "Insufficient street lighting along main roads, increasing safety concerns for the elderly population.",
+      "confidence": 0.99,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "12.1% elderly, 14.7% disabled",
+      "risk_factors": [
+        "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_8",
       "location": "San Marcos city, CA",
       "coordinates": {
         "lat": 33.1353,
@@ -99,9 +161,9 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "moderate",
-      "description": "San Marcos' medium elderly population (13.28%) and medium disability rate (10.72%) suggest a need for enhanced curb ramp accessibility for aging and disabled residents.",
-      "confidence": 0.88,
-      "detected_date": "2025-08-13",
+      "description": "Inadequate curb ramp presence at shopping centers, affecting accessibility for the elderly and disabled.",
+      "confidence": 0.85,
+      "detected_date": "2025-08-14",
       "vulnerable_population": "13.3% elderly, 10.7% disabled",
       "risk_factors": [
         "High disability rate"
@@ -110,17 +172,17 @@
       "watsonx_generated": true
     },
     {
-      "id": "scan_6",
+      "id": "scan_9",
       "location": "Milpitas city, CA",
       "coordinates": {
         "lat": 37.369249,
         "lng": -121.953789
       },
-      "issue_type": "Poor Lighting",
+      "issue_type": "Missing Accessible Parking",
       "severity": "moderate",
-      "description": "With a medium elderly population (13.11%) and low disability rate (8.03%), Milpitas could improve accessibility by addressing poor lighting conditions for nighttime safety.",
-      "confidence": 0.9,
-      "detected_date": "2025-08-13",
+      "description": "Limited accessible parking spaces at local businesses and public facilities, inconveniencing elderly residents and people with disabilities.",
+      "confidence": 0.89,
+      "detected_date": "2025-08-14",
       "vulnerable_population": "13.1% elderly, 8.0% disabled",
       "risk_factors": [
         "Standard risk profile"
@@ -129,17 +191,17 @@
       "watsonx_generated": true
     },
     {
-      "id": "scan_7",
+      "id": "scan_10",
       "location": "Delft Colony CDP, CA",
       "coordinates": {
         "lat": 36.511927,
         "lng": -119.446446
       },
-      "issue_type": "Missing Curb Ramps",
+      "issue_type": "Poor Lighting",
       "severity": "moderate",
-      "description": "Delft Colony's low elderly population (7.03%) and low disability rate (6.74%) still warrant improved curb ramp accessibility to accommodate aging residents.",
-      "confidence": 0.86,
-      "detected_date": "2025-08-13",
+      "description": "Inadequate street lighting in residential neighborhoods, increasing safety risks for the elderly population.",
+      "confidence": 0.89,
+      "detected_date": "2025-08-14",
       "vulnerable_population": "7.0% elderly, 6.7% disabled",
       "risk_factors": [
         "Low income area"
@@ -148,7 +210,7 @@
       "watsonx_generated": true
     },
     {
-      "id": "scan_8",
+      "id": "scan_11",
       "location": "McSwain CDP, CA",
       "coordinates": {
         "lat": 37.646599,
@@ -156,9 +218,9 @@
       },
       "issue_type": "Missing Curb Ramps",
       "severity": "moderate",
-      "description": "McSwain's medium elderly population (12.54%) and low disability rate (7.74%) suggest a need for better curb ramp accessibility for aging residents.",
-      "confidence": 0.9099999999999999,
-      "detected_date": "2025-08-13",
+      "description": "Limited curb ramp availability at commercial areas, affecting accessibility for the elderly and disabled.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-14",
       "vulnerable_population": "12.5% elderly, 7.7% disabled",
       "risk_factors": [
         "Standard risk profile"
@@ -167,17 +229,17 @@
       "watsonx_generated": true
     },
     {
-      "id": "scan_9",
+      "id": "scan_12",
       "location": "Holtville city, CA",
       "coordinates": {
         "lat": 32.813107,
         "lng": -115.379868
       },
-      "issue_type": "Inaccessible Transit",
-      "severity": "moderate",
-      "description": "Holtville's medium elderly population (18.61%) and medium disability rate (13.61%) could benefit from more accessible public transportation options.",
-      "confidence": 0.86,
-      "detected_date": "2025-08-13",
+      "issue_type": "Steep Grade",
+      "severity": "critical",
+      "description": "Steep inclines in residential streets, posing significant challenges for elderly residents and people with mobility impairments.",
+      "confidence": 0.9199999999999999,
+      "detected_date": "2025-08-14",
       "vulnerable_population": "18.6% elderly, 13.6% disabled",
       "risk_factors": [
         "High elderly population",
@@ -187,18 +249,233 @@
       "watsonx_generated": true
     },
     {
-      "id": "scan_10",
-      "location": "Bayview CDP (Humboldt County), CA",
+      "id": "scan_13",
+      "location": "Delft Colony CDP, CA",
       "coordinates": {
-        "lat": 40.771646,
-        "lng": -124.180834
+        "lat": 36.511927,
+        "lng": -119.446446
       },
-      "issue_type": "Inaccessible Transit",
+      "issue_type": "Missing Curb Ramps",
       "severity": "moderate",
-      "description": "Bayview's medium elderly population (19.94%) and medium disability rate (18.02%) would greatly benefit from improved public transportation accessibility.",
-      "confidence": 0.9,
-      "detected_date": "2025-08-13",
-      "vulnerable_population": "19.9% elderly, 18.0% disabled",
+      "description": "Insufficient curb ramps at local businesses, posing a challenge for elderly residents and those with mobility impairments.",
+      "confidence": 0.89,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "7.0% elderly, 6.7% disabled",
+      "risk_factors": [
+        "Low income area"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_14",
+      "location": "Paradise town, CA",
+      "coordinates": {
+        "lat": 37.876199,
+        "lng": -122.448393
+      },
+      "issue_type": "Steep Grade",
+      "severity": "critical",
+      "description": "Steep inclines in residential streets, posing significant challenges for elderly residents and people with mobility impairments.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "43.0% elderly, 19.9% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_1",
+      "location": "Calimesa city, CA",
+      "coordinates": {
+        "lat": 34.003514,
+        "lng": -117.058701
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population and moderate disability rate necessitate proper curb ramps for safe mobility.",
+      "confidence": 0.89,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "22.9% elderly, 13.6% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_2",
+      "location": "Olivehurst CDP, CA",
+      "coordinates": {
+        "lat": 39.079782,
+        "lng": -121.544184
+      },
+      "issue_type": "Broken Sidewalk",
+      "severity": "moderate",
+      "description": "Moderate disability rate requires attention to sidewalk conditions for accessibility.",
+      "confidence": 0.86,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "11.2% elderly, 14.7% disabled",
+      "risk_factors": [
+        "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_3",
+      "location": "China Lake Acres CDP, CA",
+      "coordinates": {
+        "lat": 35.639066,
+        "lng": -117.765417
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "moderate",
+      "description": "Medium disability rate calls for improved curb ramp accessibility.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "12.9% elderly, 10.1% disabled",
+      "risk_factors": [
+        "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_4",
+      "location": "Pine Flat CDP, CA",
+      "coordinates": {
+        "lat": 35.878006,
+        "lng": -118.651477
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population and medium disability rate necessitate proper curb ramps for safe mobility.",
+      "confidence": 0.89,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "23.9% elderly, 18.1% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_5",
+      "location": "Ladera Heights CDP, CA",
+      "coordinates": {
+        "lat": 33.987949,
+        "lng": -118.369798
+      },
+      "issue_type": "Poor Lighting",
+      "severity": "moderate",
+      "description": "High elderly population benefits from improved lighting for safety.",
+      "confidence": 0.9099999999999999,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "20.4% elderly, 4.8% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_6",
+      "location": "Big Bend CDP, CA",
+      "coordinates": {
+        "lat": 41.019658,
+        "lng": -121.910705
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population and high disability rate require proper curb ramps for accessibility.",
+      "confidence": 0.9099999999999999,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "24.2% elderly, 23.5% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate",
+        "Low income area"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_7",
+      "location": "Cowan CDP, CA",
+      "coordinates": {
+        "lat": 33.694747,
+        "lng": -117.858104
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "moderate",
+      "description": "Medium elderly population and low disability rate still benefit from improved curb ramp accessibility.",
+      "confidence": 0.89,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "10.5% elderly, 8.1% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_8",
+      "location": "Lytle Creek CDP, CA",
+      "coordinates": {
+        "lat": 34.259173,
+        "lng": -117.500051
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population and high disability rate necessitate proper curb ramps for safe mobility.",
+      "confidence": 0.9199999999999999,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "27.0% elderly, 28.6% disabled",
+      "risk_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_9",
+      "location": "Manhattan Beach city, CA",
+      "coordinates": {
+        "lat": 40.720559,
+        "lng": -74.006469
+      },
+      "issue_type": "Missing Accessible Parking",
+      "severity": "moderate",
+      "description": "Medium elderly population would benefit from designated accessible parking spaces.",
+      "confidence": 0.97,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "16.4% elderly, 7.0% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_10",
+      "location": "Westminster city, CA",
+      "coordinates": {
+        "lat": 33.757794,
+        "lng": -117.985893
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "moderate",
+      "description": "Medium elderly population and medium disability rate call for improved curb ramp accessibility.",
+      "confidence": 0.85,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "17.7% elderly, 12.2% disabled",
       "risk_factors": [
         "High elderly population",
         "High disability rate"
@@ -208,19 +485,115 @@
     },
     {
       "id": "scan_11",
-      "location": "Fairfax CDP, CA",
+      "location": "Orange Cove city, CA",
       "coordinates": {
-        "lat": 37.987293,
-        "lng": -122.587967
+        "lat": 36.624672,
+        "lng": -119.313175
       },
-      "issue_type": "Broken Sidewalk",
+      "issue_type": "No Tactile Paving",
       "severity": "moderate",
-      "description": "Fairfax's low elderly population (9.13%) and medium disability rate (14.99%) would benefit from improved sidewalk conditions for safe pedestrian access.",
-      "confidence": 0.9299999999999999,
-      "detected_date": "2025-08-13",
-      "vulnerable_population": "9.1% elderly, 15.0% disabled",
+      "description": "Low elderly population but presence of disabled residents warrants installation of tactile paving for safety.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "7.6% elderly, 7.8% disabled",
       "risk_factors": [
+        "Low income area"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_12",
+      "location": "Forest Meadows CDP, CA",
+      "coordinates": {
+        "lat": 38.166341,
+        "lng": -120.40258
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "critical",
+      "description": "High elderly population requires proper curb ramps for safe mobility.",
+      "confidence": 0.95,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "32.5% elderly, 5.6% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_13",
+      "location": "Round Valley CDP, CA",
+      "coordinates": {
+        "lat": 37.408159,
+        "lng": -118.584075
+      },
+      "issue_type": "Poor Lighting",
+      "severity": "moderate",
+      "description": "Low elderly population but presence of disabled residents would benefit from improved lighting for safety.",
+      "confidence": 0.98,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "9.9% elderly, 3.8% disabled",
+      "risk_factors": [
+        "Standard risk profile"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_14",
+      "location": "El Dorado Hills CDP, CA",
+      "coordinates": {
+        "lat": 38.677168,
+        "lng": -121.06432
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "moderate",
+      "description": "High elderly population benefits from improved curb ramp accessibility.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "20.1% elderly, 8.3% disabled",
+      "risk_factors": [
+        "High elderly population"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_15",
+      "location": "Centerville CDP (Shasta County), CA",
+      "coordinates": {
+        "lat": 40.51808,
+        "lng": -122.485246
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "moderate",
+      "description": "High elderly population calls for improved curb ramp accessibility.",
+      "confidence": 0.86,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "22.9% elderly, 13.0% disabled",
+      "risk_factors": [
+        "High elderly population",
         "High disability rate"
+      ],
+      "agent": "AccessScanner",
+      "watsonx_generated": true
+    },
+    {
+      "id": "scan_16",
+      "location": "Caruthers CDP, CA",
+      "coordinates": {
+        "lat": 36.539914,
+        "lng": -119.845019
+      },
+      "issue_type": "Missing Curb Ramps",
+      "severity": "moderate",
+      "description": "Low elderly population but presence of disabled residents warrants improved curb ramp accessibility.",
+      "confidence": 0.96,
+      "detected_date": "2025-08-14",
+      "vulnerable_population": "4.5% elderly, 4.9% disabled",
+      "risk_factors": [
+        "Standard risk profile"
       ],
       "agent": "AccessScanner",
       "watsonx_generated": true
@@ -336,17 +709,400 @@
       "rationale": "Priority 4.8/10 based on vulnerability analysis and accessibility gaps",
       "agent": "EquityAdvisor",
       "watsonx_generated": true
+    },
+    {
+      "id": "priority_1308",
+      "location": "Westmont CDP, California, CA",
+      "coordinates": {
+        "lat": 37.120865312,
+        "lng": -122.357740008
+      },
+      "priority_score": 4.7,
+      "priority_level": "Medium-term",
+      "top_issue": "Potential accessibility gaps",
+      "equity_factors": [
+        "High disability rate"
+      ],
+      "vulnerable_population": "11.5% elderly, 15.7% disabled, median income $47,899",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 4.7/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor",
+      "watsonx_generated": true
+    },
+    {
+      "id": "priority_406",
+      "location": "Fairfax CDP, California, CA",
+      "coordinates": {
+        "lat": 41.239734752000004,
+        "lng": -123.599401026
+      },
+      "priority_score": 4.3,
+      "priority_level": "Medium-term",
+      "top_issue": "Potential accessibility gaps",
+      "equity_factors": [
+        "High disability rate"
+      ],
+      "vulnerable_population": "9.1% elderly, 15.0% disabled, median income $50,326",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 4.3/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor",
+      "watsonx_generated": true
+    },
+    {
+      "id": "priority_290",
+      "location": "Dana Point city, California, CA",
+      "coordinates": {
+        "lat": 33.104991296,
+        "lng": -122.536162616
+      },
+      "priority_score": 4.2,
+      "priority_level": "Medium-term",
+      "top_issue": "Potential accessibility gaps",
+      "equity_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "vulnerable_population": "22.6% elderly, 10.2% disabled, median income $127,246",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 4.2/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor",
+      "watsonx_generated": true
+    },
+    {
+      "id": "priority_586",
+      "location": "Kelseyville CDP, California, CA",
+      "coordinates": {
+        "lat": 37.429283072000004,
+        "lng": -122.083425526
+      },
+      "priority_score": 4.2,
+      "priority_level": "Medium-term",
+      "top_issue": "Potential accessibility gaps",
+      "equity_factors": [
+        "High disability rate"
+      ],
+      "vulnerable_population": "10.8% elderly, 11.1% disabled, median income $43,475",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 4.2/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor",
+      "watsonx_generated": true
+    },
+    {
+      "id": "priority_1047",
+      "location": "Sage CDP, California, CA",
+      "coordinates": {
+        "lat": 37.435062944,
+        "lng": -124.355024882
+      },
+      "priority_score": 4.1,
+      "priority_level": "Medium-term",
+      "top_issue": "Potential accessibility gaps",
+      "equity_factors": [
+        "High elderly population",
+        "High disability rate"
+      ],
+      "vulnerable_population": "15.0% elderly, 13.1% disabled, median income $88,879",
+      "recommended_timeline": "6-12 months",
+      "potential_impact": "medium",
+      "implementation_cost": "medium",
+      "rationale": "Priority 4.1/10 based on vulnerability analysis and accessibility gaps",
+      "agent": "EquityAdvisor",
+      "watsonx_generated": true
     }
   ],
   "recommendations": [
     {
+      "priority": "High",
+      "priority_level": "High",
+      "title": "Comprehensive Accessibility Improvement Plan for Oakland - Lack Of Signage",
+      "description": "A tailored, community-focused plan to address the lack of signage impacting visual_impairment, elderly individuals in Oakland, considering its unique geography and diverse demographics.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit focusing on key routes connecting Oakland to Berkeley University",
+        "Collaborate with local disability organizations like 'Disability Rights Education & Defense Fund' and 'Easterseals Bay Area'",
+        "Analyze costs against potential savings from reduced emergency response and increased community participation",
+        "Develop a phased implementation plan aligned with existing infrastructure projects, such as BART expansions",
+        "Engage with Oakland's City Planning, Public Works, and Health Departments, alongside Caltrans for state route management",
+        "Implement ADA-compliant, culturally sensitive signage using Braille, large print, and contrasting colors",
+        "Establish quarterly inspections and annual deep cleaning protocols for signage",
+        "Organize workshops with community leaders and accessibility experts to educate on new signage system",
+        "Conduct biannual accessibility audits with community member involvement",
+        "Establish a dedicated hotline and online portal for accessibility feedback",
+        "Monitor safety statistics, emergency calls, and community usage patterns pre- and post-implementation"
+      ],
+      "cost_estimate": "$50,000 - $75,000",
+      "timeline": "12-18 months",
+      "expected_impact": "Improve navigation, safety, and independence for young_adults, adults with visual_impairment, elderly, fostering greater civic engagement and community participation in Oakland.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Disability Rights Education & Defense Fund",
+        "Easterseals Bay Area",
+        "Caltrans",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 37.8044,
+        "lng": -122.2711
+      },
+      "target_locations": [
+        "Oakland"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-14T12:18:25.733664",
+      "watsonx_generated": true,
+      "impact": "high",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for visual_impairment, elderly in Oakland",
+      "plan": {
+        "Phase 1 (Weeks 1-4)": "Comprehensive assessment, community engagement, and initial design",
+        "Phase 2 (Weeks 5-16)": "Detailed planning, procurement, and pilot installation",
+        "Phase 3 (Weeks 17-24)": "Full-scale implementation, stakeholder training, and soft launch",
+        "Phase 4 (Weeks 25-36)": "Evaluation, adjustments, and formal rollout",
+        "Ongoing": "Monitoring, feedback integration, and iterative improvements"
+      },
+      "success_metrics": [
+        "100% ADA compliance across identified routes",
+        "90% community satisfaction among visually impaired and elderly users",
+        "80% recognition rate of new signage by targeted user groups",
+        "Increased usage of public transport by 30% among affected populations",
+        "Reduction in reported accessibility-related complaints by 60%",
+        "Enhanced safety ratings at key intersections by 50%"
+      ],
+      "generated_date": "2025-08-14",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "high",
+      "id": "survey_rec_survey_1",
+      "survey_id": "survey_1",
+      "survey_location": {
+        "city": "Oakland",
+        "coordinates": {
+          "lat": 37.8044,
+          "lng": -122.2711
+        },
+        "fullAddress": "Oakland, CA, USA"
+      },
+      "survey_issue": {
+        "type": "lack_of_signage",
+        "description": "No signage on the correct road to get to berkeley university",
+        "severity": "critical"
+      },
+      "submitted_at": "2025-08-14T12:18:04.745845",
+      "survey_based": true
+    },
+    {
+      "priority": "Medium",
+      "priority_level": "Medium",
+      "title": "Comprehensive Accessibility Improvement Plan for Long Beach - Physical Barrier",
+      "description": "A detailed, community-focused plan to address physical barrier affecting visual_impairment in Long Beach. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$15,000 - $50,000",
+      "timeline": "6-12 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for young_adults, children with visual_impairment, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 33.7701,
+        "lng": -118.1937
+      },
+      "target_locations": [
+        "Long Beach"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-14T12:44:47.995356",
+      "watsonx_generated": true,
+      "impact": "medium",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for visual_impairment in Long Beach",
+      "plan": {
+        "Phase 1 (Weeks 1-2)": "Comprehensive assessment and community engagement.",
+        "Phase 2 (Weeks 3-8)": "Design and planning with stakeholder input.",
+        "Phase 3 (Weeks 9-12)": "Implementation and testing.",
+        "Phase 4 (Weeks 13-16)": "Verification, training, and ongoing monitoring."
+      },
+      "success_metrics": [
+        "100% ADA compliance verification",
+        "95% community satisfaction rate",
+        "90% reduction in accessibility barriers",
+        "Increased community participation by 40%",
+        "Zero safety incidents related to accessibility",
+        "Improved independence scores for affected populations"
+      ],
+      "generated_date": "2025-08-14",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "medium",
+      "id": "survey_rec_survey_2",
+      "survey_id": "survey_2",
+      "survey_location": {
+        "city": "Long Beach",
+        "coordinates": {
+          "lat": 33.7701,
+          "lng": -118.1937
+        },
+        "fullAddress": "Long Beach, CA, USA"
+      },
+      "survey_issue": {
+        "type": "physical_barrier",
+        "description": "The beach is blocked by a biker gang by the jetty\n",
+        "severity": "moderate"
+      },
+      "submitted_at": "2025-08-14T12:44:33.672789",
+      "survey_based": true
+    },
+    {
+      "priority": "High",
+      "priority_level": "High",
+      "title": "Comprehensive Accessibility Improvement Plan for Sacramento - Physical Barrier",
+      "description": "A detailed, community-focused plan to address physical barrier affecting elderly, visual_impairment, cognitive_disabilities in Sacramento. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$25,000 - $100,000",
+      "timeline": "8-16 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for seniors with elderly, visual_impairment, cognitive_disabilities, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 38.5816,
+        "lng": -121.4944
+      },
+      "target_locations": [
+        "Sacramento"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-14T12:57:23.133813",
+      "watsonx_generated": true,
+      "impact": "high",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for elderly, visual_impairment, cognitive_disabilities in Sacramento",
+      "plan": {
+        "phase_1": {
+          "duration": "Weeks 1-2",
+          "activities": [
+            "On-site accessibility audit",
+            "Community engagement sessions"
+          ]
+        },
+        "phase_2": {
+          "duration": "Weeks 3-8",
+          "activities": [
+            "Design phase with stakeholders",
+            "Securing funding",
+            "Planning for phased implementation"
+          ]
+        },
+        "phase_3": {
+          "duration": "Weeks 9-12",
+          "activities": [
+            "Implementation of ADA-compliant infrastructure solutions",
+            "Testing and adjustments based on feedback"
+          ]
+        },
+        "phase_4": {
+          "duration": "Weeks 13-16",
+          "activities": [
+            "Verification of ADA compliance",
+            "Training for maintenance staff",
+            "Ongoing monitoring and evaluation"
+          ]
+        }
+      },
+      "success_metrics": [
+        "Improved accessibility in Sacramento by 85%",
+        "95% community satisfaction with accessibility improvements",
+        "90% reduction in accessibility barriers",
+        "Enhanced quality of life for all residents"
+      ],
+      "generated_date": "2025-08-14",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "high",
+      "id": "survey_rec_survey_3",
+      "survey_id": "survey_3",
+      "survey_location": {
+        "city": "Sacramento",
+        "coordinates": {
+          "lat": 38.5816,
+          "lng": -121.4944
+        },
+        "fullAddress": "Sacramento, CA, USA"
+      },
+      "survey_issue": {
+        "type": "physical_barrier",
+        "description": "The main highway has nothing for impaired drivers to see. It is dangerous for the elderly.",
+        "severity": "critical"
+      },
+      "submitted_at": "2025-08-14T12:57:10.085240",
+      "survey_based": true
+    },
+    {
       "id": "rec_1",
       "type": "infrastructure",
-      "title": "Curb Ramp Installation Initiative",
-      "description": "A city-wide program to install ADA-compliant curb ramps in areas with moderate accessibility gaps, prioritizing locations with significant elderly and disabled populations.",
+      "title": "Curb Ramp Installation and Upgrade",
+      "description": "Implement a city-wide initiative to install missing curb ramps and upgrade existing ones to meet ADA standards, prioritizing high-risk locations identified by AccessScanner.",
       "target_locations": [
         "Dana Point city, CA",
-        "Roseville city, CA"
+        "Dana Point city, CA",
+        "Roseville city, CA",
+        "Roseville city, CA",
+        "Hollister city, CA",
+        "East Hemet CDP, CA",
+        "East Hemet CDP, CA"
       ],
       "coordinates": [
         {
@@ -357,48 +1113,26 @@
           "severity": "moderate"
         },
         {
+          "lat": 37.540552,
+          "lng": -122.246609,
+          "name": "Dana Point city, CA",
+          "issue_type": "Poor Lighting",
+          "severity": "moderate"
+        },
+        {
+          "lat": 38.74834,
+          "lng": -121.283938,
+          "name": "Roseville city, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "moderate"
+        },
+        {
           "lat": 38.74834,
           "lng": -121.283938,
           "name": "Roseville city, CA",
           "issue_type": "Inaccessible Transit",
           "severity": "moderate"
-        }
-      ],
-      "impact": "high",
-      "cost_estimate": "$500,000 - $1,000,000",
-      "timeline": "12-24 months",
-      "implementation_steps": [
-        "Conduct detailed site surveys to identify areas with the most critical curb ramp needs.",
-        "Obtain necessary permits and approvals from local authorities.",
-        "Procure high-quality, ADA-compliant curb ramp materials and engage contractors with experience in accessibility projects.",
-        "Execute phased installation, starting with the highest-priority locations identified by AccessScanner.",
-        "Conduct accessibility audits post-installation to ensure compliance and effectiveness.",
-        "Engage with local community groups, including senior centers and disability advocacy organizations, to gather feedback and ensure the project meets the needs of vulnerable populations."
-      ],
-      "success_metrics": [
-        "Number of curb ramps installed",
-        "User satisfaction surveys among elderly and disabled residents",
-        "Reduction in accessibility-related complaints"
-      ],
-      "sdg_alignment": "SDG 11.2: Accessible transportation systems",
-      "equity_impact": "Directly serves 34.2% elderly and 18.3% disabled population across targeted areas",
-      "priority_level": "Immediate",
-      "rationale": "Critical accessibility barrier affecting vulnerable populations in multiple high-priority areas, directly addressing moderate gaps in curb ramp availability.",
-      "locations_affected": 2,
-      "agent": "PlannerBot",
-      "generated_date": "2025-08-13",
-      "watsonx_generated": true
-    },
-    {
-      "id": "rec_2",
-      "type": "policy",
-      "title": "Accessible Public Transportation Policy",
-      "description": "Develop and implement a comprehensive policy to ensure all public transportation options in the identified cities are fully accessible to elderly and disabled residents.",
-      "target_locations": [
-        "Hollister city, CA",
-        "East Hemet CDP, CA"
-      ],
-      "coordinates": [
+        },
         {
           "lat": 36.851175,
           "lng": -121.403332,
@@ -410,42 +1144,55 @@
           "lat": 33.738631,
           "lng": -116.939017,
           "name": "East Hemet CDP, CA",
-          "issue_type": "Broken Sidewalk",
+          "issue_type": "Steep Grade",
+          "severity": "critical"
+        },
+        {
+          "lat": 33.738631,
+          "lng": -116.939017,
+          "name": "East Hemet CDP, CA",
+          "issue_type": "Poor Lighting",
           "severity": "moderate"
         }
       ],
       "impact": "high",
-      "cost_estimate": "$100,000 - $200,000",
-      "timeline": "6-12 months",
+      "cost_estimate": "$500,000 - $1,000,000",
+      "timeline": "12-24 months",
       "implementation_steps": [
-        "Engage with local transportation authorities and service providers to assess current accessibility levels.",
-        "Develop a detailed accessibility policy incorporating best practices and ADA standards.",
-        "Secure funding and resources for policy implementation.",
-        "Conduct training programs for transportation staff on accessibility protocols and customer service for individuals with disabilities.",
-        "Establish a feedback mechanism for continuous improvement and responsiveness to user needs."
+        "Conduct detailed site surveys to identify all missing and non-compliant curb ramps.",
+        "Obtain necessary permits and approvals from local authorities.",
+        "Procure high-quality, durable materials and contractors with experience in ADA-compliant installations.",
+        "Execute phased installation, starting with the highest-priority areas.",
+        "Conduct accessibility audits post-installation to ensure compliance and functionality.",
+        "Engage with local communities for feedback and to promote awareness of the project."
       ],
       "success_metrics": [
-        "Percentage of accessible buses and stations",
-        "User satisfaction surveys among elderly and disabled riders",
-        "Reduction in transportation-related complaints"
+        "Number of new and upgraded curb ramps",
+        "User satisfaction surveys",
+        "Reduction in accessibility complaints"
       ],
-      "sdg_alignment": "SDG 11.3: Promoting sustainable public transportation",
-      "equity_impact": "Directly benefits 28.3% elderly and 19.6% disabled population in targeted cities",
-      "priority_level": "Short-term",
-      "rationale": "Moderate accessibility gaps in public transportation directly impact the mobility and independence of vulnerable populations, necessitating immediate policy attention.",
-      "locations_affected": 2,
+      "sdg_alignment": "SDG 11.2: Accessible transportation systems",
+      "equity_impact": "Directly serves 22.6% elderly and 10.2% disabled population in Dana Point, 17.2% elderly and 11.2% disabled in Roseville, 10.7% elderly and 10.1% disabled in Hollister, 12.1% elderly and 14.7% disabled in East Hemet, 13.3% elderly and 10.7% disabled in San Marcos, 7.0% elderly and 6.7% disabled in Delft Colony, 12.5% elderly and 7.7% disabled in McSwain, 18.6% elderly and 13.6% disabled in Holtville, 23.9% elderly and 18.1% disabled in Pine Flat, and 27.0% elderly and 28.6% disabled in Lytle Creek.",
+      "priority_level": "Immediate",
+      "rationale": "Critical accessibility barrier affecting vulnerable populations in multiple high-priority areas identified by AccessScanner.",
+      "locations_affected": 7,
       "agent": "PlannerBot",
-      "generated_date": "2025-08-13",
+      "generated_date": "2025-08-14",
       "watsonx_generated": true
     },
     {
-      "id": "rec_3",
-      "type": "technology",
-      "title": "Smart Lighting and Accessibility App",
-      "description": "Implement a smart lighting system in areas with poor lighting conditions, complemented by a mobile application to provide real-time accessibility information and navigation assistance.",
+      "id": "rec_2",
+      "type": "safety",
+      "title": "Improved Street Lighting",
+      "description": "Upgrade street lighting in residential areas with high elderly populations and moderate disability rates to enhance safety and visibility.",
       "target_locations": [
         "San Marcos city, CA",
-        "Milpitas city, CA"
+        "Milpitas city, CA",
+        "Delft Colony CDP, CA",
+        "McSwain CDP, CA",
+        "Holtville city, CA",
+        "Delft Colony CDP, CA",
+        "Paradise town, CA"
       ],
       "coordinates": [
         {
@@ -459,49 +1206,14 @@
           "lat": 37.369249,
           "lng": -121.953789,
           "name": "Milpitas city, CA",
-          "issue_type": "Poor Lighting",
+          "issue_type": "Missing Accessible Parking",
           "severity": "moderate"
-        }
-      ],
-      "impact": "medium",
-      "cost_estimate": "$200,000 - $500,000",
-      "timeline": "12-18 months",
-      "implementation_steps": [
-        "Conduct a pilot study to assess the effectiveness of smart lighting in improving pedestrian safety and accessibility.",
-        "Develop a user-friendly mobile application with features such as real-time lighting status, accessibility alerts, and navigation assistance for individuals with visual impairments.",
-        "Integrate smart lighting systems with existing infrastructure, ensuring compatibility and efficiency.",
-        "Launch a public awareness campaign to promote the use of the accessibility app.",
-        "Monitor and evaluate the app's usage and impact on user experience."
-      ],
-      "success_metrics": [
-        "Reduction in pedestrian accidents in well-lit areas",
-        "App download and usage rates",
-        "User satisfaction surveys"
-      ],
-      "sdg_alignment": "SDG 11.2: Accessible transportation systems",
-      "equity_impact": "Directly assists 13.1% elderly and 8.0% disabled population in targeted areas",
-      "priority_level": "Medium-term",
-      "rationale": "Poor lighting conditions pose significant risks to pedestrian safety, particularly for elderly and disabled individuals, warranting technological intervention.",
-      "locations_affected": 2,
-      "agent": "PlannerBot",
-      "generated_date": "2025-08-13",
-      "watsonx_generated": true
-    },
-    {
-      "id": "rec_4",
-      "type": "community",
-      "title": "Community-Led Accessibility Audits and Improvement Projects",
-      "description": "Establish a community-driven program to conduct accessibility audits and implement improvements based on local needs and priorities, fostering a sense of ownership and inclusivity.",
-      "target_locations": [
-        "Delft Colony CDP, CA",
-        "McSwain CDP, CA"
-      ],
-      "coordinates": [
+        },
         {
           "lat": 36.511927,
           "lng": -119.446446,
           "name": "Delft Colony CDP, CA",
-          "issue_type": "Missing Curb Ramps",
+          "issue_type": "Poor Lighting",
           "severity": "moderate"
         },
         {
@@ -510,39 +1222,238 @@
           "name": "McSwain CDP, CA",
           "issue_type": "Missing Curb Ramps",
           "severity": "moderate"
+        },
+        {
+          "lat": 32.813107,
+          "lng": -115.379868,
+          "name": "Holtville city, CA",
+          "issue_type": "Steep Grade",
+          "severity": "critical"
+        },
+        {
+          "lat": 36.511927,
+          "lng": -119.446446,
+          "name": "Delft Colony CDP, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "moderate"
+        },
+        {
+          "lat": 37.876199,
+          "lng": -122.448393,
+          "name": "Paradise town, CA",
+          "issue_type": "Steep Grade",
+          "severity": "critical"
+        }
+      ],
+      "impact": "high",
+      "cost_estimate": "$200,000 - $400,000",
+      "timeline": "6-12 months",
+      "implementation_steps": [
+        "Conduct lighting assessments to identify areas with inadequate illumination.",
+        "Obtain necessary permits and approvals from local authorities.",
+        "Procure energy-efficient LED lighting fixtures.",
+        "Install new lighting fixtures and ensure proper functioning.",
+        "Engage with local communities for feedback and to promote awareness of the project."
+      ],
+      "success_metrics": [
+        "Number of upgraded streetlights",
+        "User satisfaction surveys",
+        "Reduction in reported safety concerns"
+      ],
+      "sdg_alignment": "SDG 11.3: Public spaces for social inclusion",
+      "equity_impact": "Directly serves 22.6% elderly and 10.2% disabled population in Dana Point, 12.1% elderly and 14.7% disabled in East Hemet, and 7.0% elderly and 6.7% disabled in Delft Colony.",
+      "priority_level": "Short-term",
+      "rationale": "Moderate safety risk for elderly residents and those with disabilities in identified areas.",
+      "locations_affected": 7,
+      "agent": "PlannerBot",
+      "generated_date": "2025-08-14",
+      "watsonx_generated": true
+    },
+    {
+      "id": "rec_3",
+      "type": "transportation",
+      "title": "Accessible Transit Stop Upgrades",
+      "description": "Ensure all public transportation stops are wheelchair accessible, improving mobility for disabled residents.",
+      "target_locations": [
+        "Calimesa city, CA",
+        "Olivehurst CDP, CA",
+        "China Lake Acres CDP, CA",
+        "Pine Flat CDP, CA",
+        "Ladera Heights CDP, CA",
+        "Big Bend CDP, CA",
+        "Cowan CDP, CA"
+      ],
+      "coordinates": [
+        {
+          "lat": 34.003514,
+          "lng": -117.058701,
+          "name": "Calimesa city, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "critical"
+        },
+        {
+          "lat": 39.079782,
+          "lng": -121.544184,
+          "name": "Olivehurst CDP, CA",
+          "issue_type": "Broken Sidewalk",
+          "severity": "moderate"
+        },
+        {
+          "lat": 35.639066,
+          "lng": -117.765417,
+          "name": "China Lake Acres CDP, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "moderate"
+        },
+        {
+          "lat": 35.878006,
+          "lng": -118.651477,
+          "name": "Pine Flat CDP, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "critical"
+        },
+        {
+          "lat": 33.987949,
+          "lng": -118.369798,
+          "name": "Ladera Heights CDP, CA",
+          "issue_type": "Poor Lighting",
+          "severity": "moderate"
+        },
+        {
+          "lat": 41.019658,
+          "lng": -121.910705,
+          "name": "Big Bend CDP, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "critical"
+        },
+        {
+          "lat": 33.694747,
+          "lng": -117.858104,
+          "name": "Cowan CDP, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "moderate"
+        }
+      ],
+      "impact": "high",
+      "cost_estimate": "$150,000 - $300,000",
+      "timeline": "6-12 months",
+      "implementation_steps": [
+        "Conduct accessibility audits of all transit stops.",
+        "Obtain necessary permits and approvals from local authorities.",
+        "Procure and install ramps, tactile paving, and other accessibility features.",
+        "Engage with local communities and disability advocacy groups for input and support.",
+        "Conduct post-implementation accessibility audits."
+      ],
+      "success_metrics": [
+        "Number of accessible transit stops upgraded",
+        "User satisfaction surveys",
+        "Increased ridership among disabled residents"
+      ],
+      "sdg_alignment": "SDG 11.2: Accessible transportation systems",
+      "equity_impact": "Directly serves 17.2% elderly and 11.2% disabled population in Roseville.",
+      "priority_level": "Short-term",
+      "rationale": "Critical accessibility barrier impacting mobility for disabled residents in Roseville.",
+      "locations_affected": 7,
+      "agent": "PlannerBot",
+      "generated_date": "2025-08-14",
+      "watsonx_generated": true
+    },
+    {
+      "id": "rec_4",
+      "type": "parking",
+      "title": "Accessible Parking Expansion",
+      "description": "Increase the number of accessible parking spaces at local businesses and public facilities to accommodate elderly residents and people with disabilities.",
+      "target_locations": [
+        "Lytle Creek CDP, CA",
+        "Manhattan Beach city, CA",
+        "Westminster city, CA",
+        "Orange Cove city, CA",
+        "Forest Meadows CDP, CA",
+        "Round Valley CDP, CA",
+        "El Dorado Hills CDP, CA"
+      ],
+      "coordinates": [
+        {
+          "lat": 34.259173,
+          "lng": -117.500051,
+          "name": "Lytle Creek CDP, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "critical"
+        },
+        {
+          "lat": 40.720559,
+          "lng": -114.1318,
+          "name": "Manhattan Beach city, CA",
+          "issue_type": "Missing Accessible Parking",
+          "severity": "moderate"
+        },
+        {
+          "lat": 33.757794,
+          "lng": -117.985893,
+          "name": "Westminster city, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "moderate"
+        },
+        {
+          "lat": 36.624672,
+          "lng": -119.313175,
+          "name": "Orange Cove city, CA",
+          "issue_type": "No Tactile Paving",
+          "severity": "moderate"
+        },
+        {
+          "lat": 38.166341,
+          "lng": -120.40258,
+          "name": "Forest Meadows CDP, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "critical"
+        },
+        {
+          "lat": 37.408159,
+          "lng": -118.584075,
+          "name": "Round Valley CDP, CA",
+          "issue_type": "Poor Lighting",
+          "severity": "moderate"
+        },
+        {
+          "lat": 38.677168,
+          "lng": -121.06432,
+          "name": "El Dorado Hills CDP, CA",
+          "issue_type": "Missing Curb Ramps",
+          "severity": "moderate"
         }
       ],
       "impact": "medium",
-      "cost_estimate": "$50,000 - $100,000 per location",
-      "timeline": "Ongoing",
+      "cost_estimate": "$100,000 - $200,000",
+      "timeline": "6-12 months",
       "implementation_steps": [
-        "Organize community workshops to educate residents about accessibility issues and the importance of inclusive urban planning.",
-        "Train local volunteers to conduct accessibility audits in collaboration with professional planners.",
-        "Establish a transparent process for reporting accessibility issues and prioritizing improvements based on community input.",
-        "Provide resources and support for community-led improvement projects, such as repairing broken sidewalks or planting accessible landscaping.",
-        "Celebrate successes and recognize community contributions to foster continued engagement and ownership."
+        "Conduct parking space assessments to identify areas for improvement.",
+        "Obtain necessary permits and approvals from local authorities.",
+        "Procure and install accessible parking signs, markings, and curb ramps.",
+        "Engage with local businesses and facilities for cooperation and support.",
+        "Conduct post-implementation audits to ensure compliance."
       ],
       "success_metrics": [
-        "Number of community-led projects completed",
-        "Increase in community participation in accessibility initiatives",
-        "User satisfaction surveys among residents"
+        "Number of new accessible parking spaces",
+        "User satisfaction surveys",
+        "Increased usage by elderly and disabled individuals"
       ],
-      "sdg_alignment": "SDG 11.4: Strengthening participatory processes",
-      "equity_impact": "Empowers and includes all residents, particularly vulnerable populations, in shaping their urban environment",
-      "priority_level": "Ongoing",
-      "rationale": "Community involvement is crucial for ensuring that accessibility improvements are tailored to local needs and sustained over time.",
-      "locations_affected": 2,
+      "sdg_alignment": "SDG 11.2: Accessible transportation systems",
+      "equity_impact": "Directly serves 13.1% elderly and 8.0% disabled population in Milpitas, and 7.0% elderly and 6.7% disabled in Delft Colony.",
+      "priority_level": "Short-term",
+      "rationale": "Limited accessible parking spaces inconvenience elderly residents and people with disabilities.",
+      "locations_affected": 7,
       "agent": "PlannerBot",
-      "generated_date": "2025-08-13",
+      "generated_date": "2025-08-14",
       "watsonx_generated": true
     }
   ],
   "summary": {
-    "total_issues_identified": 11,
-    "critical_issues": 0,
-    "moderate_issues": 11,
+    "total_issues_identified": 30,
+    "critical_issues": 8,
+    "moderate_issues": 22,
     "immediate_priority_areas": 0,
-    "high_impact_recommendations": 2
+    "high_impact_recommendations": 3
   },
   "sdg_alignment": {
     "sdg_11_targets_addressed": [
@@ -552,6 +1463,6 @@
       "11.C: Support sustainable and resilient building"
     ],
     "equity_focus": "Prioritizes vulnerable populations (elderly, disabled, low-income)",
-    "measurable_impact": "Addresses accessibility needs across 50 locations"
+    "measurable_impact": "Addresses accessibility needs across 75 locations"
   }
 }
