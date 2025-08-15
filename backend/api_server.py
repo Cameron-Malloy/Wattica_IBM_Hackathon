@@ -620,6 +620,152 @@ async def get_survey_recommendations():
         "total": len(recommendations)
     }
 
+@app.post("/chatbot")
+async def chat_with_ai(request: dict):
+    """Chat with WatsonX AI about accessibility data and planning"""
+    try:
+        user_message = request.get('message', '')
+        chat_history = request.get('history', [])
+        context_data = request.get('context', {})
+        
+        if not user_message:
+            raise HTTPException(status_code=400, detail="Message is required")
+        
+        # Load current accessibility data for context
+        results_file = "../accessmap-frontend/public/api_results/multi_agent_analysis_CA.json"
+        accessibility_data = {}
+        if os.path.exists(results_file):
+            with open(results_file, 'r') as f:
+                accessibility_data = json.load(f)
+        
+        # Create comprehensive prompt for WatsonX
+        prompt = f"""You are an expert AI accessibility advisor and urban planning consultant. You have access to comprehensive accessibility data and can provide detailed insights, recommendations, and planning assistance.
+
+CONTEXT DATA:
+- Accessibility Gaps: {len(accessibility_data.get('scan_results', []))} identified issues
+- Priority Areas: {len(accessibility_data.get('priority_areas', []))} high-priority locations
+- Recommendations: {len(accessibility_data.get('recommendations', []))} actionable plans
+- Survey Submissions: {len(survey_submissions)} community reports
+
+USER MESSAGE: {user_message}
+
+CHAT HISTORY: {chat_history[-5:] if len(chat_history) > 5 else chat_history}
+
+CONTEXT: {context_data}
+
+Your role is to:
+1. Provide intelligent, helpful responses about accessibility planning
+2. Analyze gaps, recommendations, and implementation strategies
+3. Offer detailed insights with specific examples from the data
+4. Create visual planning suggestions and mind maps when appropriate
+5. Be conversational, engaging, and professional
+6. Suggest next steps and actionable items
+
+Respond in a conversational, helpful manner. If the user asks about specific data, reference the actual accessibility data available. If they ask for planning or visualization suggestions, provide detailed, actionable guidance.
+
+IMPORTANT: Be specific, detailed, and provide real value. Don't be generic - use the actual data context to give meaningful insights."""
+
+        # Use WatsonX to generate response
+        from ibm_watsonx_ai.foundation_models import Model
+        from ibm_watsonx_ai import Credentials
+        
+        # Get WatsonX credentials
+        api_key = os.getenv("WATSONX_API_KEY")
+        project_id = os.getenv("WATSONX_PROJECT_ID")
+        region = os.getenv("WATSONX_REGION", "us-south")
+        
+        if not api_key or not project_id:
+            raise Exception("WatsonX credentials not configured")
+        
+        # Initialize WatsonX model
+        creds = Credentials(api_key=api_key, url="https://us-south.ml.cloud.ibm.com")
+        model = Model(
+            model_id="ibm/granite-3-3-8b-instruct",
+            credentials=creds,
+            project_id=project_id
+        )
+        
+        # Generate AI response
+        response = model.generate(
+            prompt=prompt,
+            params={
+                'max_new_tokens': 800,
+                'temperature': 0.7,
+                'top_p': 0.9,
+                'repetition_penalty': 1.1
+            }
+        )
+        
+        # Extract response text
+        if hasattr(response, 'generated_text'):
+            ai_response = response.generated_text
+        elif hasattr(response, 'results') and response.results:
+            ai_response = response.results[0].get('generated_text', '')
+        elif isinstance(response, dict) and 'results' in response:
+            ai_response = response['results'][0].get('generated_text', '')
+        elif isinstance(response, dict) and 'generated_text' in response:
+            ai_response = response['generated_text']
+        else:
+            ai_response = str(response)
+        
+        # Clean up response
+        ai_response = ai_response.strip()
+        
+        # Add metadata
+        response_data = {
+            "message": ai_response,
+            "timestamp": datetime.now().isoformat(),
+            "context_used": {
+                "gaps_count": len(accessibility_data.get('scan_results', [])),
+                "recommendations_count": len(accessibility_data.get('recommendations', [])),
+                "surveys_count": len(survey_submissions)
+            },
+            "suggestions": generate_follow_up_suggestions(user_message, ai_response)
+        }
+        
+        logger.info(f"✅ Chatbot response generated successfully")
+        
+        return response_data
+        
+    except Exception as e:
+        logger.error(f"Chatbot error: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to generate chatbot response: {str(e)}")
+
+def generate_follow_up_suggestions(user_message, ai_response):
+    """Generate follow-up suggestions based on the conversation"""
+    suggestions = []
+    
+    # Add context-aware suggestions
+    if 'gap' in user_message.lower() or 'issue' in user_message.lower():
+        suggestions.extend([
+            "Show me a detailed analysis of this gap",
+            "What are the related recommendations?",
+            "Create an implementation plan for this issue"
+        ])
+    
+    if 'recommendation' in user_message.lower() or 'plan' in user_message.lower():
+        suggestions.extend([
+            "Break down the implementation steps",
+            "What's the cost analysis?",
+            "Show me the timeline and milestones"
+        ])
+    
+    if 'visual' in user_message.lower() or 'map' in user_message.lower():
+        suggestions.extend([
+            "Create a mind map for this plan",
+            "Show me a flow diagram",
+            "Generate a visual timeline"
+        ])
+    
+    # Add general suggestions
+    suggestions.extend([
+        "What are the latest accessibility gaps?",
+        "Show me the most critical issues",
+        "Create a comprehensive implementation strategy"
+    ])
+    
+    return suggestions[:5]  # Return top 5 suggestions
+
 @app.post("/merge-survey-recommendations")
 async def merge_survey_recommendations(state: str = "CA"):
     """Manually trigger merging of survey recommendations into main analysis"""
@@ -718,7 +864,6 @@ IMPORTANT: Return ONLY the JSON object below. Do not include any additional text
         # Use WatsonX to generate recommendation with retry logic
         from ibm_watsonx_ai.foundation_models import Model
         from ibm_watsonx_ai import Credentials
-        import os
         
         # Get WatsonX credentials
         api_key = os.getenv("WATSONX_API_KEY")

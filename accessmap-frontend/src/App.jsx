@@ -8,6 +8,7 @@ import MapPage from './pages/MapPage';
 import EnhancedSurveyPage from './pages/EnhancedSurveyPage';
 import CommunityPage from './pages/CommunityPage';
 import EnhancedChatLogPage from './pages/EnhancedChatLogPage';
+import AIAdvisorPage from './pages/AIAdvisorPage';
 import './index.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               <Route path="/survey" element={<EnhancedSurveyPage />} />
               <Route path="/community" element={<CommunityPage />} />
               <Route path="/chat" element={<EnhancedChatLogPage />} />
+              <Route path="/ai-advisor" element={<AIAdvisorPage />} />
             </Routes>
           </main>
           

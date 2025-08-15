@@ -46,6 +46,12 @@ const Navigation = () => {
       href: '/chat',
       icon: ChatBubbleLeftRightIcon,
       description: 'AI agent communication logs'
+    },
+    {
+      name: 'AI Advisor',
+      href: '/ai-advisor',
+      icon: SparklesIcon,
+      description: 'Intelligent accessibility planning assistant'
     }
   ];
 
