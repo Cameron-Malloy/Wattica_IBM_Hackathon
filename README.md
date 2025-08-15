@@ -4,7 +4,7 @@
 
 *Developed by four UC Berkeley incoming freshmen*
 
-AccessMap uses IBM WatsonX AI to analyze urban accessibility gaps and provide actionable insights for creating more inclusive communities. Our solution combines demographic vulnerability data with AI-powered analysis to identify critical accessibility barriers and prioritize improvements.
+AccessMap uses IBM WatsonX AI to analyze urban accessibility gaps and provide actionable insights for creating more inclusive communities. Our comprehensive solution combines demographic vulnerability data with conversational AI, intelligent planning tools, and persistent recommendation management to transform how cities approach accessibility improvements.
 
 ## 🎯 Problem Statement
 
@@ -48,6 +48,13 @@ AccessMap leverages IBM WatsonX AI to:
 - Community-driven improvement tracking
 - Real-time feedback integration
 
+### 🤖 **AI Advisor & Conversational Planning**
+- **Interactive AI Chat**: Natural language conversations about accessibility challenges
+- **Persistent Recommendations**: Save, continue, and evolve AI recommendations over time
+- **Smart Planning Tools**: AI-integrated implementation planning with timeline visualization
+- **Conversation History**: Complete chat logs linked to planning items and recommendations
+- **Dynamic Updates**: Recommendations automatically update with new AI insights (cost, timeline, priority)
+
 ## 🛠️ Technology Stack
 
 ### Backend (Python/FastAPI)
@@ -59,11 +66,14 @@ AccessMap leverages IBM WatsonX AI to:
 - **Uvicorn** - ASGI server
 
 ### Frontend (React)
-- **React 18** - Modern user interface
-- **Leaflet** - Interactive mapping
-- **Tailwind CSS** - Responsive design
+- **React 18** - Modern user interface with hooks and context
+- **Leaflet** - Interactive mapping with real-time data
+- **Tailwind CSS** - Responsive design system
 - **Heroicons** - Consistent iconography
-- **Framer Motion** - Smooth animations
+- **Framer Motion** - Smooth animations and transitions
+- **React Hot Toast** - User notifications and feedback
+- **Recharts** - Data visualization and analytics
+- **LocalStorage API** - Persistent data storage
 
 ## 🚦 Getting Started
 
@@ -185,25 +195,48 @@ export WATSONX_PROJECT_ID=your_actual_project_id
 
 ### Dashboard Overview
 - **Real-time Statistics**: View total issues, priorities, and recommendations
-- **Active Analysis Jobs**: Monitor ongoing AI analysis
-- **Quick Actions**: Start new analysis or view interactive map
+- **Active Analysis Jobs**: Monitor ongoing AI analysis with live updates
+- **AI-Generated Recommendations**: Special highlighting for AI-powered suggestions
+- **Quick Actions**: Start new analysis or navigate to interactive tools
+
+### AI Advisor (NEW! 🤖)
+- **Conversational Interface**: Natural language chat with IBM WatsonX AI
+- **Contextual Assistance**: AI understands accessibility gaps and provides specific guidance
+- **Save Recommendations**: Convert AI responses into actionable recommendations
+- **Continue Conversations**: Evolve recommendations through ongoing dialogue
+- **Implementation Planning**: AI-integrated planning tools with timeline visualization
+
+#### AI Advisor Features:
+1. **Interactive Chat**: Ask questions about accessibility challenges, implementation strategies, or specific gaps
+2. **Smart Recommendations**: AI analyzes your questions and provides tailored solutions
+3. **Persistent Storage**: Save important AI responses as recommendations that persist across sessions
+4. **Dynamic Updates**: Continue conversations to refine cost estimates, timelines, and priorities
+5. **Planning Integration**: View saved chat logs in planning tools for complete context
 
 ### Interactive Map
-- **Accessibility Gaps**: Red markers showing critical issues
+- **Accessibility Gaps**: Red markers showing critical issues with detailed popups
 - **Priority Areas**: Orange markers for high-priority locations
 - **Recommendations**: Blue markers for AI-generated solutions
 - **Survey Reports**: Green markers for community submissions
+- **Advanced Filtering**: Filter by severity, type, and data source
 
-### Survey System
-1. **Submit Survey**: Report accessibility issues in your community
+### Enhanced Survey System
+1. **Submit Survey**: Report accessibility issues with location and photo support
 2. **AI Analysis**: Get instant AI-powered recommendations
-3. **Track Progress**: Monitor implementation status
+3. **Integration**: Survey data automatically integrates with AI Advisor
+4. **Track Progress**: Monitor implementation status across all platforms
 
-### Recommendations
-- **Infrastructure**: Physical accessibility improvements
-- **Policy**: Administrative and compliance solutions
-- **Technology**: Digital and monitoring solutions
-- **Community**: Engagement and awareness programs
+### Smart Planning Tools
+- **AI-Integrated Planning**: Planning interface that connects with AI conversations
+- **Chat Log Access**: View complete conversation history for each plan item
+- **Timeline Visualization**: Detailed implementation timelines with cost analysis
+- **Recommendation Sync**: Seamless integration between AI advice and planning
+
+### Recommendation Management
+- **Multi-Source**: Recommendations from surveys, AI chat, and automated analysis
+- **AI-Generated Highlighting**: Special visual treatment for AI-powered suggestions
+- **Persistent Storage**: All recommendations saved locally and synchronized
+- **Conversation Context**: Full chat history preserved with each recommendation
 
 ## 📁 Project Structure
 
@@ -211,15 +244,29 @@ export WATSONX_PROJECT_ID=your_actual_project_id
 Wattica_IBM_Hackathon/
 ├── backend/                    # Python FastAPI backend
 │   ├── agents/                # AI agents (AccessScanner, EquityAdvisor, PlannerBot)
-│   ├── api_server.py          # Main API server
+│   ├── api_server.py          # Main API server with WatsonX integration
 │   ├── multi_agent_orchestrator.py  # Agent coordination
 │   ├── requirements.txt       # Python dependencies
 │   └── venv/                  # Virtual environment
 ├── accessmap-frontend/         # React frontend
-│   ├── src/                   # React source code
-│   ├── public/                # Static assets
-│   ├── package.json           # Node.js dependencies
-│   └── api_results/           # Generated analysis data
+│   ├── src/
+│   │   ├── components/        # Reusable UI components
+│   │   │   ├── InteractiveCharts.jsx       # Data visualization
+│   │   │   ├── SmartPlanningInterface.jsx  # AI-integrated planning
+│   │   │   ├── EnhancedRecommendations.jsx # Advanced recommendation display
+│   │   │   └── VisualPlanningTools.jsx     # Planning visualization
+│   │   ├── contexts/          # React contexts
+│   │   │   └── ApiContext.jsx # Global state management with persistence
+│   │   ├── pages/             # Main application pages
+│   │   │   ├── AIAdvisorPage.jsx          # Conversational AI interface
+│   │   │   ├── DashboardPage.jsx          # Enhanced dashboard with AI features
+│   │   │   ├── MapPage.jsx                # Interactive mapping
+│   │   │   └── EnhancedSurveyPage.jsx     # Advanced survey system
+│   │   ├── services/          # API integration
+│   │   └── utils/             # Utility functions and geo-caching
+│   ├── public/
+│   │   └── api_results/       # Generated analysis data
+│   └── package.json           # Node.js dependencies
 └── README.md                  # This file
 ```
 
@@ -229,15 +276,30 @@ Wattica_IBM_Hackathon/
 - **AccessScanner**: Identifies accessibility gaps using demographic data
 - **EquityAdvisor**: Prioritizes areas based on vulnerability factors
 - **PlannerBot**: Generates actionable improvement recommendations
+- **Conversational AI**: Interactive WatsonX-powered chat interface
 
-### Real-time Data
-- **Live Updates**: Analysis results update automatically
+### Advanced AI Integration
+- **Persistent Conversations**: Save and continue AI discussions across sessions
+- **Dynamic Recommendations**: AI responses automatically update with new insights
+- **Context-Aware Planning**: AI understands project context and provides relevant guidance
+- **Smart Parsing**: Automatically extracts cost, timeline, and priority from AI responses
+
+### Real-time Data & Persistence
+- **Live Updates**: Analysis results update automatically across all components
+- **LocalStorage Integration**: Recommendations and conversations persist across browser sessions
+- **Cross-Page Synchronization**: Data updates seamlessly between Dashboard, AI Advisor, and Planning Tools
 - **Community Input**: Survey submissions integrate with AI analysis
-- **Progress Tracking**: Monitor implementation status
+
+### Enhanced User Experience
+- **Conversational Interface**: Natural language interaction with accessibility AI
+- **Visual Planning Tools**: Interactive timeline and cost visualization
+- **Smart Notifications**: Context-aware toast messages and status indicators
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 
 ### Comprehensive Analysis
 - **Demographic Context**: Elderly, disabled, and low-income populations
-- **Geographic Coverage**: California cities and communities
+- **Geographic Coverage**: California cities and communities with precise geo-caching
+- **Multi-Modal Input**: Surveys, AI conversations, and automated analysis
 - **SDG Alignment**: Sustainable Development Goal 11 compliance
 
 ## 🐛 Troubleshooting

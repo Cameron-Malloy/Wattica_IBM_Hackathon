@@ -11,6 +11,36 @@ const API_ACTIONS = {
   UPDATE_JOB_STATUS: 'UPDATE_JOB_STATUS',
   CLEAR_ERROR: 'CLEAR_ERROR',
   SET_CONNECTION_STATUS: 'SET_CONNECTION_STATUS',
+  ADD_RECOMMENDATION: 'ADD_RECOMMENDATION',
+  ADD_SURVEY_SUBMISSION: 'ADD_SURVEY_SUBMISSION',
+  ADD_PLAN_ITEM: 'ADD_PLAN_ITEM',
+  UPDATE_PLAN_ITEM: 'UPDATE_PLAN_ITEM',
+  ADD_SAVED_CHAT_RECOMMENDATION: 'ADD_SAVED_CHAT_RECOMMENDATION',
+  UPDATE_SAVED_CHAT_RECOMMENDATION: 'UPDATE_SAVED_CHAT_RECOMMENDATION',
+  CLEAR_SAVED_CHAT_RECOMMENDATIONS: 'CLEAR_SAVED_CHAT_RECOMMENDATIONS',
+};
+
+// Load saved recommendations from localStorage
+const loadSavedRecommendations = () => {
+  try {
+    const saved = localStorage.getItem('savedChatRecommendations');
+    const recommendations = saved ? JSON.parse(saved) : [];
+    console.log('Loading saved recommendations from localStorage:', recommendations);
+    return recommendations;
+  } catch (error) {
+    console.error('Error loading saved recommendations:', error);
+    return [];
+  }
+};
+
+// Save recommendations to localStorage
+const saveSavedRecommendations = (recommendations) => {
+  try {
+    console.log('Saving recommendations to localStorage:', recommendations);
+    localStorage.setItem('savedChatRecommendations', JSON.stringify(recommendations));
+  } catch (error) {
+    console.error('Error saving recommendations:', error);
+  }
 };
 
 // Initial state
@@ -21,6 +51,9 @@ const initialState = {
   activeJobs: [],
   connectionStatus: 'checking', // 'connected', 'disconnected', 'checking'
   lastUpdated: null,
+  planItems: [],
+  surveySubmissions: [],
+  savedChatRecommendations: loadSavedRecommendations(),
 };
 
 // Reducer
@@ -59,6 +92,69 @@ function apiReducer(state, action) {
     
     case API_ACTIONS.SET_CONNECTION_STATUS:
       return { ...state, connectionStatus: action.payload };
+    
+    case API_ACTIONS.ADD_RECOMMENDATION:
+      return {
+        ...state,
+        results: state.results ? {
+          ...state.results,
+          recommendations: [...(state.results.recommendations || []), action.payload]
+        } : {
+          // Create initial results structure if it doesn't exist
+          recommendations: [action.payload],
+          scan_results: [],
+          priority_areas: []
+        }
+      };
+    
+    case API_ACTIONS.ADD_SURVEY_SUBMISSION:
+      return {
+        ...state,
+        surveySubmissions: [...state.surveySubmissions, action.payload],
+        results: state.results ? {
+          ...state.results,
+          survey_submissions: [...(state.results.survey_submissions || []), action.payload]
+        } : state.results
+      };
+    
+    case API_ACTIONS.ADD_PLAN_ITEM:
+      return {
+        ...state,
+        planItems: [...state.planItems, action.payload]
+      };
+    
+    case API_ACTIONS.UPDATE_PLAN_ITEM:
+      return {
+        ...state,
+        planItems: state.planItems.map(item =>
+          item.id === action.payload.id ? { ...item, ...action.payload.updates } : item
+        )
+      };
+    
+    case API_ACTIONS.ADD_SAVED_CHAT_RECOMMENDATION:
+      const newRecommendations = [...state.savedChatRecommendations, action.payload];
+      saveSavedRecommendations(newRecommendations);
+      return {
+        ...state,
+        savedChatRecommendations: newRecommendations
+      };
+    
+    case API_ACTIONS.UPDATE_SAVED_CHAT_RECOMMENDATION:
+      const updatedRecommendations = state.savedChatRecommendations.map(rec =>
+        rec.id === action.payload.id ? { ...rec, ...action.payload.updates } : rec
+      );
+      saveSavedRecommendations(updatedRecommendations);
+      return {
+        ...state,
+        savedChatRecommendations: updatedRecommendations
+      };
+    
+    case API_ACTIONS.CLEAR_SAVED_CHAT_RECOMMENDATIONS:
+      saveSavedRecommendations([]);
+      return {
+        ...state,
+        savedChatRecommendations: []
+      };
     
     default:
       return state;
@@ -179,6 +275,83 @@ export function ApiProvider({ children }) {
     dispatch({ type: API_ACTIONS.SET_RESULTS, payload: null });
   }, []);
 
+  const addRecommendation = useCallback((recommendation) => {
+    const newRecommendation = {
+      ...recommendation,
+      id: `rec-${Date.now()}`,
+      created_at: new Date().toISOString(),
+      source: recommendation.source || 'planning_tool' // Don't overwrite if source is already set
+    };
+    dispatch({ type: API_ACTIONS.ADD_RECOMMENDATION, payload: newRecommendation });
+    return newRecommendation;
+  }, []);
+
+  const addSurveySubmission = useCallback((surveyData) => {
+    const submission = {
+      ...surveyData,
+      id: `survey-${Date.now()}`,
+      submitted_at: new Date().toISOString(),
+      status: 'submitted'
+    };
+    dispatch({ type: API_ACTIONS.ADD_SURVEY_SUBMISSION, payload: submission });
+    return submission;
+  }, []);
+
+  const addPlanItem = useCallback((planItem) => {
+    const newPlanItem = {
+      ...planItem,
+      id: `plan-${Date.now()}`,
+      created_at: new Date().toISOString()
+    };
+    dispatch({ type: API_ACTIONS.ADD_PLAN_ITEM, payload: newPlanItem });
+    
+    // Also add as recommendation if it's a completed item
+    if (planItem.status === 'completed' || planItem.addAsRecommendation) {
+      addRecommendation({
+        title: planItem.title,
+        description: planItem.description,
+        type: planItem.type,
+        priority_level: planItem.priority,
+        cost_estimate: planItem.cost,
+        timeline: planItem.duration,
+        implementation_status: planItem.status,
+        source: 'planning_tool'
+      });
+    }
+    
+    return newPlanItem;
+  }, [addRecommendation]);
+
+  const updatePlanItem = useCallback((id, updates) => {
+    dispatch({ 
+      type: API_ACTIONS.UPDATE_PLAN_ITEM, 
+      payload: { id, updates } 
+    });
+  }, []);
+
+  const addSavedChatRecommendation = useCallback((recommendation) => {
+    const savedRec = {
+      ...recommendation,
+      id: `saved-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      saved_at: new Date().toISOString()
+    };
+    console.log('Adding saved chat recommendation:', savedRec);
+    dispatch({ type: API_ACTIONS.ADD_SAVED_CHAT_RECOMMENDATION, payload: savedRec });
+    return savedRec;
+  }, []);
+
+  const updateSavedChatRecommendation = useCallback((id, updates) => {
+    console.log('Updating saved chat recommendation:', id, updates);
+    dispatch({ 
+      type: API_ACTIONS.UPDATE_SAVED_CHAT_RECOMMENDATION, 
+      payload: { id, updates } 
+    });
+  }, []);
+
+  const clearSavedChatRecommendations = useCallback(() => {
+    dispatch({ type: API_ACTIONS.CLEAR_SAVED_CHAT_RECOMMENDATIONS });
+  }, []);
+
   const value = {
     ...state,
     startAnalysis,
@@ -189,6 +362,13 @@ export function ApiProvider({ children }) {
     checkBackendConnection,
     isConnected: state.connectionStatus === 'connected',
     isChecking: state.connectionStatus === 'checking',
+    addRecommendation,
+    addSurveySubmission,
+    addPlanItem,
+    updatePlanItem,
+    addSavedChatRecommendation,
+    updateSavedChatRecommendation,
+    clearSavedChatRecommendations,
   };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

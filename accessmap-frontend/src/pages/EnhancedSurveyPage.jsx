@@ -27,7 +27,7 @@ const EnhancedSurveyPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [submittedPlan, setSubmittedPlan] = useState(null);
-  const { getLatestResults } = useApi();
+  const { getLatestResults, addSurveySubmission } = useApi();
   
   const [formData, setFormData] = useState({
     city: '',
@@ -136,6 +136,15 @@ const EnhancedSurveyPage = () => {
         demographics: formData.demographics,
         contact: {} // Add contact info if needed
       };
+
+      // Add to local context first
+      const submissionData = {
+        ...surveyPayload,
+        submitted_at: new Date().toISOString(),
+        id: `survey-${Date.now()}`,
+        status: 'submitted'
+      };
+      addSurveySubmission(submissionData);
 
       // Submit survey data
       const surveyResponse = await fetch('http://localhost:8003/survey', {

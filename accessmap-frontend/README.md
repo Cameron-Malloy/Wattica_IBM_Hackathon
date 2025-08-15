@@ -1,6 +1,6 @@
 # AccessMap Frontend
 
-A modern, intuitive React application for visualizing and managing accessibility analysis across California. Built with real-time backend integration, comprehensive geo-caching, and an excellent user experience.
+A modern, intuitive React application for visualizing and managing accessibility analysis across California. Built with conversational AI, persistent recommendation management, real-time backend integration, comprehensive geo-caching, and an exceptional user experience powered by IBM WatsonX AI.
 
 ## 🚀 Features
 
@@ -11,6 +11,14 @@ A modern, intuitive React application for visualizing and managing accessibility
 - **Advanced Geo-caching**: 1,300+ California cities with precise coordinates
 - **Smart Data Filtering**: Filter by severity, region, and data type
 - **Real-time Status Updates**: Live polling for analysis job progress
+
+### 🤖 AI-Powered Features (NEW!)
+- **Conversational AI Interface**: Natural language chat with IBM WatsonX AI
+- **Persistent Recommendation Management**: Save, continue, and evolve AI recommendations
+- **Smart Planning Integration**: AI-powered planning tools with conversation history
+- **Dynamic Updates**: Recommendations automatically update with new AI insights
+- **Cross-Page Persistence**: LocalStorage-backed data persistence across sessions
+- **Context-Aware Responses**: AI understands accessibility gaps and provides specific guidance
 
 ### User Experience
 - **Intuitive Navigation**: Clean, modern interface with clear information hierarchy
@@ -25,12 +33,27 @@ A modern, intuitive React application for visualizing and managing accessibility
 ```
 src/
 ├── components/          # Reusable UI components
+│   ├── InteractiveCharts.jsx       # Enhanced data visualization with improved analytics
+│   ├── SmartPlanningInterface.jsx  # AI-integrated planning tools
+│   ├── EnhancedRecommendations.jsx # Advanced recommendation display
+│   ├── ClickableGapsGrid.jsx       # Interactive accessibility gap visualization
+│   ├── MindMapVisualization.jsx    # Visual planning and relationship mapping
+│   └── VisualPlanningTools.jsx     # Planning interface components
 ├── contexts/           # React contexts for state management
-├── data/              # Data services and API clients
+│   └── ApiContext.jsx  # Global state with persistent storage and AI integration
 ├── pages/             # Main application pages
+│   ├── AIAdvisorPage.jsx          # Conversational AI interface (NEW!)
+│   ├── DashboardPage.jsx          # Enhanced dashboard with AI features
+│   ├── MapPage.jsx                # Interactive mapping
+│   ├── EnhancedSurveyPage.jsx     # Advanced survey system
+│   └── CommunityPage.jsx          # Community engagement features
 ├── services/          # Backend API integration
-├── styles/            # Global styles and CSS
-└── utils/             # Utility functions and helpers
+│   └── apiService.js   # Enhanced API client with AI endpoints
+├── utils/             # Utility functions and helpers
+│   ├── californiaCitiesData.js     # 1,300+ California cities geo-cache
+│   ├── geocodingService.js         # Intelligent coordinate lookup
+│   └── coordinateGenerator.js      # Deterministic coordinate generation
+└── styles/            # Global styles and CSS
 ```
 
 ### Key Components
@@ -41,11 +64,12 @@ src/
 - Error handling and retry logic
 - Connection status monitoring
 
-#### API Context (`contexts/ApiContext.jsx`)
-- Global state management for API operations
-- Real-time updates across components
-- Loading and error state management
-- Job tracking and status updates
+#### API Context (`contexts/ApiContext.jsx`) - ENHANCED!
+- Global state management for API operations with persistent storage
+- Real-time updates across components with LocalStorage integration
+- Advanced state management for AI recommendations and conversations
+- Job tracking and status updates with cross-page synchronization
+- Persistent recommendation storage with automatic save/load functionality
 
 #### Geo-caching System
 - **`utils/californiaCitiesData.js`**: 1,300+ California cities with precise coordinates
@@ -112,29 +136,41 @@ The frontend connects to the backend API server which runs:
 
 ## 📱 Pages Overview
 
-### Dashboard (`/dashboard`)
-- Start new analysis jobs
-- Monitor active jobs with real-time status
-- View latest results and statistics
+### Dashboard (`/dashboard`) - ENHANCED!
+- Start new analysis jobs with improved monitoring
+- Monitor active jobs with real-time status updates
+- View latest results and statistics with AI-generated highlighting
+- Special visual treatment for AI-generated recommendations
 - Quick access to map and detailed views
+- Enhanced filtering including "AI Generated" category
+
+### AI Advisor (`/ai-advisor`) - NEW! 🤖
+- **Conversational Interface**: Natural language chat with IBM WatsonX AI
+- **Multiple Visualization Tabs**: Accessibility gaps, analytics, recommendations, planning tools, and saved conversations
+- **Persistent Recommendations**: Save AI responses as actionable recommendations
+- **Continue Conversations**: Evolve recommendations through ongoing dialogue
+- **Smart Planning Integration**: AI-integrated planning tools with timeline visualization
+- **Chat History**: Complete conversation logs with search and filtering
 
 ### Map (`/map`)
-- Interactive California map
-- Real-time data visualization
-- Advanced filtering and search
-- Detailed item information
+- Interactive California map with enhanced data visualization
+- Real-time data visualization with improved performance
+- Advanced filtering and search with AI recommendation support
+- Detailed item information with conversation context
+- Support for AI-generated recommendation markers
 
-### Survey (`/survey`)
-- Community feedback collection
-- Accessibility issue reporting
-- Photo upload capabilities
-- Multi-step form with validation
+### Enhanced Survey (`/survey`)
+- Community feedback collection with AI integration
+- Accessibility issue reporting with improved validation
+- Photo upload capabilities with enhanced processing
+- Multi-step form with validation and AI-powered suggestions
+- Automatic integration with AI Advisor conversations
 
-### Chat Log (`/chat-log`)
-- Detailed analysis results
-- Agent conversation logs
-- Implementation recommendations
-- Historical data tracking
+### Community (`/community`)
+- Community engagement features and collaboration tools
+- Social sharing and discussion capabilities
+- Progress tracking and community achievements
+- Integration with survey and recommendation systems
 
 ## 🔧 API Integration
 
@@ -143,16 +179,22 @@ The frontend connects to the backend API server which runs:
 - `POST /scan` - Start accessibility scanning
 - `POST /prioritize` - Start priority analysis
 - `POST /plan` - Start planning analysis
-- `GET /status/{job_id}` - Get job status
-- `GET /results/{job_id}` - Get analysis results
+- `POST /chatbot` - Interactive AI conversation endpoint (NEW!)
+- `POST /survey` - Submit community surveys with AI integration
+- `GET /surveys` - Retrieve survey data and AI recommendations
+- `GET /status/{job_id}` - Get job status with enhanced tracking
+- `GET /results/{job_id}` - Get analysis results with AI context
 - `GET /latest/{state}` - Get latest results for state
-- `GET /health` - Health check
+- `GET /health` - Health check and system status
 
 ### Real-time Features
 - **Job Polling**: Automatic status updates every 2 seconds
 - **Connection Monitoring**: Real-time backend connectivity status
 - **Error Recovery**: Automatic retry and fallback mechanisms
 - **Data Synchronization**: Consistent state across all components
+- **AI Conversation Persistence**: Real-time saving of conversations to LocalStorage
+- **Cross-Page Updates**: Recommendations sync automatically between pages
+- **Live Chat Updates**: Real-time AI responses with typing indicators
 
 ## 🎨 UI/UX Design
 
@@ -178,10 +220,16 @@ The frontend connects to the backend API server which runs:
 - **Offline Capability**: Basic functionality without internet
 
 ### React Optimizations
-- **Context Optimization**: Efficient state management
-- **Component Memoization**: Reduced unnecessary re-renders
+- **Context Optimization**: Efficient state management with selective updates
+- **Component Memoization**: Reduced unnecessary re-renders with React.memo
 - **Lazy Loading**: Code splitting for better performance
 - **Bundle Optimization**: Tree shaking and minification
+
+### AI & Persistence Optimizations (NEW!)
+- **LocalStorage Caching**: Instant load of saved recommendations and conversations
+- **Smart Updates**: Only update changed recommendation fields
+- **Conversation Threading**: Efficient storage of chat history
+- **Background Sync**: Non-blocking persistence operations
 
 ## 🔒 Security Features
 

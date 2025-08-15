@@ -11,8 +11,8 @@
     ],
     "data_source": "Multi-Agent WatsonX Analysis",
     "survey_recommendations_included": true,
-    "total_survey_recommendations": 3,
-    "last_updated": "2025-08-14T12:57:23.135994"
+    "total_survey_recommendations": 2,
+    "last_updated": "2025-08-15T14:50:50.936839"
   },
   "scan_results": [
     {
@@ -820,95 +820,10 @@
   ],
   "recommendations": [
     {
-      "priority": "High",
-      "priority_level": "High",
-      "title": "Comprehensive Accessibility Improvement Plan for Oakland - Lack Of Signage",
-      "description": "A tailored, community-focused plan to address the lack of signage impacting visual_impairment, elderly individuals in Oakland, considering its unique geography and diverse demographics.",
-      "recommended_actions": [
-        "Conduct comprehensive on-site accessibility audit focusing on key routes connecting Oakland to Berkeley University",
-        "Collaborate with local disability organizations like 'Disability Rights Education & Defense Fund' and 'Easterseals Bay Area'",
-        "Analyze costs against potential savings from reduced emergency response and increased community participation",
-        "Develop a phased implementation plan aligned with existing infrastructure projects, such as BART expansions",
-        "Engage with Oakland's City Planning, Public Works, and Health Departments, alongside Caltrans for state route management",
-        "Implement ADA-compliant, culturally sensitive signage using Braille, large print, and contrasting colors",
-        "Establish quarterly inspections and annual deep cleaning protocols for signage",
-        "Organize workshops with community leaders and accessibility experts to educate on new signage system",
-        "Conduct biannual accessibility audits with community member involvement",
-        "Establish a dedicated hotline and online portal for accessibility feedback",
-        "Monitor safety statistics, emergency calls, and community usage patterns pre- and post-implementation"
-      ],
-      "cost_estimate": "$50,000 - $75,000",
-      "timeline": "12-18 months",
-      "expected_impact": "Improve navigation, safety, and independence for young_adults, adults with visual_impairment, elderly, fostering greater civic engagement and community participation in Oakland.",
-      "implementation_partners": [
-        "City Planning Department",
-        "Public Works Department",
-        "Disability Services Office",
-        "Disability Rights Education & Defense Fund",
-        "Easterseals Bay Area",
-        "Caltrans",
-        "Community Organizations",
-        "Accessibility Consultants",
-        "Transportation Authority",
-        "Health and Human Services"
-      ],
-      "locations_affected": "1",
-      "type": "infrastructure",
-      "coordinates": {
-        "lat": 37.8044,
-        "lng": -122.2711
-      },
-      "target_locations": [
-        "Oakland"
-      ],
-      "agent": "SurveyBot",
-      "generated_at": "2025-08-14T12:18:25.733664",
-      "watsonx_generated": true,
-      "impact": "high",
-      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
-      "equity_impact": "Addresses accessibility needs for visual_impairment, elderly in Oakland",
-      "plan": {
-        "Phase 1 (Weeks 1-4)": "Comprehensive assessment, community engagement, and initial design",
-        "Phase 2 (Weeks 5-16)": "Detailed planning, procurement, and pilot installation",
-        "Phase 3 (Weeks 17-24)": "Full-scale implementation, stakeholder training, and soft launch",
-        "Phase 4 (Weeks 25-36)": "Evaluation, adjustments, and formal rollout",
-        "Ongoing": "Monitoring, feedback integration, and iterative improvements"
-      },
-      "success_metrics": [
-        "100% ADA compliance across identified routes",
-        "90% community satisfaction among visually impaired and elderly users",
-        "80% recognition rate of new signage by targeted user groups",
-        "Increased usage of public transport by 30% among affected populations",
-        "Reduction in reported accessibility-related complaints by 60%",
-        "Enhanced safety ratings at key intersections by 50%"
-      ],
-      "generated_date": "2025-08-14",
-      "status": "active",
-      "category": "survey_based",
-      "urgency": "high",
-      "id": "survey_rec_survey_1",
-      "survey_id": "survey_1",
-      "survey_location": {
-        "city": "Oakland",
-        "coordinates": {
-          "lat": 37.8044,
-          "lng": -122.2711
-        },
-        "fullAddress": "Oakland, CA, USA"
-      },
-      "survey_issue": {
-        "type": "lack_of_signage",
-        "description": "No signage on the correct road to get to berkeley university",
-        "severity": "critical"
-      },
-      "submitted_at": "2025-08-14T12:18:04.745845",
-      "survey_based": true
-    },
-    {
       "priority": "Medium",
       "priority_level": "Medium",
-      "title": "Comprehensive Accessibility Improvement Plan for Long Beach - Physical Barrier",
-      "description": "A detailed, community-focused plan to address physical barrier affecting visual_impairment in Long Beach. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "title": "Comprehensive Accessibility Improvement Plan for Sacramento - Poor Lighting",
+      "description": "A detailed, community-focused plan to address poor lighting affecting visual_impairment, walking_aids, elderly in Sacramento. This plan prioritizes safety, independence, and equitable access for all residents.",
       "recommended_actions": [
         "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
         "Engage with local disability advocacy groups and affected community members",
@@ -923,88 +838,7 @@
       ],
       "cost_estimate": "$15,000 - $50,000",
       "timeline": "6-12 weeks",
-      "expected_impact": "Significantly improve accessibility, safety, and independence for young_adults, children with visual_impairment, enhancing quality of life and community participation.",
-      "implementation_partners": [
-        "City Planning Department",
-        "Public Works Department",
-        "Disability Services Office",
-        "Local Disability Advocacy Groups",
-        "Community Organizations",
-        "Accessibility Consultants",
-        "Transportation Authority",
-        "Health and Human Services"
-      ],
-      "locations_affected": "1",
-      "type": "infrastructure",
-      "coordinates": {
-        "lat": 33.7701,
-        "lng": -118.1937
-      },
-      "target_locations": [
-        "Long Beach"
-      ],
-      "agent": "SurveyBot",
-      "generated_at": "2025-08-14T12:44:47.995356",
-      "watsonx_generated": true,
-      "impact": "medium",
-      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
-      "equity_impact": "Addresses accessibility needs for visual_impairment in Long Beach",
-      "plan": {
-        "Phase 1 (Weeks 1-2)": "Comprehensive assessment and community engagement.",
-        "Phase 2 (Weeks 3-8)": "Design and planning with stakeholder input.",
-        "Phase 3 (Weeks 9-12)": "Implementation and testing.",
-        "Phase 4 (Weeks 13-16)": "Verification, training, and ongoing monitoring."
-      },
-      "success_metrics": [
-        "100% ADA compliance verification",
-        "95% community satisfaction rate",
-        "90% reduction in accessibility barriers",
-        "Increased community participation by 40%",
-        "Zero safety incidents related to accessibility",
-        "Improved independence scores for affected populations"
-      ],
-      "generated_date": "2025-08-14",
-      "status": "active",
-      "category": "survey_based",
-      "urgency": "medium",
-      "id": "survey_rec_survey_2",
-      "survey_id": "survey_2",
-      "survey_location": {
-        "city": "Long Beach",
-        "coordinates": {
-          "lat": 33.7701,
-          "lng": -118.1937
-        },
-        "fullAddress": "Long Beach, CA, USA"
-      },
-      "survey_issue": {
-        "type": "physical_barrier",
-        "description": "The beach is blocked by a biker gang by the jetty\n",
-        "severity": "moderate"
-      },
-      "submitted_at": "2025-08-14T12:44:33.672789",
-      "survey_based": true
-    },
-    {
-      "priority": "High",
-      "priority_level": "High",
-      "title": "Comprehensive Accessibility Improvement Plan for Sacramento - Physical Barrier",
-      "description": "A detailed, community-focused plan to address physical barrier affecting elderly, visual_impairment, cognitive_disabilities in Sacramento. This plan prioritizes safety, independence, and equitable access for all residents.",
-      "recommended_actions": [
-        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
-        "Engage with local disability advocacy groups and affected community members",
-        "Perform detailed cost-benefit analysis and secure funding sources",
-        "Develop phased implementation timeline with clear milestones",
-        "Coordinate with city planning, public works, and disability services departments",
-        "Implement ADA-compliant solutions following universal design principles",
-        "Establish regular maintenance and monitoring protocols",
-        "Create community education and awareness programs",
-        "Conduct post-implementation accessibility assessments",
-        "Establish feedback mechanisms for continuous improvement"
-      ],
-      "cost_estimate": "$25,000 - $100,000",
-      "timeline": "8-16 weeks",
-      "expected_impact": "Significantly improve accessibility, safety, and independence for seniors with elderly, visual_impairment, cognitive_disabilities, enhancing quality of life and community participation.",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for seniors, young_adults, children, adults with visual_impairment, walking_aids, elderly, enhancing quality of life and community participation.",
       "implementation_partners": [
         "City Planning Department",
         "Public Works Department",
@@ -1025,55 +859,24 @@
         "Sacramento"
       ],
       "agent": "SurveyBot",
-      "generated_at": "2025-08-14T12:57:23.133813",
+      "generated_at": "2025-08-15T14:42:02.267211",
       "watsonx_generated": true,
-      "impact": "high",
-      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
-      "equity_impact": "Addresses accessibility needs for elderly, visual_impairment, cognitive_disabilities in Sacramento",
-      "plan": {
-        "phase_1": {
-          "duration": "Weeks 1-2",
-          "activities": [
-            "On-site accessibility audit",
-            "Community engagement sessions"
-          ]
-        },
-        "phase_2": {
-          "duration": "Weeks 3-8",
-          "activities": [
-            "Design phase with stakeholders",
-            "Securing funding",
-            "Planning for phased implementation"
-          ]
-        },
-        "phase_3": {
-          "duration": "Weeks 9-12",
-          "activities": [
-            "Implementation of ADA-compliant infrastructure solutions",
-            "Testing and adjustments based on feedback"
-          ]
-        },
-        "phase_4": {
-          "duration": "Weeks 13-16",
-          "activities": [
-            "Verification of ADA compliance",
-            "Training for maintenance staff",
-            "Ongoing monitoring and evaluation"
-          ]
-        }
-      },
+      "impact": "medium",
+      "sdg_alignment": "SDG 11.7: Safe and inclusive public spaces",
+      "equity_impact": "Addresses accessibility needs for visual_impairment, walking_aids, elderly in Sacramento",
+      "plan": "Phase 1 (Weeks 1-2): Comprehensive assessment and community engagement. Phase 2 (Weeks 3-8): Design and planning with stakeholder input. Phase 3 (Weeks 9-12): Implementation and testing. Phase 4 (Weeks 13-16): Verification, training, and ongoing monitoring.",
       "success_metrics": [
-        "Improved accessibility in Sacramento by 85%",
-        "95% community satisfaction with accessibility improvements",
-        "90% reduction in accessibility barriers",
-        "Enhanced quality of life for all residents"
+        "Enhanced lighting coverage in Sacramento by 90%",
+        "75% reduction in safety incidents in poorly lit areas",
+        "Improved visibility ratings from 3/10 to 8/10",
+        "Increased evening pedestrian activity by 60%"
       ],
-      "generated_date": "2025-08-14",
+      "generated_date": "2025-08-15",
       "status": "active",
       "category": "survey_based",
-      "urgency": "high",
-      "id": "survey_rec_survey_3",
-      "survey_id": "survey_3",
+      "urgency": "medium",
+      "id": "survey_rec_survey_1",
+      "survey_id": "survey_1",
       "survey_location": {
         "city": "Sacramento",
         "coordinates": {
@@ -1083,11 +886,115 @@
         "fullAddress": "Sacramento, CA, USA"
       },
       "survey_issue": {
+        "type": "poor_lighting",
+        "description": "The city center has no lighting when it is night\n",
+        "severity": "moderate"
+      },
+      "submitted_at": "2025-08-15T14:41:52.320908",
+      "survey_based": true
+    },
+    {
+      "priority": "High",
+      "priority_level": "High",
+      "title": "Comprehensive Accessibility Improvement Plan for San Francisco - Physical Barrier",
+      "description": "A detailed, community-focused plan to address physical barrier affecting visual_impairment in San Francisco. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$25,000 - $100,000",
+      "timeline": "8-16 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for adults, seniors, young_adults with visual_impairment, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "target_locations": [
+        "San Francisco"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-15T14:50:50.933192",
+      "watsonx_generated": true,
+      "impact": "high",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for visual_impairment in San Francisco",
+      "plan": {
+        "Phase_1": {
+          "duration": "Weeks 1-2",
+          "activities": [
+            "Comprehensive accessibility audit",
+            "Community engagement and stakeholder meetings"
+          ]
+        },
+        "Phase_2": {
+          "duration": "Weeks 3-8",
+          "activities": [
+            "Design and planning with input from stakeholders",
+            "Development of specifications and procurement of materials"
+          ]
+        },
+        "Phase_3": {
+          "duration": "Weeks 9-12",
+          "activities": [
+            "Implementation of infrastructure improvements",
+            "Testing and adjustments as needed"
+          ]
+        },
+        "Phase_4": {
+          "duration": "Weeks 13-16",
+          "activities": [
+            "Verification of ADA compliance",
+            "Training for staff and community members",
+            "Ongoing monitoring and maintenance protocols"
+          ]
+        }
+      },
+      "success_metrics": [
+        "Improved accessibility in San Francisco by 85%",
+        "95% community satisfaction with accessibility improvements",
+        "90% reduction in accessibility barriers",
+        "Enhanced quality of life for all residents"
+      ],
+      "generated_date": "2025-08-15",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "high",
+      "id": "survey_rec_survey_2",
+      "survey_id": "survey_2",
+      "survey_location": {
+        "city": "San Francisco",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "fullAddress": "San Francisco, CA, USA"
+      },
+      "survey_issue": {
         "type": "physical_barrier",
-        "description": "The main highway has nothing for impaired drivers to see. It is dangerous for the elderly.",
+        "description": "On the I5 freeway there is a road block by the center of the city",
         "severity": "critical"
       },
-      "submitted_at": "2025-08-14T12:57:10.085240",
+      "submitted_at": "2025-08-15T14:50:41.956114",
       "survey_based": true
     },
     {
