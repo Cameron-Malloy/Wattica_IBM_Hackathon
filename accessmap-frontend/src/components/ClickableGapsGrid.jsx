@@ -28,6 +28,7 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
   const [selectedGap, setSelectedGap] = useState(null);
   const [filterSeverity, setFilterSeverity] = useState('all');
   const [filterType, setFilterType] = useState('all');
+  const [filterSource, setFilterSource] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('severity');
   const [showDetailModal, setShowDetailModal] = useState(false);
@@ -96,16 +97,24 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
     let filtered = results.scan_results.filter(gap => {
       const matchesSeverity = filterSeverity === 'all' || gap.severity === filterSeverity;
       const matchesType = filterType === 'all' || gap.issue_type === filterType;
+      const matchesSource = filterSource === 'all' || 
+        (filterSource === 'survey' && gap.survey_based) ||
+        (filterSource === 'ai' && !gap.survey_based);
       const matchesSearch = searchTerm === '' || 
         gap.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         gap.issue_type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         gap.description?.toLowerCase().includes(searchTerm.toLowerCase());
       
-      return matchesSeverity && matchesType && matchesSearch;
+      return matchesSeverity && matchesType && matchesSource && matchesSearch;
     });
 
-    // Sort the results
+    // Sort the results - prioritize survey-based gaps
     filtered.sort((a, b) => {
+      // First, prioritize survey-based gaps
+      if (a.survey_based && !b.survey_based) return -1;
+      if (!a.survey_based && b.survey_based) return 1;
+      
+      // Then sort by selected criteria
       switch (sortBy) {
         case 'severity':
           const severityOrder = { critical: 0, high: 1, moderate: 2, low: 3 };
@@ -122,7 +131,7 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
     });
 
     return filtered;
-  }, [results, filterSeverity, filterType, searchTerm, sortBy]);
+  }, [results, filterSeverity, filterType, filterSource, searchTerm, sortBy]);
 
   const uniqueTypes = useMemo(() => {
     if (!results?.scan_results) return [];
@@ -210,7 +219,7 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
           </span>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {/* Search */}
           <div className="relative">
             <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -250,6 +259,17 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
             ))}
           </select>
 
+          {/* Source Filter */}
+          <select
+            value={filterSource}
+            onChange={(e) => setFilterSource(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="all">All Sources</option>
+            <option value="survey">📋 Community Reports</option>
+            <option value="ai">🤖 AI Detected</option>
+          </select>
+
           {/* Sort */}
           <select
             value={sortBy}
@@ -287,6 +307,11 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
                       <span className="font-semibold text-sm">
                         {gap.issue_type?.replace(/_/g, ' ').toUpperCase()}
                       </span>
+                      {gap.survey_based && (
+                        <span className="px-2 py-1 text-xs bg-blue-500 text-white rounded-full font-medium border border-blue-300">
+                          📋 Community Reported
+                        </span>
+                      )}
                     </div>
                     <span className={`px-2 py-1 text-xs rounded-full border ${getSeverityBadgeColor(gap.severity)} bg-white/20 text-white border-white/30`}>
                       {gap.severity}

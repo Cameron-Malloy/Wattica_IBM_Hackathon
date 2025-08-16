@@ -388,11 +388,11 @@ const MapPage = () => {
                   </div>
                 </div>
                 <a 
-                  href="/dashboard?rec=${primaryRecommendation.id}" 
+                  href="/ai-advisor?tab=recommendations&rec=${primaryRecommendation.id}" 
                   target="_blank"
                   class="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white text-xs font-semibold py-2 px-3 rounded transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
                 >
-                  📊 View Full Solution
+                  🤖 View AI Solution
                 </a>
               </div>
             `;
@@ -409,13 +409,13 @@ const MapPage = () => {
                     <p class="text-xs text-blue-600">Community feedback analysis</p>
                   </div>
                 </div>
-                <p class="text-xs text-gray-600 mb-3">This community report has been analyzed and solutions are available on the dashboard.</p>
+                <p class="text-xs text-gray-600 mb-3">This community report has been analyzed and AI solutions are available.</p>
                 <a 
-                  href="/dashboard" 
+                  href="/ai-advisor?tab=recommendations" 
                   target="_blank"
                   class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
                 >
-                  📊 View Full Analysis
+                  🤖 View AI Analysis
                 </a>
               </div>
             `;
@@ -651,11 +651,11 @@ const MapPage = () => {
                   </div>
                 </div>
                 <a 
-                  href="/dashboard?rec=${primaryRecommendation.id}" 
+                  href="/ai-advisor?tab=recommendations&rec=${primaryRecommendation.id}" 
                   target="_blank"
                   class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white text-xs font-semibold py-2 px-3 rounded transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
                 >
-                  📊 View Full Recommendation
+                  🤖 View AI Recommendation
                 </a>
               </div>
             `;
@@ -672,13 +672,13 @@ const MapPage = () => {
                     <p class="text-xs text-blue-600">Comprehensive accessibility analysis</p>
                   </div>
                 </div>
-                <p class="text-xs text-gray-600 mb-2">Detailed accessibility analysis and recommendations are available on the dashboard for ${item.location}.</p>
+                <p class="text-xs text-gray-600 mb-2">Detailed accessibility analysis and AI recommendations are available for ${item.location}.</p>
                 <a 
-                  href="/dashboard" 
+                  href="/ai-advisor?tab=recommendations" 
                   target="_blank"
                   class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold py-2 px-3 rounded transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
                 >
-                  📊 View Full Analysis
+                  🤖 View AI Analysis
                 </a>
               </div>
             `;
@@ -699,11 +699,11 @@ const MapPage = () => {
                 </div>
                 <p class="text-xs text-gray-600 mb-2">hasRecommendations: ${item.hasRecommendations}, recommendationsCount: ${item.associatedRecommendations?.length || 0}</p>
                 <a 
-                  href="/dashboard" 
+                  href="/ai-advisor?tab=recommendations" 
                   target="_blank"
                   class="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white text-xs font-semibold py-2 px-3 rounded transition-all duration-200 inline-block text-center shadow-sm hover:shadow-md"
                 >
-                  📊 View Dashboard
+                  🤖 View AI Advisor
                 </a>
               </div>
             `;
@@ -1474,10 +1474,10 @@ const MapPage = () => {
                                )}
                              </div>
                              <button 
-                               onClick={() => window.open(`/dashboard?rec=${rec.id}`, '_blank')}
+                               onClick={() => window.open(`/ai-advisor?tab=recommendations&rec=${rec.id}`, '_blank')}
                                className="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium py-2 px-3 rounded-lg transition-colors"
                              >
-                               📊 View Full Details on Dashboard
+                               🤖 View AI Recommendation
                              </button>
                            </div>
                          ))}

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ApiProvider } from './contexts/ApiContext';
 import Navigation from './components/Navigation';
-import DashboardPage from './pages/DashboardPage';
+
 import MapPage from './pages/MapPage';
 import EnhancedSurveyPage from './pages/EnhancedSurveyPage';
 import CommunityPage from './pages/CommunityPage';
@@ -22,13 +22,11 @@ function App() {
           {/* Main Content Area */}
           <main className="animate-fade-in">
             <Routes>
-              <Route path="/" element={<DashboardPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/" element={<AIAdvisorPage />} />
+              <Route path="/ai-advisor" element={<AIAdvisorPage />} />
               <Route path="/map" element={<MapPage />} />
               <Route path="/survey" element={<EnhancedSurveyPage />} />
               <Route path="/community" element={<CommunityPage />} />
-
-              <Route path="/ai-advisor" element={<AIAdvisorPage />} />
             </Routes>
           </main>
           

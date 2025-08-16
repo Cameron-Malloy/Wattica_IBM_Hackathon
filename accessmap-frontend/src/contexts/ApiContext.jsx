@@ -12,6 +12,7 @@ const API_ACTIONS = {
   CLEAR_ERROR: 'CLEAR_ERROR',
   SET_CONNECTION_STATUS: 'SET_CONNECTION_STATUS',
   ADD_RECOMMENDATION: 'ADD_RECOMMENDATION',
+  UPDATE_RECOMMENDATION: 'UPDATE_RECOMMENDATION',
   ADD_SURVEY_SUBMISSION: 'ADD_SURVEY_SUBMISSION',
   ADD_PLAN_ITEM: 'ADD_PLAN_ITEM',
   UPDATE_PLAN_ITEM: 'UPDATE_PLAN_ITEM',
@@ -43,6 +44,26 @@ const saveSavedRecommendations = (recommendations) => {
   }
 };
 
+// Load enhanced recommendations progress from localStorage
+const loadEnhancedRecommendationsProgress = () => {
+  try {
+    const saved = localStorage.getItem('enhancedRecommendationsProgress');
+    return saved ? JSON.parse(saved) : {};
+  } catch (error) {
+    console.error('Error loading enhanced recommendations progress:', error);
+    return {};
+  }
+};
+
+// Save enhanced recommendations progress to localStorage
+const saveEnhancedRecommendationsProgress = (progressMap) => {
+  try {
+    localStorage.setItem('enhancedRecommendationsProgress', JSON.stringify(progressMap));
+  } catch (error) {
+    console.error('Error saving enhanced recommendations progress:', error);
+  }
+};
+
 // Initial state
 const initialState = {
   loading: false,
@@ -54,6 +75,7 @@ const initialState = {
   planItems: [],
   surveySubmissions: [],
   savedChatRecommendations: loadSavedRecommendations(),
+  enhancedRecommendationsProgress: loadEnhancedRecommendationsProgress(),
 };
 
 // Reducer
@@ -66,9 +88,21 @@ function apiReducer(state, action) {
       return { ...state, error: action.payload, loading: false };
     
     case API_ACTIONS.SET_RESULTS:
+      // Apply saved progress to recommendations when loading results
+      const resultsWithProgress = action.payload ? {
+        ...action.payload,
+        recommendations: action.payload.recommendations?.map(rec => {
+          const recId = rec.id || rec.title;
+          const savedProgress = state.enhancedRecommendationsProgress[recId];
+          return savedProgress !== undefined 
+            ? { ...rec, implementation_progress: savedProgress }
+            : rec;
+        }) || []
+      } : action.payload;
+
       return { 
         ...state, 
-        results: action.payload, 
+        results: resultsWithProgress, 
         loading: false, 
         error: null,
         lastUpdated: new Date().toISOString()
@@ -105,6 +139,36 @@ function apiReducer(state, action) {
           scan_results: [],
           priority_areas: []
         }
+      };
+    
+    case API_ACTIONS.UPDATE_RECOMMENDATION:
+      const updatedResults = state.results ? {
+        ...state.results,
+        recommendations: state.results.recommendations?.map(rec => 
+          rec.id === action.payload.id || rec.title === action.payload.title
+            ? { ...rec, ...action.payload.updates }
+            : rec
+        ) || [],
+        lastUpdated: new Date().toISOString()
+      } : state.results;
+
+      // If progress is being updated, save it to localStorage
+      if (action.payload.updates.implementation_progress !== undefined) {
+        const progressMap = { ...state.enhancedRecommendationsProgress };
+        const recId = action.payload.id || action.payload.title;
+        progressMap[recId] = action.payload.updates.implementation_progress;
+        saveEnhancedRecommendationsProgress(progressMap);
+        
+        return {
+          ...state,
+          results: updatedResults,
+          enhancedRecommendationsProgress: progressMap
+        };
+      }
+
+      return {
+        ...state,
+        results: updatedResults
       };
     
     case API_ACTIONS.ADD_SURVEY_SUBMISSION:
@@ -286,6 +350,20 @@ export function ApiProvider({ children }) {
     return newRecommendation;
   }, []);
 
+  const updateRecommendation = useCallback((identifier, updates) => {
+    dispatch({ 
+      type: API_ACTIONS.UPDATE_RECOMMENDATION, 
+      payload: { 
+        id: typeof identifier === 'string' ? identifier : identifier.id,
+        title: typeof identifier === 'object' ? identifier.title : null,
+        updates: {
+          ...updates,
+          last_updated: new Date().toISOString()
+        }
+      } 
+    });
+  }, []);
+
   const addSurveySubmission = useCallback((surveyData) => {
     const submission = {
       ...surveyData,
@@ -294,8 +372,16 @@ export function ApiProvider({ children }) {
       status: 'submitted'
     };
     dispatch({ type: API_ACTIONS.ADD_SURVEY_SUBMISSION, payload: submission });
+    
+    // Auto-refresh results to include new survey data in AI advisor
+    setTimeout(() => {
+      getLatestResults('CA').catch(error => {
+        console.warn('Failed to auto-refresh results after survey submission:', error);
+      });
+    }, 2000); // Wait 2 seconds for backend processing
+    
     return submission;
-  }, []);
+  }, [getLatestResults]);
 
   const addPlanItem = useCallback((planItem) => {
     const newPlanItem = {
@@ -352,6 +438,20 @@ export function ApiProvider({ children }) {
     dispatch({ type: API_ACTIONS.CLEAR_SAVED_CHAT_RECOMMENDATIONS });
   }, []);
 
+  const updateRecommendationProgress = useCallback((id, progress) => {
+    console.log('Updating recommendation progress:', id, progress);
+    dispatch({ 
+      type: API_ACTIONS.UPDATE_SAVED_CHAT_RECOMMENDATION, 
+      payload: { 
+        id, 
+        updates: { 
+          implementation_progress: progress,
+          last_updated: new Date().toISOString()
+        } 
+      } 
+    });
+  }, []);
+
   const value = {
     ...state,
     startAnalysis,
@@ -363,11 +463,13 @@ export function ApiProvider({ children }) {
     isConnected: state.connectionStatus === 'connected',
     isChecking: state.connectionStatus === 'checking',
     addRecommendation,
+    updateRecommendation,
     addSurveySubmission,
     addPlanItem,
     updatePlanItem,
     addSavedChatRecommendation,
     updateSavedChatRecommendation,
+    updateRecommendationProgress,
     clearSavedChatRecommendations,
   };
 

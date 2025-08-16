@@ -199,7 +199,7 @@ const EnhancedSurveyPage = () => {
       }
 
       if (surveyResult.ai_recommendation) {
-        toast.success('Survey submitted and AI recommendation generated! Check the Recommendations tab to see it.');
+        toast.success('Survey submitted and AI recommendation generated! Your accessibility gap and AI recommendation are now available in the AI Advisor page.');
         // Refresh recommendations to include the new survey-based recommendation
         try {
           await getLatestResults('CA');
@@ -207,7 +207,7 @@ const EnhancedSurveyPage = () => {
           console.warn('Failed to refresh recommendations:', error);
         }
       } else {
-        toast.success('Survey submitted successfully!');
+        toast.success('Survey submitted successfully! Your accessibility gap has been recorded and will appear in the AI Advisor page.');
       }
     } catch (error) {
       console.error('Error submitting survey:', error);
@@ -793,6 +793,13 @@ const EnhancedSurveyPage = () => {
 
                 <div className="flex justify-center space-x-4">
                   <button
+                    onClick={() => window.location.href = '/ai-advisor'}
+                    className="button-primary flex items-center"
+                  >
+                    <SparklesIcon className="h-5 w-5 mr-2" />
+                    View in AI Advisor
+                  </button>
+                  <button
                     onClick={() => window.location.href = '/community'}
                     className="button-secondary flex items-center"
                   >
@@ -801,7 +808,7 @@ const EnhancedSurveyPage = () => {
                   </button>
                   <button
                     onClick={() => window.location.href = '/map'}
-                    className="button-primary flex items-center"
+                    className="button-secondary flex items-center"
                   >
                     <MapPinIcon className="h-5 w-5 mr-2" />
                     View on Map

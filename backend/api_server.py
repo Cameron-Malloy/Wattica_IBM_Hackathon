@@ -234,8 +234,8 @@ load_survey_submissions()
 
 def merge_survey_recommendations_to_main_analysis(state: str = "CA"):
     """
-    Merge survey-based recommendations into the main multi-agent analysis results
-    so they appear on the map and dashboard
+    Merge survey-based recommendations AND accessibility gaps into the main multi-agent analysis results
+    so they appear on the map, dashboard, and AI advisor page
     """
     try:
         # Load existing multi-agent analysis results
@@ -249,7 +249,9 @@ def merge_survey_recommendations_to_main_analysis(state: str = "CA"):
                     "state": state,
                     "generated_date": datetime.now().strftime('%Y-%m-%d'),
                     "survey_recommendations_included": True,
-                    "total_survey_recommendations": 0
+                    "total_survey_recommendations": 0,
+                    "survey_gaps_included": True,
+                    "total_survey_gaps": 0
                 },
                 "recommendations": [],
                 "scan_results": [],
@@ -259,9 +261,35 @@ def merge_survey_recommendations_to_main_analysis(state: str = "CA"):
             with open(main_analysis_file, 'r') as f:
                 main_analysis = json.load(f)
         
-        # Get survey recommendations
+        # Get survey recommendations AND accessibility gaps
         survey_recommendations = []
+        survey_gaps = []
+        
         for survey in survey_submissions:
+            # Create accessibility gap from survey data
+            gap = {
+                "id": f"survey_gap_{survey['id']}",
+                "survey_id": survey['id'],
+                "issue_type": survey['issue'].get('type', 'accessibility_barrier'),
+                "severity": survey['issue'].get('severity', 'moderate'),
+                "location": survey['location'],
+                "description": survey['issue'].get('description', 'Community-reported accessibility issue'),
+                "impact": survey['impact'],
+                "demographics": survey['demographics'],
+                "submitted_at": survey['submitted_at'],
+                "survey_based": True,
+                "source": "community_survey",
+                "agent": "CommunityReporter",
+                "confidence_score": 0.95,  # High confidence since it's community-reported
+                "affected_population": survey['demographics'].get('mobility_needs', []),
+                "frequency": survey['impact'].get('frequency', 'unknown'),
+                "age_groups": survey['impact'].get('age_groups', []),
+                "coordinates": survey['location'].get('coordinates', {}),
+                "city": survey['location'].get('city', 'Unknown')
+            }
+            survey_gaps.append(gap)
+            
+            # Create recommendation if AI recommendation exists
             if survey.get('ai_recommendation'):
                 recommendation = survey['ai_recommendation'].copy()
                 # Add survey context to the recommendation
@@ -273,7 +301,22 @@ def merge_survey_recommendations_to_main_analysis(state: str = "CA"):
                 recommendation['survey_based'] = True
                 recommendation['agent'] = "SurveyBot"  # Distinguish from PlannerBot
                 recommendation['generated_date'] = datetime.now().strftime('%Y-%m-%d')
+                recommendation['addresses_gaps'] = [f"survey_gap_{survey['id']}"]  # Link to the gap
                 survey_recommendations.append(recommendation)
+        
+        # Add survey gaps to scan_results
+        if survey_gaps:
+            if 'scan_results' not in main_analysis:
+                main_analysis['scan_results'] = []
+            
+            # Remove existing survey gaps to avoid duplicates
+            main_analysis['scan_results'] = [
+                gap for gap in main_analysis['scan_results'] 
+                if not gap.get('survey_based')
+            ]
+            
+            # Add survey gaps at the beginning (higher priority since they're community-reported)
+            main_analysis['scan_results'] = survey_gaps + main_analysis['scan_results']
         
         if survey_recommendations:
             # Add survey recommendations to the main analysis
@@ -289,28 +332,30 @@ def merge_survey_recommendations_to_main_analysis(state: str = "CA"):
             # Add survey recommendations at the beginning (higher priority)
             main_analysis['recommendations'] = survey_recommendations + main_analysis['recommendations']
             
-            # Update metadata to reflect survey integration
-            if 'metadata' not in main_analysis:
-                main_analysis['metadata'] = {}
-            
-            main_analysis['metadata']['survey_recommendations_included'] = True
-            main_analysis['metadata']['total_survey_recommendations'] = len(survey_recommendations)
-            main_analysis['metadata']['last_updated'] = datetime.now().isoformat()
-            
-            # Ensure directory exists
-            os.makedirs(os.path.dirname(main_analysis_file), exist_ok=True)
-            
-            # Save updated analysis
-            with open(main_analysis_file, 'w') as f:
-                json.dump(main_analysis, f, indent=2)
-            
-            # Also update the backend copy
-            backend_file = f"../census_results/multi_agent_analysis/multi_agent_analysis_{state}.json"
-            os.makedirs(os.path.dirname(backend_file), exist_ok=True)
-            with open(backend_file, 'w') as f:
-                json.dump(main_analysis, f, indent=2)
-            
-            logger.info(f"✅ Merged {len(survey_recommendations)} survey recommendations into main analysis")
+        # Update metadata to reflect survey integration
+        if 'metadata' not in main_analysis:
+            main_analysis['metadata'] = {}
+        
+        main_analysis['metadata']['survey_recommendations_included'] = True
+        main_analysis['metadata']['total_survey_recommendations'] = len(survey_recommendations)
+        main_analysis['metadata']['survey_gaps_included'] = True
+        main_analysis['metadata']['total_survey_gaps'] = len(survey_gaps)
+        main_analysis['metadata']['last_updated'] = datetime.now().isoformat()
+        
+        # Ensure directory exists
+        os.makedirs(os.path.dirname(main_analysis_file), exist_ok=True)
+        
+        # Save updated analysis
+        with open(main_analysis_file, 'w') as f:
+            json.dump(main_analysis, f, indent=2)
+        
+        # Also update the backend copy
+        backend_file = f"../census_results/multi_agent_analysis/multi_agent_analysis_{state}.json"
+        os.makedirs(os.path.dirname(backend_file), exist_ok=True)
+        with open(backend_file, 'w') as f:
+            json.dump(main_analysis, f, indent=2)
+        
+        logger.info(f"✅ Merged {len(survey_gaps)} survey gaps and {len(survey_recommendations)} survey recommendations into main analysis")
             
     except Exception as e:
         logger.error(f"Failed to merge survey recommendations: {e}")

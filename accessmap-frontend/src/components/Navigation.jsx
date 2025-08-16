@@ -18,10 +18,10 @@ const Navigation = () => {
 
   const navigationItems = [
     {
-      name: 'Dashboard',
-      href: '/dashboard',
-      icon: HomeIcon,
-      description: 'Overview and analytics'
+      name: 'AI Advisor',
+      href: '/ai-advisor',
+      icon: SparklesIcon,
+      description: 'Intelligent accessibility planning assistant powered by WatsonX'
     },
     {
       name: 'Map',
@@ -40,18 +40,6 @@ const Navigation = () => {
       href: '/community',
       icon: UserGroupIcon,
       description: 'Community feedback and reports'
-    },
-    {
-      name: 'AI Chat',
-      href: '/chat',
-      icon: ChatBubbleLeftRightIcon,
-      description: 'AI agent communication logs'
-    },
-    {
-      name: 'AI Advisor',
-      href: '/ai-advisor',
-      icon: SparklesIcon,
-      description: 'Intelligent accessibility planning assistant'
     }
   ];
 
@@ -66,12 +54,41 @@ const Navigation = () => {
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-                  <SparklesIcon className="h-6 w-6 text-white" />
+                <div className="w-16 h-16 relative overflow-hidden rounded-xl shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
+                  <img 
+                    src="/access-map-logo.png" 
+                    alt="AccessMap Logo" 
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                  {/* CSS-based logo fallback that matches your design */}
+                  <div className="w-full h-full bg-gray-100 border-2 border-gray-400 rounded-xl hidden items-center justify-center relative overflow-hidden">
+                    {/* Roads/Infrastructure */}
+                    <div className="absolute inset-0">
+                      {/* Main road */}
+                      <div className="absolute top-1/2 left-0 right-0 h-2 bg-gray-600 transform -translate-y-1/2"></div>
+                      {/* Dashed line */}
+                      <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white transform -translate-y-1/2" style={{
+                        backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 2px, white 2px, white 4px)'
+                      }}></div>
+                      {/* Intersecting road */}
+                      <div className="absolute top-0 bottom-0 left-1/2 w-2 bg-gray-600 transform -translate-x-1/2"></div>
+                    </div>
+                    {/* Green hills */}
+                    <div className="absolute top-1 left-1 w-5 h-5 bg-green-600 rounded-full"></div>
+                    <div className="absolute top-1 right-1 w-5 h-5 bg-green-600 rounded-full"></div>
+                    {/* Brown/amber area */}
+                    <div className="absolute bottom-1 left-2 right-2 h-4 bg-amber-600 rounded-full flex items-center justify-center">
+                      <span className="text-white text-sm font-bold">AM</span>
+                    </div>
+                  </div>
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold gradient-text">AccessMap</h1>
-                  <p className="text-xs text-gray-500 -mt-1">IBM Hackathon</p>
+                  <h1 className="text-xl font-bold text-gray-800">AccessMap</h1>
+                  <p className="text-xs text-amber-600 font-medium -mt-1">Inclusive City Planning</p>
                 </div>
               </Link>
             </div>
@@ -132,10 +149,33 @@ const Navigation = () => {
           <div className="flex justify-between items-center h-16">
             {/* Mobile Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <SparklesIcon className="h-5 w-5 text-white" />
+              <div className="w-12 h-12 relative overflow-hidden rounded-lg shadow-lg">
+                <img 
+                  src="/access-map-logo.png" 
+                  alt="AccessMap Logo" 
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+                {/* CSS-based mobile logo fallback */}
+                <div className="w-full h-full bg-gray-100 border-2 border-gray-400 rounded-lg hidden items-center justify-center relative overflow-hidden">
+                  {/* Roads */}
+                  <div className="absolute inset-0">
+                    <div className="absolute top-1/2 left-0 right-0 h-1.5 bg-gray-600 transform -translate-y-1/2"></div>
+                    <div className="absolute top-0 bottom-0 left-1/2 w-1.5 bg-gray-600 transform -translate-x-1/2"></div>
+                  </div>
+                  {/* Green hills */}
+                  <div className="absolute top-1 left-1 w-3.5 h-3.5 bg-green-600 rounded-full"></div>
+                  <div className="absolute top-1 right-1 w-3.5 h-3.5 bg-green-600 rounded-full"></div>
+                  {/* Brown area with AM */}
+                  <div className="absolute bottom-1 left-1.5 right-1.5 h-2.5 bg-amber-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">AM</span>
+                  </div>
+                </div>
               </div>
-              <span className="text-lg font-bold gradient-text">AccessMap</span>
+              <span className="text-lg font-bold text-gray-800">AccessMap</span>
             </Link>
 
             {/* Mobile menu button */}
