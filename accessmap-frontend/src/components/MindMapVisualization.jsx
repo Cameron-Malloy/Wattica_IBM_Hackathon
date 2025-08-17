@@ -178,7 +178,7 @@ const MindMapVisualization = ({ results, onNodeClick }) => {
             data: {
               type: 'issue',
               label: item.issue_type?.replace(/_/g, ' ') || 'Unknown Issue',
-              subtitle: item.location?.split(',')[0] || 'Unknown Location',
+              subtitle: typeof item.location === 'string' ? item.location.split(',')[0] : (item.location?.city || item.location?.fullAddress || 'Unknown Location'),
               clickable: true,
               issueData: item
             }
@@ -200,7 +200,7 @@ const MindMapVisualization = ({ results, onNodeClick }) => {
     if (viewMode === 'location') {
       // Location clusters
       const locationGroups = scanResults.reduce((acc, item) => {
-        const location = item.location?.split(',')[0] || 'Unknown';
+        const location = typeof item.location === 'string' ? item.location.split(',')[0] : (item.location?.city || item.location?.fullAddress || 'Unknown');
         if (!acc[location]) acc[location] = [];
         acc[location].push(item);
         return acc;

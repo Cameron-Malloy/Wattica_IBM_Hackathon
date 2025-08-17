@@ -964,8 +964,17 @@ const MapPage = () => {
         // Ensure every city has recommendations by creating default ones if needed
         const allCities = new Set();
         allGapsData.forEach(gap => {
-          const locationName = gap.location || gap.name || 'Unknown Location';
-          allCities.add(locationName);
+          let locationName = gap.location || gap.name || 'Unknown Location';
+          
+          // Ensure locationName is a string
+          if (typeof locationName === 'object') {
+            locationName = locationName?.city || locationName?.fullAddress || 'Unknown Location';
+          }
+          
+          // Only add strings to the set
+          if (typeof locationName === 'string') {
+            allCities.add(locationName);
+          }
         });
         
         // Create default recommendations for cities that don't have them
@@ -973,7 +982,7 @@ const MapPage = () => {
           if (!locationToRecommendations[cityName] || locationToRecommendations[cityName].length === 0) {
             // Create a default recommendation for this city
             const defaultRecommendation = {
-              id: `default_${cityName.replace(/\s+/g, '_').toLowerCase()}`,
+              id: `default_${typeof cityName === 'string' ? cityName.replace(/\s+/g, '_').toLowerCase() : 'unknown'}`,
               title: `General Accessibility Improvements for ${cityName}`,
               description: `Comprehensive accessibility improvements and infrastructure upgrades for ${cityName}`,
               type: 'infrastructure',
@@ -997,7 +1006,10 @@ const MapPage = () => {
           return {
             ...gap,
             associatedRecommendations,
-            hasRecommendations: associatedRecommendations.length > 0
+            hasRecommendations: associatedRecommendations.length > 0,
+            confidence: 0.95,  // High confidence for community-reported issues
+            survey_based: true,
+            agent: 'CommunityReporter'
           };
         }).filter(item => {
           if (filters.severity !== 'all' && item.severity !== filters.severity) return false;
@@ -1041,7 +1053,10 @@ const MapPage = () => {
             demographics: survey.demographics,
             contact: survey.contact,
             associatedRecommendations,
-            hasRecommendations: associatedRecommendations.length > 0
+            hasRecommendations: associatedRecommendations.length > 0,
+            confidence: 0.95,  // High confidence for community-reported issues
+            survey_based: true,
+            agent: 'CommunityReporter'
           };
         }).filter(item => {
           if (filters.severity !== 'all' && item.severity !== filters.severity) return false;
@@ -1082,7 +1097,10 @@ const MapPage = () => {
             demographics: survey.demographics,
             contact: survey.contact,
             associatedRecommendations,
-            hasRecommendations: associatedRecommendations.length > 0
+            hasRecommendations: associatedRecommendations.length > 0,
+            confidence: 0.95,  // High confidence for community-reported issues
+            survey_based: true,
+            agent: 'CommunityReporter'
           };
         }).filter(item => {
           if (filters.severity !== 'all' && item.severity !== filters.severity) return false;

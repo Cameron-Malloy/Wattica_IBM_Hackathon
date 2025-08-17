@@ -11,10 +11,366 @@
     ],
     "data_source": "Multi-Agent WatsonX Analysis",
     "survey_recommendations_included": true,
-    "total_survey_recommendations": 3,
-    "last_updated": "2025-08-16T01:22:43.596729"
+    "total_survey_recommendations": 7,
+    "last_updated": "2025-08-16T15:00:30.692491",
+    "survey_gaps_included": true,
+    "total_survey_gaps": 7
   },
   "scan_results": [
+    {
+      "id": "survey_gap_survey_1",
+      "survey_id": "survey_1",
+      "issue_type": "poor_lighting",
+      "severity": "moderate",
+      "location": {
+        "city": "Sacramento",
+        "coordinates": {
+          "lat": 38.5816,
+          "lng": -121.4944
+        },
+        "fullAddress": "Sacramento, CA, USA"
+      },
+      "description": "The city center has no lighting when it is night\n",
+      "impact": {
+        "frequency": "weekly",
+        "affected_groups": [],
+        "age_groups": [
+          "seniors",
+          "young_adults",
+          "children",
+          "adults"
+        ]
+      },
+      "demographics": {
+        "mobility_needs": [
+          "visual_impairment",
+          "walking_aids",
+          "elderly"
+        ],
+        "income_level": "high",
+        "accessibility_concerns": []
+      },
+      "submitted_at": "2025-08-15T14:41:52.320908",
+      "survey_based": true,
+      "source": "community_survey",
+      "agent": "CommunityReporter",
+      "confidence_score": 0.95,
+      "affected_population": [
+        "visual_impairment",
+        "walking_aids",
+        "elderly"
+      ],
+      "frequency": "weekly",
+      "age_groups": [
+        "seniors",
+        "young_adults",
+        "children",
+        "adults"
+      ],
+      "coordinates": {
+        "lat": 38.5816,
+        "lng": -121.4944
+      },
+      "city": "Sacramento"
+    },
+    {
+      "id": "survey_gap_survey_2",
+      "survey_id": "survey_2",
+      "issue_type": "physical_barrier",
+      "severity": "critical",
+      "location": {
+        "city": "San Francisco",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "fullAddress": "San Francisco, CA, USA"
+      },
+      "description": "On the I5 freeway there is a road block by the center of the city",
+      "impact": {
+        "frequency": "daily",
+        "affected_groups": [],
+        "age_groups": [
+          "adults",
+          "seniors",
+          "young_adults"
+        ]
+      },
+      "demographics": {
+        "mobility_needs": [
+          "visual_impairment"
+        ],
+        "income_level": "high",
+        "accessibility_concerns": []
+      },
+      "submitted_at": "2025-08-15T14:50:41.956114",
+      "survey_based": true,
+      "source": "community_survey",
+      "agent": "CommunityReporter",
+      "confidence_score": 0.95,
+      "affected_population": [
+        "visual_impairment"
+      ],
+      "frequency": "daily",
+      "age_groups": [
+        "adults",
+        "seniors",
+        "young_adults"
+      ],
+      "coordinates": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "city": "San Francisco"
+    },
+    {
+      "id": "survey_gap_survey_3",
+      "survey_id": "survey_3",
+      "issue_type": "poor_lighting",
+      "severity": "moderate",
+      "location": {
+        "city": "San Diego",
+        "coordinates": {
+          "lat": 32.7157,
+          "lng": -117.1611
+        },
+        "fullAddress": "San Diego, CA, USA"
+      },
+      "description": "The main stadium for baseball has no lighting in the section for the elderly.",
+      "impact": {
+        "frequency": "weekly",
+        "affected_groups": [],
+        "age_groups": [
+          "seniors"
+        ]
+      },
+      "demographics": {
+        "mobility_needs": [
+          "visual_impairment",
+          "elderly"
+        ],
+        "income_level": "middle",
+        "accessibility_concerns": []
+      },
+      "submitted_at": "2025-08-16T01:22:33.899152",
+      "survey_based": true,
+      "source": "community_survey",
+      "agent": "CommunityReporter",
+      "confidence_score": 0.95,
+      "affected_population": [
+        "visual_impairment",
+        "elderly"
+      ],
+      "frequency": "weekly",
+      "age_groups": [
+        "seniors"
+      ],
+      "coordinates": {
+        "lat": 32.7157,
+        "lng": -117.1611
+      },
+      "city": "San Diego"
+    },
+    {
+      "id": "survey_gap_survey_4",
+      "survey_id": "survey_4",
+      "issue_type": "narrow_pathways",
+      "severity": "critical",
+      "location": {
+        "city": "San Francisco",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "fullAddress": "San Francisco, CA, USA"
+      },
+      "description": "The pathways are overgrown near the bay by downtown",
+      "impact": {
+        "frequency": "weekly",
+        "affected_groups": [],
+        "age_groups": [
+          "seniors"
+        ]
+      },
+      "demographics": {
+        "mobility_needs": [
+          "hearing_impairment"
+        ],
+        "income_level": "low",
+        "accessibility_concerns": []
+      },
+      "submitted_at": "2025-08-16T12:20:57.631595",
+      "survey_based": true,
+      "source": "community_survey",
+      "agent": "CommunityReporter",
+      "confidence_score": 0.95,
+      "affected_population": [
+        "hearing_impairment"
+      ],
+      "frequency": "weekly",
+      "age_groups": [
+        "seniors"
+      ],
+      "coordinates": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "city": "San Francisco"
+    },
+    {
+      "id": "survey_gap_survey_5",
+      "survey_id": "survey_5",
+      "issue_type": "transportation_issue",
+      "severity": "moderate",
+      "location": {
+        "city": "San Jose",
+        "coordinates": {
+          "lat": 37.3382,
+          "lng": -121.8863
+        },
+        "fullAddress": "San Jose, CA, USA"
+      },
+      "description": "There is no way for blind people to take the public system. Helping dogs are not allowed for some reason.",
+      "impact": {
+        "frequency": "daily",
+        "affected_groups": [],
+        "age_groups": [
+          "adults",
+          "young_adults",
+          "seniors"
+        ]
+      },
+      "demographics": {
+        "mobility_needs": [
+          "visual_impairment",
+          "elderly"
+        ],
+        "income_level": "middle",
+        "accessibility_concerns": []
+      },
+      "submitted_at": "2025-08-16T13:23:41.265116",
+      "survey_based": true,
+      "source": "community_survey",
+      "agent": "CommunityReporter",
+      "confidence_score": 0.95,
+      "affected_population": [
+        "visual_impairment",
+        "elderly"
+      ],
+      "frequency": "daily",
+      "age_groups": [
+        "adults",
+        "young_adults",
+        "seniors"
+      ],
+      "coordinates": {
+        "lat": 37.3382,
+        "lng": -121.8863
+      },
+      "city": "San Jose"
+    },
+    {
+      "id": "survey_gap_survey_6",
+      "survey_id": "survey_6",
+      "issue_type": "transportation_issue",
+      "severity": "moderate",
+      "location": {
+        "city": "San Diego",
+        "coordinates": {
+          "lat": 32.7157,
+          "lng": -117.1611
+        },
+        "fullAddress": "San Diego, CA, USA"
+      },
+      "description": "There is a lack of public transport\n",
+      "impact": {
+        "frequency": "daily",
+        "affected_groups": [],
+        "age_groups": [
+          "young_adults",
+          "adults",
+          "seniors"
+        ]
+      },
+      "demographics": {
+        "mobility_needs": [
+          "wheelchair",
+          "elderly"
+        ],
+        "income_level": "middle",
+        "accessibility_concerns": []
+      },
+      "submitted_at": "2025-08-16T14:47:53.375003",
+      "survey_based": true,
+      "source": "community_survey",
+      "agent": "CommunityReporter",
+      "confidence_score": 0.95,
+      "affected_population": [
+        "wheelchair",
+        "elderly"
+      ],
+      "frequency": "daily",
+      "age_groups": [
+        "young_adults",
+        "adults",
+        "seniors"
+      ],
+      "coordinates": {
+        "lat": 32.7157,
+        "lng": -117.1611
+      },
+      "city": "San Diego"
+    },
+    {
+      "id": "survey_gap_survey_7",
+      "survey_id": "survey_7",
+      "issue_type": "transportation_issue",
+      "severity": "moderate",
+      "location": {
+        "city": "Fresno",
+        "coordinates": {
+          "lat": 36.7378,
+          "lng": -119.7871
+        },
+        "fullAddress": "Fresno, CA, USA"
+      },
+      "description": "There is a lack of public transport in the city center",
+      "impact": {
+        "frequency": "daily",
+        "affected_groups": [],
+        "age_groups": [
+          "seniors",
+          "adults"
+        ]
+      },
+      "demographics": {
+        "mobility_needs": [
+          "wheelchair",
+          "elderly"
+        ],
+        "income_level": "middle",
+        "accessibility_concerns": []
+      },
+      "submitted_at": "2025-08-16T14:59:49.146270",
+      "survey_based": true,
+      "source": "community_survey",
+      "agent": "CommunityReporter",
+      "confidence_score": 0.95,
+      "affected_population": [
+        "wheelchair",
+        "elderly"
+      ],
+      "frequency": "daily",
+      "age_groups": [
+        "seniors",
+        "adults"
+      ],
+      "coordinates": {
+        "lat": 36.7378,
+        "lng": -119.7871
+      },
+      "city": "Fresno"
+    },
     {
       "id": "scan_1",
       "location": "Dana Point city, CA",
@@ -891,7 +1247,10 @@
         "severity": "moderate"
       },
       "submitted_at": "2025-08-15T14:41:52.320908",
-      "survey_based": true
+      "survey_based": true,
+      "addresses_gaps": [
+        "survey_gap_survey_1"
+      ]
     },
     {
       "priority": "High",
@@ -995,7 +1354,10 @@
         "severity": "critical"
       },
       "submitted_at": "2025-08-15T14:50:41.956114",
-      "survey_based": true
+      "survey_based": true,
+      "addresses_gaps": [
+        "survey_gap_survey_2"
+      ]
     },
     {
       "priority": "Medium",
@@ -1069,7 +1431,387 @@
         "severity": "moderate"
       },
       "submitted_at": "2025-08-16T01:22:33.899152",
-      "survey_based": true
+      "survey_based": true,
+      "addresses_gaps": [
+        "survey_gap_survey_3"
+      ]
+    },
+    {
+      "priority": "High",
+      "priority_level": "High",
+      "title": "Comprehensive Accessibility Improvement Plan for San Francisco - Narrow Pathways",
+      "description": "A detailed, community-focused plan to address narrow pathways affecting hearing_impairment in San Francisco. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$25,000 - $100,000",
+      "timeline": "8-16 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for seniors with hearing_impairment, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "target_locations": [
+        "San Francisco"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-16T12:21:08.644663",
+      "watsonx_generated": true,
+      "impact": "high",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for hearing_impairment in San Francisco",
+      "plan": {
+        "phase1": {
+          "start": 0,
+          "end": 2,
+          "activities": [
+            "Comprehensive accessibility audit",
+            "Community engagement meetings",
+            "Identify priority areas based on severity and frequency"
+          ]
+        },
+        "phase2": {
+          "start": 3,
+          "end": 8,
+          "activities": [
+            "Design wider pathways adhering to ADA guidelines",
+            "Plan for vegetation management around pathways",
+            "Select materials and finishes that provide tactile and visual cues",
+            "Develop a budget and procure necessary resources"
+          ]
+        },
+        "phase3": {
+          "start": 9,
+          "end": 12,
+          "activities": [
+            "Implementation of designed improvements",
+            "Testing of new pathways for functionality and compliance",
+            "Training for city staff and contractors on maintenance and upkeep"
+          ]
+        },
+        "phase4": {
+          "start": 13,
+          "end": 16,
+          "activities": [
+            "Verification of ADA compliance",
+            "Launch community education programs",
+            "Monitor progress and collect user feedback",
+            "Adjust plans as needed for ongoing improvement"
+          ]
+        }
+      },
+      "success_metrics": [
+        "All pathways in San Francisco now meet minimum width requirements",
+        "100% of pathways accommodate mobility devices",
+        "Improved pathway accessibility from 40% to 95%",
+        "Reduced pathway-related mobility barriers by 90%"
+      ],
+      "generated_date": "2025-08-16",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "high",
+      "id": "survey_rec_survey_4",
+      "survey_id": "survey_4",
+      "survey_location": {
+        "city": "San Francisco",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "fullAddress": "San Francisco, CA, USA"
+      },
+      "survey_issue": {
+        "type": "narrow_pathways",
+        "description": "The pathways are overgrown near the bay by downtown",
+        "severity": "critical"
+      },
+      "submitted_at": "2025-08-16T12:20:57.631595",
+      "survey_based": true,
+      "addresses_gaps": [
+        "survey_gap_survey_4"
+      ]
+    },
+    {
+      "priority": "Medium",
+      "priority_level": "Medium",
+      "title": "Comprehensive Accessibility Improvement Plan for San Jose - Transportation Issue",
+      "description": "A detailed, community-focused plan to address transportation issue affecting visual_impairment, elderly in San Jose. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$15,000 - $50,000",
+      "timeline": "6-12 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for adults, young_adults, seniors with visual_impairment, elderly, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 37.3382,
+        "lng": -121.8863
+      },
+      "target_locations": [
+        "San Jose"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-16T13:23:55.629521",
+      "watsonx_generated": true,
+      "impact": "medium",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for visual_impairment, elderly in San Jose",
+      "plan": {
+        "phase_1": {
+          "name": "Assessment & Engagement",
+          "activities": [
+            "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+            "Engage with local disability advocacy groups and affected community members"
+          ]
+        },
+        "phase_2": {
+          "name": "Design & Planning",
+          "activities": [
+            "Perform detailed cost-benefit analysis and secure funding sources",
+            "Develop phased implementation timeline with clear milestones",
+            "Coordinate with city planning, public works, and disability services departments",
+            "Implement ADA-compliant solutions following universal design principles"
+          ]
+        },
+        "phase_3": {
+          "name": "Implementation & Testing",
+          "activities": [
+            "Establish regular maintenance and monitoring protocols",
+            "Create community education and awareness programs"
+          ]
+        },
+        "phase_4": {
+          "name": "Verification & Monitoring",
+          "activities": [
+            "Conduct post-implementation accessibility assessments",
+            "Establish feedback mechanisms for continuous improvement"
+          ]
+        }
+      },
+      "success_metrics": [
+        "Improved accessibility in San Jose by 85%",
+        "95% community satisfaction with accessibility improvements",
+        "90% reduction in accessibility barriers",
+        "Enhanced quality of life for all residents"
+      ],
+      "generated_date": "2025-08-16",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "medium",
+      "id": "survey_rec_survey_5",
+      "survey_id": "survey_5",
+      "survey_location": {
+        "city": "San Jose",
+        "coordinates": {
+          "lat": 37.3382,
+          "lng": -121.8863
+        },
+        "fullAddress": "San Jose, CA, USA"
+      },
+      "survey_issue": {
+        "type": "transportation_issue",
+        "description": "There is no way for blind people to take the public system. Helping dogs are not allowed for some reason.",
+        "severity": "moderate"
+      },
+      "submitted_at": "2025-08-16T13:23:41.265116",
+      "survey_based": true,
+      "addresses_gaps": [
+        "survey_gap_survey_5"
+      ]
+    },
+    {
+      "priority": "Medium",
+      "priority_level": "Medium",
+      "title": "Comprehensive Accessibility Improvement Plan for San Diego - Transportation Issue",
+      "description": "A detailed, community-focused plan to address transportation issue affecting wheelchair, elderly in San Diego. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$15,000 - $50,000",
+      "timeline": "6-12 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for young_adults, adults, seniors with wheelchair, elderly, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 32.7157,
+        "lng": -117.1611
+      },
+      "target_locations": [
+        "San Diego"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-16T14:48:12.761930",
+      "watsonx_generated": true,
+      "impact": "medium",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for wheelchair, elderly in San Diego",
+      "plan": "Phase 1 (Weeks 1-2): Comprehensive assessment and community engagement. Phase 2 (Weeks 3-8): Design and planning with stakeholder input. Phase 3 (Weeks 9-12): Implementation and testing. Phase 4 (Weeks 13-16): Verification, training, and ongoing monitoring.",
+      "success_metrics": [
+        "Improved accessibility in San Diego by 85%",
+        "95% community satisfaction with accessibility improvements",
+        "90% reduction in accessibility barriers",
+        "Enhanced quality of life for all residents"
+      ],
+      "generated_date": "2025-08-16",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "medium",
+      "id": "survey_rec_survey_6",
+      "survey_id": "survey_6",
+      "survey_location": {
+        "city": "San Diego",
+        "coordinates": {
+          "lat": 32.7157,
+          "lng": -117.1611
+        },
+        "fullAddress": "San Diego, CA, USA"
+      },
+      "survey_issue": {
+        "type": "transportation_issue",
+        "description": "There is a lack of public transport\n",
+        "severity": "moderate"
+      },
+      "submitted_at": "2025-08-16T14:47:53.375003",
+      "survey_based": true,
+      "addresses_gaps": [
+        "survey_gap_survey_6"
+      ]
+    },
+    {
+      "priority": "Medium",
+      "priority_level": "Medium",
+      "title": "Fresno Public Transport Expansion & Accessibility Enhancement Plan",
+      "description": "A multi-faceted plan to expand public transport options and enhance accessibility in Fresno's city center, ensuring inclusivity for wheelchair users, elderly individuals, and other mobility-impaired residents.",
+      "recommended_actions": [
+        "Infrastructure: Expand bus routes covering key areas like hospitals, shopping centers, and recreational facilities. Install curb cuts, tactile walking signals, and audio/visual announcements at bus stops and stations.",
+        "Tech: Implement real-time tracking apps for buses, providing accessible navigation assistance to visually impaired passengers. Introduce automated fare collection systems with easy-to-use interfaces.",
+        "Policy: Strengthen local transportation policies to mandate accessibility requirements for private vehicle operators offering shared services within the city limits. Review and update existing ADA compliance standards for public transport.",
+        "Community: Collaborate with local disability advocacy organizations to develop targeted outreach campaigns and educational workshops on utilizing enhanced transportation services. Establish a volunteer program to assist seniors and mobility-impaired citizens in navigating the improved public transport system."
+      ],
+      "cost_estimate": "$2,000,000 - $5,000,000",
+      "timeline": "18-24 months",
+      "expected_impact": "The proposed plan will significantly improve mobility and independence for wheelchair users, elderly individuals, and other mobility-impaired residents in Fresno's city center. Enhanced transportation options will reduce isolation, increase access to essential services, and promote overall well-being.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Transit Authority",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Health and Human Services",
+        "Private Mobility Service Providers"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 36.7378,
+        "lng": -119.7871
+      },
+      "target_locations": [
+        "Fresno"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-16T15:00:30.689528",
+      "watsonx_generated": true,
+      "impact": "medium",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for wheelchair, elderly in Fresno",
+      "plan": {
+        "Phase 1 (Months 1-3): Needs Assessment and Community Engagement": "Conduct accessibility audits, gather data on current transport usage patterns, and hold community meetings to identify priorities and concerns.",
+        "Phase 2 (Months 4-12): Design and Planning": "Develop a comprehensive expansion plan, including route optimization, infrastructure upgrades, and technology integration. Secure necessary funding and permits.",
+        "Phase 3 (Months 13-24): Implementation and Testing": "Execute infrastructure improvements, install new technology, and train staff on accessibility best practices. Conduct pilot tests with select user groups.",
+        "Phase 4 (Months 25-36): Verification, Training, and Ongoing Monitoring": "Verify ADA compliance, conduct performance evaluations, and provide ongoing support and training for staff and users. Continuously monitor and adapt the system based on user feedback."
+      },
+      "success_metrics": [
+        "Improved accessibility in Fresno by 85%",
+        "95% community satisfaction with accessibility improvements",
+        "90% reduction in accessibility barriers",
+        "Enhanced quality of life for all residents"
+      ],
+      "generated_date": "2025-08-16",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "medium",
+      "id": "survey_rec_survey_7",
+      "survey_id": "survey_7",
+      "survey_location": {
+        "city": "Fresno",
+        "coordinates": {
+          "lat": 36.7378,
+          "lng": -119.7871
+        },
+        "fullAddress": "Fresno, CA, USA"
+      },
+      "survey_issue": {
+        "type": "transportation_issue",
+        "description": "There is a lack of public transport in the city center",
+        "severity": "moderate"
+      },
+      "submitted_at": "2025-08-16T14:59:49.146270",
+      "survey_based": true,
+      "addresses_gaps": [
+        "survey_gap_survey_7"
+      ]
     },
     {
       "id": "rec_1",

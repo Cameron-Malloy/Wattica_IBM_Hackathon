@@ -1093,7 +1093,13 @@ What would you like to explore today?`,
                   >
                     {activeVisualization === 'gaps' && (
                       <ClickableGapsGrid 
-                        results={results}
+                        results={{
+                          ...results,
+                          scan_results: results?.scan_results?.map(gap => ({
+                            ...gap,
+                            confidence: gap.survey_based ? 0.95 : (gap.confidence || 0)
+                          }))
+                        }}
                         onGapClick={handleGapSelection}
                         onStartConversation={handleStartConversation}
                       />
@@ -1101,7 +1107,13 @@ What would you like to explore today?`,
 
                     {activeVisualization === 'charts' && (
                       <InteractiveCharts 
-                        results={results} 
+                        results={{
+                          ...results,
+                          scan_results: results?.scan_results?.map(gap => ({
+                            ...gap,
+                            confidence: gap.survey_based ? 0.95 : (gap.confidence || 0)
+                          }))
+                        }}
                         onGapClick={handleVisualizationClick}
                         onRecommendationClick={handleVisualizationClick}
                       />
@@ -2168,7 +2180,9 @@ What would you like to explore today?`,
                                   <div className="flex flex-wrap gap-2">
                                     {selectedSavedRec.target_locations.map((location, index) => (
                                       <span key={index} className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
-                                        {location}
+                                        {typeof location === 'string' 
+                                          ? location 
+                                          : location?.city || location?.fullAddress || 'Unknown Location'}
                                       </span>
                                     ))}
                                   </div>

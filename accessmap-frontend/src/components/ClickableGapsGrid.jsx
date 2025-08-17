@@ -147,7 +147,10 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
   };
 
   const handleStartConversation = (gap) => {
-    const message = `I'd like to discuss the ${gap.issue_type?.replace(/_/g, ' ')} issue in ${gap.location}. Can you provide more detailed recommendations and create an implementation plan?`;
+    const locationText = typeof gap.location === 'string' 
+      ? gap.location 
+      : gap.location?.city || gap.location?.fullAddress || 'Unknown Location';
+    const message = `I'd like to discuss the ${gap.issue_type?.replace(/_/g, ' ')} issue in ${locationText}. Can you provide more detailed recommendations and create an implementation plan?`;
     
     if (onStartConversation) {
       onStartConversation(message, gap);
@@ -307,11 +310,7 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
                       <span className="font-semibold text-sm">
                         {gap.issue_type?.replace(/_/g, ' ').toUpperCase()}
                       </span>
-                      {gap.survey_based && (
-                        <span className="px-2 py-1 text-xs bg-blue-500 text-white rounded-full font-medium border border-blue-300">
-                          📋 Community Reported
-                        </span>
-                      )}
+
                     </div>
                     <span className={`px-2 py-1 text-xs rounded-full border ${getSeverityBadgeColor(gap.severity)} bg-white/20 text-white border-white/30`}>
                       {gap.severity}
@@ -320,7 +319,11 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
                   
                   <div className="flex items-center text-white/90 text-sm">
                     <MapPinIcon className="h-4 w-4 mr-1" />
-                    <span className="truncate">{gap.location?.split(',')[0] || 'Unknown Location'}</span>
+                    <span className="truncate">
+                      {typeof gap.location === 'string' 
+                        ? gap.location.split(',')[0] 
+                        : gap.location?.city || gap.location?.fullAddress || 'Unknown Location'}
+                    </span>
                   </div>
                 </div>
 
@@ -439,7 +442,9 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
                         {selectedGap.issue_type?.replace(/_/g, ' ').toUpperCase()}
                       </h2>
                       <p className="text-white/90">
-                        {selectedGap.location}
+                        {typeof selectedGap.location === 'string' 
+                          ? selectedGap.location 
+                          : selectedGap.location?.city || selectedGap.location?.fullAddress || 'Unknown Location'}
                       </p>
                     </div>
                   </div>
@@ -545,7 +550,9 @@ const ClickableGapsGrid = ({ results, onGapClick, onStartConversation }) => {
                             <span className="font-medium text-green-900">Address</span>
                           </div>
                           <p className="text-sm text-green-800">
-                            {selectedGap.location || 'Location not specified'}
+                            {typeof selectedGap.location === 'string' 
+                              ? selectedGap.location 
+                              : selectedGap.location?.city || selectedGap.location?.fullAddress || 'Location not specified'}
                           </p>
                         </div>
                         

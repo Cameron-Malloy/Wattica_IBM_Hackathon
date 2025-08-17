@@ -154,7 +154,7 @@ const InteractiveCharts = ({ results, onGapClick, onRecommendationClick }) => {
       const disabledMatch = item.vulnerable_population?.match(/(\d+\.?\d*)% disabled/);
       
       return {
-        location: item.location?.split(',')[0] || 'Unknown',
+        location: typeof item.location === 'string' ? item.location.split(',')[0] : (item.location?.city || item.location?.fullAddress || 'Unknown'),
         elderly: elderlyMatch ? parseFloat(elderlyMatch[1]) : 0,
         disabled: disabledMatch ? parseFloat(disabledMatch[1]) : 0,
         severity: item.severity,

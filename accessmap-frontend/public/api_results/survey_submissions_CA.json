@@ -306,5 +306,442 @@
       "urgency": "medium"
     },
     "watsonx_generated": true
+  },
+  {
+    "id": "survey_4",
+    "submitted_at": "2025-08-16T12:20:57.631595",
+    "location": {
+      "city": "San Francisco",
+      "coordinates": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "fullAddress": "San Francisco, CA, USA"
+    },
+    "issue": {
+      "type": "narrow_pathways",
+      "description": "The pathways are overgrown near the bay by downtown",
+      "severity": "critical"
+    },
+    "impact": {
+      "frequency": "weekly",
+      "affected_groups": [],
+      "age_groups": [
+        "seniors"
+      ]
+    },
+    "demographics": {
+      "mobility_needs": [
+        "hearing_impairment"
+      ],
+      "income_level": "low",
+      "accessibility_concerns": []
+    },
+    "contact": {},
+    "ai_recommendation": {
+      "priority": "High",
+      "priority_level": "High",
+      "title": "Comprehensive Accessibility Improvement Plan for San Francisco - Narrow Pathways",
+      "description": "A detailed, community-focused plan to address narrow pathways affecting hearing_impairment in San Francisco. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$25,000 - $100,000",
+      "timeline": "8-16 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for seniors with hearing_impairment, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "target_locations": [
+        "San Francisco"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-16T12:21:08.644663",
+      "watsonx_generated": true,
+      "impact": "high",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for hearing_impairment in San Francisco",
+      "plan": {
+        "phase1": {
+          "start": 0,
+          "end": 2,
+          "activities": [
+            "Comprehensive accessibility audit",
+            "Community engagement meetings",
+            "Identify priority areas based on severity and frequency"
+          ]
+        },
+        "phase2": {
+          "start": 3,
+          "end": 8,
+          "activities": [
+            "Design wider pathways adhering to ADA guidelines",
+            "Plan for vegetation management around pathways",
+            "Select materials and finishes that provide tactile and visual cues",
+            "Develop a budget and procure necessary resources"
+          ]
+        },
+        "phase3": {
+          "start": 9,
+          "end": 12,
+          "activities": [
+            "Implementation of designed improvements",
+            "Testing of new pathways for functionality and compliance",
+            "Training for city staff and contractors on maintenance and upkeep"
+          ]
+        },
+        "phase4": {
+          "start": 13,
+          "end": 16,
+          "activities": [
+            "Verification of ADA compliance",
+            "Launch community education programs",
+            "Monitor progress and collect user feedback",
+            "Adjust plans as needed for ongoing improvement"
+          ]
+        }
+      },
+      "success_metrics": [
+        "All pathways in San Francisco now meet minimum width requirements",
+        "100% of pathways accommodate mobility devices",
+        "Improved pathway accessibility from 40% to 95%",
+        "Reduced pathway-related mobility barriers by 90%"
+      ],
+      "generated_date": "2025-08-16",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "high"
+    },
+    "watsonx_generated": true
+  },
+  {
+    "id": "survey_5",
+    "submitted_at": "2025-08-16T13:23:41.265116",
+    "location": {
+      "city": "San Jose",
+      "coordinates": {
+        "lat": 37.3382,
+        "lng": -121.8863
+      },
+      "fullAddress": "San Jose, CA, USA"
+    },
+    "issue": {
+      "type": "transportation_issue",
+      "description": "There is no way for blind people to take the public system. Helping dogs are not allowed for some reason.",
+      "severity": "moderate"
+    },
+    "impact": {
+      "frequency": "daily",
+      "affected_groups": [],
+      "age_groups": [
+        "adults",
+        "young_adults",
+        "seniors"
+      ]
+    },
+    "demographics": {
+      "mobility_needs": [
+        "visual_impairment",
+        "elderly"
+      ],
+      "income_level": "middle",
+      "accessibility_concerns": []
+    },
+    "contact": {},
+    "ai_recommendation": {
+      "priority": "Medium",
+      "priority_level": "Medium",
+      "title": "Comprehensive Accessibility Improvement Plan for San Jose - Transportation Issue",
+      "description": "A detailed, community-focused plan to address transportation issue affecting visual_impairment, elderly in San Jose. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$15,000 - $50,000",
+      "timeline": "6-12 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for adults, young_adults, seniors with visual_impairment, elderly, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 37.3382,
+        "lng": -121.8863
+      },
+      "target_locations": [
+        "San Jose"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-16T13:23:55.629521",
+      "watsonx_generated": true,
+      "impact": "medium",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for visual_impairment, elderly in San Jose",
+      "plan": {
+        "phase_1": {
+          "name": "Assessment & Engagement",
+          "activities": [
+            "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+            "Engage with local disability advocacy groups and affected community members"
+          ]
+        },
+        "phase_2": {
+          "name": "Design & Planning",
+          "activities": [
+            "Perform detailed cost-benefit analysis and secure funding sources",
+            "Develop phased implementation timeline with clear milestones",
+            "Coordinate with city planning, public works, and disability services departments",
+            "Implement ADA-compliant solutions following universal design principles"
+          ]
+        },
+        "phase_3": {
+          "name": "Implementation & Testing",
+          "activities": [
+            "Establish regular maintenance and monitoring protocols",
+            "Create community education and awareness programs"
+          ]
+        },
+        "phase_4": {
+          "name": "Verification & Monitoring",
+          "activities": [
+            "Conduct post-implementation accessibility assessments",
+            "Establish feedback mechanisms for continuous improvement"
+          ]
+        }
+      },
+      "success_metrics": [
+        "Improved accessibility in San Jose by 85%",
+        "95% community satisfaction with accessibility improvements",
+        "90% reduction in accessibility barriers",
+        "Enhanced quality of life for all residents"
+      ],
+      "generated_date": "2025-08-16",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "medium"
+    },
+    "watsonx_generated": true
+  },
+  {
+    "id": "survey_6",
+    "submitted_at": "2025-08-16T14:47:53.375003",
+    "location": {
+      "city": "San Diego",
+      "coordinates": {
+        "lat": 32.7157,
+        "lng": -117.1611
+      },
+      "fullAddress": "San Diego, CA, USA"
+    },
+    "issue": {
+      "type": "transportation_issue",
+      "description": "There is a lack of public transport\n",
+      "severity": "moderate"
+    },
+    "impact": {
+      "frequency": "daily",
+      "affected_groups": [],
+      "age_groups": [
+        "young_adults",
+        "adults",
+        "seniors"
+      ]
+    },
+    "demographics": {
+      "mobility_needs": [
+        "wheelchair",
+        "elderly"
+      ],
+      "income_level": "middle",
+      "accessibility_concerns": []
+    },
+    "contact": {},
+    "ai_recommendation": {
+      "priority": "Medium",
+      "priority_level": "Medium",
+      "title": "Comprehensive Accessibility Improvement Plan for San Diego - Transportation Issue",
+      "description": "A detailed, community-focused plan to address transportation issue affecting wheelchair, elderly in San Diego. This plan prioritizes safety, independence, and equitable access for all residents.",
+      "recommended_actions": [
+        "Conduct comprehensive on-site accessibility audit with certified accessibility experts",
+        "Engage with local disability advocacy groups and affected community members",
+        "Perform detailed cost-benefit analysis and secure funding sources",
+        "Develop phased implementation timeline with clear milestones",
+        "Coordinate with city planning, public works, and disability services departments",
+        "Implement ADA-compliant solutions following universal design principles",
+        "Establish regular maintenance and monitoring protocols",
+        "Create community education and awareness programs",
+        "Conduct post-implementation accessibility assessments",
+        "Establish feedback mechanisms for continuous improvement"
+      ],
+      "cost_estimate": "$15,000 - $50,000",
+      "timeline": "6-12 weeks",
+      "expected_impact": "Significantly improve accessibility, safety, and independence for young_adults, adults, seniors with wheelchair, elderly, enhancing quality of life and community participation.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Works Department",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Transportation Authority",
+        "Health and Human Services"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 32.7157,
+        "lng": -117.1611
+      },
+      "target_locations": [
+        "San Diego"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-16T14:48:12.761930",
+      "watsonx_generated": true,
+      "impact": "medium",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for wheelchair, elderly in San Diego",
+      "plan": "Phase 1 (Weeks 1-2): Comprehensive assessment and community engagement. Phase 2 (Weeks 3-8): Design and planning with stakeholder input. Phase 3 (Weeks 9-12): Implementation and testing. Phase 4 (Weeks 13-16): Verification, training, and ongoing monitoring.",
+      "success_metrics": [
+        "Improved accessibility in San Diego by 85%",
+        "95% community satisfaction with accessibility improvements",
+        "90% reduction in accessibility barriers",
+        "Enhanced quality of life for all residents"
+      ],
+      "generated_date": "2025-08-16",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "medium"
+    },
+    "watsonx_generated": true
+  },
+  {
+    "id": "survey_7",
+    "submitted_at": "2025-08-16T14:59:49.146270",
+    "location": {
+      "city": "Fresno",
+      "coordinates": {
+        "lat": 36.7378,
+        "lng": -119.7871
+      },
+      "fullAddress": "Fresno, CA, USA"
+    },
+    "issue": {
+      "type": "transportation_issue",
+      "description": "There is a lack of public transport in the city center",
+      "severity": "moderate"
+    },
+    "impact": {
+      "frequency": "daily",
+      "affected_groups": [],
+      "age_groups": [
+        "seniors",
+        "adults"
+      ]
+    },
+    "demographics": {
+      "mobility_needs": [
+        "wheelchair",
+        "elderly"
+      ],
+      "income_level": "middle",
+      "accessibility_concerns": []
+    },
+    "contact": {},
+    "ai_recommendation": {
+      "priority": "Medium",
+      "priority_level": "Medium",
+      "title": "Fresno Public Transport Expansion & Accessibility Enhancement Plan",
+      "description": "A multi-faceted plan to expand public transport options and enhance accessibility in Fresno's city center, ensuring inclusivity for wheelchair users, elderly individuals, and other mobility-impaired residents.",
+      "recommended_actions": [
+        "Infrastructure: Expand bus routes covering key areas like hospitals, shopping centers, and recreational facilities. Install curb cuts, tactile walking signals, and audio/visual announcements at bus stops and stations.",
+        "Tech: Implement real-time tracking apps for buses, providing accessible navigation assistance to visually impaired passengers. Introduce automated fare collection systems with easy-to-use interfaces.",
+        "Policy: Strengthen local transportation policies to mandate accessibility requirements for private vehicle operators offering shared services within the city limits. Review and update existing ADA compliance standards for public transport.",
+        "Community: Collaborate with local disability advocacy organizations to develop targeted outreach campaigns and educational workshops on utilizing enhanced transportation services. Establish a volunteer program to assist seniors and mobility-impaired citizens in navigating the improved public transport system."
+      ],
+      "cost_estimate": "$2,000,000 - $5,000,000",
+      "timeline": "18-24 months",
+      "expected_impact": "The proposed plan will significantly improve mobility and independence for wheelchair users, elderly individuals, and other mobility-impaired residents in Fresno's city center. Enhanced transportation options will reduce isolation, increase access to essential services, and promote overall well-being.",
+      "implementation_partners": [
+        "City Planning Department",
+        "Public Transit Authority",
+        "Disability Services Office",
+        "Local Disability Advocacy Groups",
+        "Community Organizations",
+        "Accessibility Consultants",
+        "Health and Human Services",
+        "Private Mobility Service Providers"
+      ],
+      "locations_affected": "1",
+      "type": "infrastructure",
+      "coordinates": {
+        "lat": 36.7378,
+        "lng": -119.7871
+      },
+      "target_locations": [
+        "Fresno"
+      ],
+      "agent": "SurveyBot",
+      "generated_at": "2025-08-16T15:00:30.689528",
+      "watsonx_generated": true,
+      "impact": "medium",
+      "sdg_alignment": "SDG 11.2: Accessible and affordable transport systems",
+      "equity_impact": "Addresses accessibility needs for wheelchair, elderly in Fresno",
+      "plan": {
+        "Phase 1 (Months 1-3): Needs Assessment and Community Engagement": "Conduct accessibility audits, gather data on current transport usage patterns, and hold community meetings to identify priorities and concerns.",
+        "Phase 2 (Months 4-12): Design and Planning": "Develop a comprehensive expansion plan, including route optimization, infrastructure upgrades, and technology integration. Secure necessary funding and permits.",
+        "Phase 3 (Months 13-24): Implementation and Testing": "Execute infrastructure improvements, install new technology, and train staff on accessibility best practices. Conduct pilot tests with select user groups.",
+        "Phase 4 (Months 25-36): Verification, Training, and Ongoing Monitoring": "Verify ADA compliance, conduct performance evaluations, and provide ongoing support and training for staff and users. Continuously monitor and adapt the system based on user feedback."
+      },
+      "success_metrics": [
+        "Improved accessibility in Fresno by 85%",
+        "95% community satisfaction with accessibility improvements",
+        "90% reduction in accessibility barriers",
+        "Enhanced quality of life for all residents"
+      ],
+      "generated_date": "2025-08-16",
+      "status": "active",
+      "category": "survey_based",
+      "urgency": "medium"
+    },
+    "watsonx_generated": true
   }
 ]
