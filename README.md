@@ -4,7 +4,9 @@
 
 *"Turning Data into Access-First Action"*
 
-AccessMap leverages IBM WatsonX AI to transform how cities approach accessibility improvements. Our comprehensive solution combines demographic vulnerability analysis, conversational AI planning, community engagement, and intelligent recommendation management to create more inclusive communities.
+AccessMap leverages IBM WatsonX AI to transform how cities approach accessibility improvements. Our comprehensive solution combines demographic vulnerability analysis, conversational AI planning, community engagement, and intelligent recommendation management to create more inclusive communities. 
+
+## Video Demonstration: https://www.youtube.com/watch?v=m_bbx-PxZE0
 
 ## 🎯 Problem Statement
 
